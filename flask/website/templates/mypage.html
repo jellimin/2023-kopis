@@ -1,0 +1,44 @@
+<!-- mypage.html -->
+{% extends "base.html" %}
+
+{% block title %}Title - Mypage{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-sm-6">
+            <form method="GET" action="/mypage/update">
+                <fieldset disabled="disabled">
+                    <h2 align="center">MyPage</h2>
+
+                    <!-- 프로필 이미지 영역 -->
+                    {% if current_user.image_path %}
+                    <img src="{{ url_for('static', filename=current_user.image_path)}}" alt="사용자프로필이미지"
+                        class="rounded mx-auto d-block">
+                    {% else %}
+                    <img src="{{ url_for('static', filename='basic_profile.png')}}" alt="기본프로필이미지"
+                        class="rounded mx-auto d-block">
+                    {% endif %}
+
+                    <!-- 기본 정보 영역 -->
+                    <div class="mb-3">
+                        <label for="InputEmail1" class="form-label">이메일</label>
+                        <input name="email" type="email" class="form-control" id="InputEmail1"
+                            aria-describedby="emailHelp" placeholder="{{ current_user.email }}">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="Nickname1" class="form-label">닉네임</label>
+                        <input name="nickname" type="text" class="form-control" id="Nickname1"
+                            placeholder="{{ current_user.nickname }}">
+                    </div>
+
+                </fieldset>
+                <button type="submit" class="btn btn-primary">정보 수정</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

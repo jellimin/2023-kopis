@@ -1,0 +1,55 @@
+<!-- mypage_update.html -->
+{% extends "base.html" %}
+
+{% block title %}Title - Mypage 수정{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-sm-6">
+            <form method="POST" enctype="multipart/form-data">
+                <h2 align="center">MyPage 수정</h2>
+
+                    <!-- 프로필 이미지 영역 -->
+                    {% if current_user.image_path %}
+                    <img src="{{ url_for('static', filename=current_user.image_path)}}" alt="사용자프로필이미지"
+                        class="rounded mx-auto d-block">
+                    {% else %}
+                    <img src="{{ url_for('static', filename='basic_profile.png')}}" alt="기본프로필이미지"
+                        class="rounded mx-auto d-block">
+                    {% endif %}
+
+                    <!-- 프로필 파일 수정 버튼 -->
+                    <label for="imageFile" class="form-label">프로필 이미지</label>
+                    <input type = 'file' name='imageFile', id = 'imageFile'>
+
+                    <!-- 기본 정보 영역 -->
+
+                    <!-- 이메일 변경 못하게 fieldset:disabled 추가 -->
+                    <fieldset disabled="disabled">
+                        <div class="mb-3">
+                            <label for="InputEmail1" class="form-label">이메일</label>
+                            <input name="email" type="email" class="form-control" id="InputEmail1"
+                                aria-describedby="emailHelp" placeholder="{{ current_user.email }}">
+                        </div>
+                    </fieldset>
+
+                    <div class="mb-3">
+                        <label for="InputPassword1" class="form-label">비밀번호</label>
+                        <input name="password1" type="password" class="form-control" id="InputPassword1"">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="Nickname1" class="form-label">닉네임</label>
+                        <input name="nickname" type="text" class="form-control" id="Nickname1"
+                            placeholder="{{ current_user.nickname }}">
+                    </div>
+
+                <button type="submit" class="btn btn-primary">정보 수정 제출</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
