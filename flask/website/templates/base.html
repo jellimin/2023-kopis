@@ -5,71 +5,140 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <style>
+        * {
+          box-sizing: border-box; /* 길이 계산을 편하게 하기위함. box-sizing에 관한 설명은 아래 링크를 참고해주세요 */
+        }
+        a {
+          text-decoration: none; /* 기본 밑줄을 제거합니다 */
+          color: #888;
+        }
+        a:hover {
+          text-decoration: underline; /* 마우스 커서가 올라갔을 때 밑줄을 생성합니다*/
+        }
+        header {
+          background: #ffdc8b;
+          margin: auto; /* header의 양쪽 여백(margin)을 동등하게 맞춤 -> 수평가운데정렬 */
+          width: 1350px;
+          height: 215px;
+          display: flex;
+          align-items: center; /* 하위 요소들 수직 가운데정렬 */
+          justify-content: center;
+        }
+        .img-logo {
+            position: relative;
+            bottom: 30px;
+            left: 110px;
+        }
+        .nav {
+            position: relative;
+            top: 70px;
+            right: 110px;
+        }
+        /* nav */
+        /* main {
+          margin: auto;
+          background: #ffff00;
+          width: 1350px;
+          min-height: 700px;
+        } */
+        footer {
+          margin: auto;
+          background: rgb(0, 255, 255);
+          width: 1350px;
+          height: 310px;
+        }
+    </style>
+
+
+    <!-- 부트스트랩 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <!-- 플로팅 배너 -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='banner.css') }}">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.js"></script> 
     <!-- 메인페이지 css로 수정하는 방법 -->
-    <!--<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
 
     <title>{% block title %}Home{% endblock %}</title>
 </head>
+
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    {% if current_user.is_authenticated %}
-                    <!-- 로그인 되었을 때 -->
-                    <li class="nav-item">
-                        <a href="/" class="nav-link">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/logout" class="nav-link">Log Out</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/mypage" class="nav-link">My Page</a>
-                    </li>
-                    {% else %}
-                    <!-- 로그인 안되었을 때 -->
-                    <li class="nav-item">
-                        <a href="/sign-in" class="nav-link">Sign In</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/sign-up" class="nav-link">Sign Up</a>
-                    </li>
-                    {% endif %}
-                </ul>
+    <header>
+        <img src="{{ url_for('static', filename='logo.png') }}" style="width:150px; height:150px;" class = 'img-logo'/>
+        <div class = 'nav'>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav">
+                            {% if current_user.is_authenticated %}
+                            <!-- 로그인 되었을 때 -->
+                            <li class="nav-item">
+                                <a href="/service" class="nav-link">서비스 소개</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/" class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/logout" class="nav-link">Log Out</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/mypage" class="nav-link">My Page</a>
+                            </li>
+                            {% else %}
+                            <!-- 로그인 안되었을 때 -->
+                            <li class="nav-item">
+                                <a href="/service" class="nav-link">서비스 소개</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/" class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/sign-in" class="nav-link">Sign In</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/sign-up" class="nav-link">Sign Up</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                </div>
+            </nav>
         </div>
-    </nav>
 
-    <!-- Message Flashing -->
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% for category, message in messages %}
-                {% if category == "error" %}         
-                <!-- error 메시지 -->
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                {% elif category == "success" %}
-                <!-- success 메시지 -->
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                {% endif %}
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
+        <!-- Message Flashing -->
+        
+        <!-- {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    {% if category == "error" %}         
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    {% elif category == "success" %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endwith %} -->
 
-    <!-- content -->
-    <div class="container">
+    </header>
+
+    <!-- 메인 -->
+    <main class="container">
         {% block content %}
         {% endblock %}
-    </div>
+    </main>
+
+    <footer></footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
-    <script src="{{ url_for('static', filename='index.js')}}"></script>
+    <script src="https://zelkun.tistory.com/attachment/cfile8.uf@99BB7A3D5D45C065343307.js"></script>
+    <script src="{{ url_for('static', filename='address.js')}}"></script>
+    <script src="{{ url_for('static', filename='banner.js')}}"></script>
 </body>
 </html>
