@@ -20,7 +20,7 @@ def open_info():
     return open
 
 def open_info_all():
-    df = pd.read_csv(path)
+    df = pd.read_csv('C:/Users/pmy49/OneDrive/바탕 화면/flask/website/data/interpark_open_data.csv')
     df = df[['제목', 'URL', '티켓오픈일시', '이미지URL']]
     open = []
     for i in range(len(df)):

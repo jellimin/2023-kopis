@@ -3,7 +3,7 @@ from os import path
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from sqlalchemy import MetaData
-from flask      import Flask, request, jsonify, current_app
+from flask  import Flask, request, jsonify, current_app
 from flask.json import JSONEncoder
 from sqlalchemy import create_engine, text
 from flaskext.mysql import MySQL
