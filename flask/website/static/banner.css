@@ -1,0 +1,11 @@
+body { height: 2000px; }
+
+.sideBanner {
+  position: absolute;
+  width: 100px;
+  height: 50px;
+  top: 70px;
+  left: 1330px;
+  background-color: #ffffff;
+  color: #fffffff;
+}

@@ -1,15 +1,15 @@
-from flask import Blueprint, redirect, render_template, request, flash, url_for, jsonify
+from flask import Blueprint, redirect, render_template, request, flash, url_for, jsonify, session
 from flask_login import login_required, current_user
-from .models import Note, User
-from . import db
+# from .models import Note, User
+# from . import db
 import os
 from werkzeug.utils import secure_filename
+import re
 
 mypage_views = Blueprint('mypage_views', __name__)
 
 # 나의 정보 페이지
 @mypage_views.route('/mypage', methods=['GET','POST'])
-@login_required
 def mypage():
     return render_template('mypage.html')
 
@@ -24,7 +24,6 @@ def allowed_file(filename):
 
 # 나의 정보 수정 페이지
 @mypage_views.route('/mypage/update', methods=['GET','POST'])
-@login_required
 def mypage_update():
 
     # 나의 정보 수정 요청 확인
@@ -43,13 +42,23 @@ def mypage_update():
                     filetype = filename.rsplit('.', 1)[1].lower()
                     image_path = f'{os.path.dirname(__file__)}/static/'  # ../website/static/
 
+
                     # user id로 프로필 명 저장
-                    image_file.save(f'{image_path}{current_user.id}.{filetype}')
+                    image_file.save('{}{}.{}'.format(image_path, session['u_id'], filetype))
 
                     # DB user.image_path에 반영
-                    user = User.query.get(current_user.id)
-                    user.image_path = f'{current_user.id}.{filetype}'
-                    db.session.commit()
+                    id = session['u_id']
+                    sql = "UPDATE UserInfo SET image_url = '%s' WHERE u_id = '%s'" % (str(id)+'.'+filetype, id)
+
+                    from . import mysql
+                    conn = mysql.connect()
+                    cursor = conn.cursor()
+                    cursor.execute(sql)
+                    conn.commit()
+                    cursor.close()
+                    conn.close()
+
+                    session['image_url'] = '{}.{}'.format(session['u_id'], filetype)
 
                     return redirect(url_for('mypage_views.mypage'))
                 else:
@@ -57,35 +66,86 @@ def mypage_update():
                     flash('이미지 파일은 png jpg jepg gif 만 지원합니다.', category = "error")
                     return redirect(request.url)
                 
-        # 닉네임, 비밀번호 변경여부 확인
-        nickname = request.form.get('nickname')
+        # 변경여부 확인
         password1 = request.form.get('password1')
-
-        # 닉네임 입력 여부 및 유효성 검사
-        if nickname:
-            db_user = User.query.filter_by(nickname=nickname).first()
-            if db_user :
-                flash("이미 있는 닉네임입니다.")
-                return redirect(request.url)
-            elif len(nickname) < 2:
-                flash("닉네임은 2자 이상입니다.", category="error")
-                return redirect(request.url)
-            else:
-                user = User.query.get(current_user.id)
-                user.nickname = nickname
-                db.session.commit()
-                changed = True
+        nickname = request.form.get('nickname')
+        birth = request.form.get('birth')
+        address1 = request.form.get('address1')
+        address2 = request.form.get('address2')
+        address3 = request.form.get('address3')
 
         # 패스워드 입력 여부 및 유효성 검사
         if password1:
-            if len(password1) < 7:
-                flash("비밀번호가 너무 짧습니다.", category = "error")
+            if re.match('^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$', password1) == None:
+                flash("비밀번호 입력 형식이 잘못 되었습니다.", category="error")
                 return redirect(request.url)
             else:
-                user = User.query.get(current_user.id)
-                user.password = password1
-                db.session.commit()
+                id = session['u_id']
+                sql = "UPDATE UserInfo SET user_password = '%s' WHERE u_id = '%s'" % (password1, id)
+                from . import mysql
+                conn = mysql.connect()
+                cursor = conn.cursor()
+                cursor.execute(sql)
+                conn.commit()
+                cursor.close()
+                conn.close()
                 changed = True
+
+        # 닉네임 입력 여부
+        if nickname:
+            if len(nickname) < 2:
+                flash("닉네임은 2자 이상입니다.", category="error")
+                return redirect(request.url)
+            else:
+                id = session['u_id']
+                sql = "UPDATE UserInfo SET nickname = '%s' WHERE u_id = '%s'" % (nickname, id)
+                from . import mysql
+                conn = mysql.connect()
+                cursor = conn.cursor()
+                cursor.execute(sql)
+                conn.commit()
+                cursor.close()
+                conn.close()
+                changed = True
+
+        # 생년월일 입력 여부
+        if birth:
+            id = session['u_id']
+            sql = "UPDATE UserInfo SET birthday = '%s' WHERE u_id = '%s'" % (birth, id)
+            from . import mysql
+            conn = mysql.connect()
+            cursor = conn.cursor()
+            cursor.execute(sql)
+            conn.commit()
+            cursor.close()
+            conn.close()
+            changed = True
+
+        # 주소1, 주소2, 주소3 모두 입력된 경우
+        if address1 and address2 and address3:
+            id = session['u_id']
+            sql = "UPDATE UserInfo SET address1 = '%s', address2 = '%s', address3 = '%s' WHERE u_id = '%s'" % (address1, address2, address3, id)
+            from . import mysql
+            conn = mysql.connect()
+            cursor = conn.cursor()
+            cursor.execute(sql)
+            conn.commit()
+            cursor.close()
+            conn.close()
+            changed = True
+
+        # 주소1, 주소2 모두 입력된 경우 -> 세종특별자치시 경우, 주소3 없음
+        if address1 and address2:
+            id = session['u_id']
+            sql = "UPDATE UserInfo SET address1 = '%s', address2 = '%s', address3 = NULL WHERE u_id = '%s'" % (address1, address2, id)
+            from . import mysql
+            conn = mysql.connect()
+            cursor = conn.cursor()
+            cursor.execute(sql)
+            conn.commit()
+            cursor.close()
+            conn.close()
+            changed = True
 
         # 변경사항이 있다면 redirect
         if changed:
