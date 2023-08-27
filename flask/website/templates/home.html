@@ -3,8 +3,61 @@
 {% block title %}Title - Home{% endblock %}
 
 {% block content %}
-<div class = "container">
-    <h1>KEYWI</h1>
-    <img src="{{ url_for('static', filename='logo.png') }}">
+
+<div class="main-container">
+    <div class="temp-box box-one">
+        <p style="font-size:30px">1-2. HotInfo</p>
+    </div>
+    <div class="temp-box box-two">
+        <p style="font-size:30px">3. Keyword Searching</p>
+    </div>
+    <div class="temp-box box-three">
+        <p style="font-size:30px">2. Curation</p>
+    </div>
+    <div class="temp-box box-four">
+        <div style="text-align:center">
+            <p style="font-size:30px"><b>1-1. OpenInfo</b></p>
+        </div>
+        <div style="text-align:right">
+            <button type="button" class="extra-button" onclick="location.href='/open'">더보기</button>
+        </div>
+        <div class="row">
+            {% for info in open %}
+            <div class="col-md-2">
+                <div style="font-size:13px; width:180px; height:50px; background-color:rgb(255, 170, 0)">
+                    <p>{{info['title']}}</p>
+                </div>
+                <div style="width:180px; height:30px; background-color:rgb(0, 174, 255)">
+                    <p style="text-align:right">{{info['date']}}</p>
+                </div>
+                <div style="text-align : center;">
+                    <img src="{{info['image']}}" style="width:150px; height:130px;"/>
+                </div>
+                <div style=" text-align: center;">
+                    <p><a style= "background-color:rgb(0, 255, 200)" class="btn btn-default" href="{{info['url']}}">공연 상세보기 &raquo;</a></p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
 </div>
+
+<div class="sideBanner">
+    <img src="{{ url_for('static', filename='banner.png') }}">
+    <button type="button" class="extra-button" onclick="location.href='/test'">유형테스트 하러 가기</button>
+</div>
+
+
+<!-- <div class="row">
+    {% for info in open %}
+    <div class="col-md-4">
+        <h4 id="title">{{info['division']}}</h4><p>{{info['title']}}</p> <p>{{info['date']}}</p>
+        <p>
+            <img src="{{info['image']}}" />
+        </p>
+        <p><a class="btn btn-default" href="{{info['url']}}">공연 상세보기 &raquo;</a></p>
+    </div>
+    {% endfor %}
+</div> -->
+
 {% endblock %}
