@@ -3,7 +3,7 @@ import pymysql
 
 crawler = ContentCrawler()
 movie_df = crawler.get_movie_detail()
-drama_df = crawler.get_drama_info()
+drama_df = crawler.get_drama_detail()
 ent_df = crawler.get_entertain_info()
 
 conn = pymysql.connect(host='admin.ckaurvkcjohj.eu-north-1.rds.amazonaws.com', user='hashtag', password='hashtag123', db='KEYWIDB', charset='utf8')

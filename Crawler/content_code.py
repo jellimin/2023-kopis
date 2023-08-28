@@ -102,128 +102,85 @@ class ContentCrawler:
 
         return df[['장르','제목','줄거리','URL']]
 
-    ## 드라마 줄거리 추출
-    def get_drama_info(self):
-        # 크롤링 오류 발생 제거
-        chrome_options = Options()
-        chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
-        chrome_options.add_argument("headless") #창숨기기
-        
 
-        query = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=%EC%8B%9C%EC%B2%AD%EB%A5%A0+%EC%88%9C%EC%9C%84&oquery=08%EC%9B%9407%EC%9D%BC%EC%A3%BC+%EC%A7%80%EC%83%81%ED%8C%8C+%EC%8B%9C%EC%B2%AD%EB%A5%A0&tqi=iLF5ZlprvN8ssix3jbsssssssn4-214140"
-        service = Service(executable_path = "./chromedriver.exe" )
-        # driver = webdriver.Chrome(service = service, options=chrome_options)
+    # 수집하고자하는 정보 - 드라마제목, 순위, 상세페이지url, 줄거리
 
-        driver = webdriver.Chrome(service=service, options=chrome_options)
-        driver.get(query)
+    def get_drama_info(self): # 드라마 제목, 상세페이지 url
+        result_data = []
+        query = ['주간 드라마 시청률', '주간 드라마 종합편성시청률', '주간 드라마 케이블시청률']
+    
+        for i in query:
+            base_url = "https://search.naver.com/search.naver"
+            query_params = {
+                "sm": "tab_hty.top",
+                "where": "nexearch",
+                "query": i
+            }
+            res = requests.get(base_url, params=query_params)
+            soup = BeautifulSoup(res.content, "html.parser")
 
-        rank = []
-        title = []
-        url = []
+            weekly_drama = soup.find(class_ = "tb_list").find_all("tr")[1:4]
+            k = 1
+            for j in weekly_drama:
+                drama = j.find("a")
+                if drama == None:
+                    continue
+                drama_title = drama.text
+                drama_rank = str(k)
+                drama_url = drama['href']
+                k += 1
+                result_data.append({'제목':drama_title, '순위':drama_rank, 'URL':drama_url})
+        df = pd.DataFrame(result_data)
+        return df
 
-        # '주간' 클릭
-        driver.find_element(By.XPATH, "/html/body/div[3]/div[2]/div/div[1]/section[1]/div/div[2]/div[2]/div[1]/ul/li[2]/a").click()
-                
-        for j in range(1, 4):
-            # 지상파, 종합편성, 케이블 페이지 존재
-            page = "/html/body/div[3]/div[2]/div/div[1]/section[1]/div/div[2]/div[1]/ul/li[{}]/a".format(j)
-            driver.find_element(By.XPATH, page).click()
+    def get_drama_detail(self): # 줄거리
+        df = self.get_drama_info()
+        url = df['URL']
+        base_url = "https://search.naver.com/search.naver"
 
-            # 드라마       
-            select = "/html/body/div[3]/div[2]/div/div[1]/section[1]/div/div[2]/div[2]/div[2]/select/option[2]"
-            driver.find_element(By.XPATH, select).click()
-
-            for i in range(1, 4):   
-                a = str(i) # rank
-                b = "/html/body/div[3]/div[2]/div/div[1]/section[1]/div/div[2]/div[3]/div/table/tbody/tr[{}]/td[2]/p/a".format(i) # 제목, url
-            
-                titlee = driver.find_element(By.XPATH, b).text
-                urll = driver.find_element(By.XPATH, b).get_attribute('href')
-
-                rank.append(a)
-                title.append(titlee)
-                url.append(urll)
-
-        dict = {'순위':rank, '제목':title, 'URL':url}
-        data = pd.DataFrame(dict)
-        url = data['URL']
-
-        content = [] # 줄거리
-
-        # 드라마
+        drama_content = []
         for i in range(len(url)):
-            query = url[i]
-            driver = webdriver.Chrome(options=chrome_options)
-            driver.get(query)
-            # driver.implicitly_wait(10)
-
-            cont = driver.find_element(By.CSS_SELECTOR, 'span.desc._text').text
-            content.append(cont)
-
-        data['줄거리'] = content
-        #data.drop('URL', axis=1, inplace=True)
+            detail_url = base_url + url[i]
+            print(detail_url)
+            res = requests.get(detail_url)
+            time.sleep(2)
+            soup = BeautifulSoup(res.content, "html.parser")
+            content = soup.find(class_='desc _text').text
+            drama_content.append(content)
+        df['줄거리'] = drama_content
         now = self.week_no()
-        #data.to_csv(f"./Crawling/data/{now}_drama.csv", index=False, sep=",")
-
-        # 함수 정의 후 크롤링 끝난 뒤 send_message 하기 ! 
+        #df.to_csv(f'./Crawling/data/{now}_드라마.csv',index=False)
         message = {'content':f'{now}_드라마 줄거리 크롤링을 완료했습니다.'}
         self.send_message(message)
-        return data[['제목','줄거리','URL']]
-    
-    def get_entertain_info(self):
-        ## 시청률 관련 크롤링 - 예능
-        options = webdriver.ChromeOptions()
-        options.add_experimental_option('excludeSwitches', ['enable-logging'])
-        options.add_argument("headless") #창숨기기
         
-        service = Service(executable_path = "./chromedriver.exe" )
-        # 예능 출연진 크롤링
+        return df[['제목', '순위', '줄거리', 'URL']]
 
-        ent_title = ['나 혼자 산다', '유 퀴즈 온 더 블럭', '놀라운 토요일'] # 예능프로 제목
+    def get_entertain_info(self): # 제목, 회차, 방영날짜, 출연진
+        result_data = []
+        query = ['나 혼자 산다 회차정보', '유 퀴즈 온 더 블럭 회차정보', '놀라운 토요일 회차정보']
+        
+        for i in query:
+            base_url = "https://search.naver.com/search.naver"
+            query_params = {
+                "sm": "tab_hty.top",
+                "where": "nexearch",
+                "query": i
+            }
+            res = requests.get(base_url, params=query_params)
+            soup = BeautifulSoup(res.content, "html.parser")
 
-        title = []
-        actor = [] # 출연진 내용
-        series = [] # 회차
-        date = [] # 날짜
+            enter = soup.find_all(class_="list_col _column")
+            for j in enter:
+                title = i.replace('회차정보', "")
+                epis = j.find(class_="num_txt").text
+                date = j.find(class_="date_info").text
+                actor = j.find("dd").text
+                result_data.append({'제목':title, '회차':epis, '날짜':date, '출연진':actor})
+        df = pd.DataFrame(result_data)
 
-        # 예능
-        for i in range(len(ent_title)):
-            query = "https://search.naver.com/search.naver?query={}".format(ent_title[i])
-            driver = webdriver.Chrome(service=service,options=options)
-            driver.get(query)
-            # driver.implicitly_wait(10)
-
-            driver.find_element(By.XPATH,"/html/body/div[3]/div[2]/div/div[1]/div[2]/div[1]/div[4]/div/div/ul/li[5]/a").click() #회차정보 탭으로 이동
-
-            for j in range(1, 3): # 2개 회차
-                title.append(ent_title[i])
-                a = "/html/body/div[3]/div[2]/div/div[1]/div[2]/div[2]/div/div/div/div[{}]/ul/li[1]/div/div[1]/strong/a/span".format(j)
-                aa = driver.find_element(By.XPATH, a).text
-                series.append(aa)
-                b = "/html/body/div[3]/div[2]/div/div[1]/div[2]/div[2]/div/div/div/div[{}]/ul/li[1]/div/div[1]/span".format(j)
-                bb = driver.find_element(By.XPATH, b).text
-                date.append(bb)
-            
-                temp=[]
-                while(True):
-                    try:
-                        for k in range(1, 6):
-                            c = "/html/body/div[3]/div[2]/div/div[1]/div[2]/div[2]/div/div/div/div[{0}]/ul/li[1]/div/dl/dd/a[{1}]".format(j, k)
-                            act = driver.find_element(By.XPATH, c).text
-                            temp.append(act)   
-                        temp = ",".join(temp)
-                    except:
-                        break
-                actor.append(temp)
-
-        dict = {'제목':title, '회차정보':series, '방영날짜':date, '출연진':actor}
-        df = pd.DataFrame(dict)
         now = self.week_no()
-        #df.to_csv(f"./Crawling/data/{now}_entertainment.csv", index=False, sep=",")
-
-        # 함수 정의 후 크롤링 끝난 뒤 send_message 하기 ! 
+        #df.to_csv(f'./Crawling/data/{now}_예능.csv',index=False)
         message = {'content':f'{now}_예능 출연진 크롤링을 완료했습니다.'}
         self.send_message(message)
-        return df[['제목','회차정보','방영날짜','출연진']]
 
-
+        return df
