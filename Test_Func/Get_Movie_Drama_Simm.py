@@ -69,49 +69,11 @@ def extract_word(text):
     result = hangul.sub(' ', text)
     return result
 
-# 맞춤법 교정
-def grammar_correction(df):
-    tmp = df.copy()
-    error_idx = []
-    for i, res in enumerate(tqdm(tmp['content'])):
-        if len(res) > 500: # 텍스트 길이가 500보다 클 때
-            # 결과값
-            res = ''
-            # 반복 횟수 구하기
-            if len(tmp.loc[i, 'content']) % 500 == 0:
-                iter = len(tmp.loc[i, 'content']) // 500
-            else:
-                iter = len(tmp.loc[i, 'content']) // 500 + 1
-            for i in range(iter):
-                if i < (iter-1):
-                    res += spell_checker.check(tmp.loc[i, 'content'][500*i:500*(i+1)]).checked
-                elif i == (iter-1):
-                    res += spell_checker.check(tmp.loc[i, 'content'][500*i:]).checked
-            tmp.loc[i, 'content'] = res
-        else: # 텍스트 길이가 500보다 작을 때
-            try:
-              tmp.loc[i, 'content'] = spell_checker.check(res).checked
-            except:
-              error_idx.append(i)
-    return tmp
 # 한글만 남기기
 def extract_num_eng(text):
     hangul = re.compile('[^가-힣]')
     result = hangul.sub(' ', text)
     return result
-# 형태소 - 명사만 추출
-# 한 행당 한 리뷰가 들어가게 처리
-def tagging(df):
-    okt = Okt()
-    words = df['content'].tolist()
-    total = [] # 한 행당 리뷰 형태소
-    for i in tqdm(words):
-        morph_list = [] # 한 리뷰당
-        for word in okt.pos(i, stem = True):
-            if word[1] in ['Noun']:
-                morph_list.append(word[0])
-        total.append(morph_list)
-    return total
 
 def preprocessing_text(df):
     df = duplicate_drop(df)
