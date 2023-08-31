@@ -39,7 +39,7 @@ finally:
 
 # 전처리 함수 정의
 def replace_cont():
-    show_df = pd.read_csv('./Keywi/Modeling/data/공연중상세정보.csv')[['제목','장르','줄거리','작품설명','url','이미지url']]
+    show_df = pd.read_csv('./Keywi/Modeling/data/공연중상세정보.csv')[['제목','장르','줄거리','작품설명','기간','장소','url','이미지url']]
     content = []
     for i in range(0,show_df.shape[0]):
         row = show_df.iloc[i]
@@ -69,11 +69,49 @@ def extract_word(text):
     result = hangul.sub(' ', text)
     return result
 
+# 맞춤법 교정
+def grammar_correction(df):
+    tmp = df.copy()
+    error_idx = []
+    for i, res in enumerate(tqdm(tmp['content'])):
+        if len(res) > 500: # 텍스트 길이가 500보다 클 때
+            # 결과값
+            res = ''
+            # 반복 횟수 구하기
+            if len(tmp.loc[i, 'content']) % 500 == 0:
+                iter = len(tmp.loc[i, 'content']) // 500
+            else:
+                iter = len(tmp.loc[i, 'content']) // 500 + 1
+            for i in range(iter):
+                if i < (iter-1):
+                    res += spell_checker.check(tmp.loc[i, 'content'][500*i:500*(i+1)]).checked
+                elif i == (iter-1):
+                    res += spell_checker.check(tmp.loc[i, 'content'][500*i:]).checked
+            tmp.loc[i, 'content'] = res
+        else: # 텍스트 길이가 500보다 작을 때
+            try:
+              tmp.loc[i, 'content'] = spell_checker.check(res).checked
+            except:
+              error_idx.append(i)
+    return tmp
 # 한글만 남기기
 def extract_num_eng(text):
     hangul = re.compile('[^가-힣]')
     result = hangul.sub(' ', text)
     return result
+# 형태소 - 명사만 추출
+# 한 행당 한 리뷰가 들어가게 처리
+def tagging(df):
+    okt = Okt()
+    words = df['content'].tolist()
+    total = [] # 한 행당 리뷰 형태소
+    for i in tqdm(words):
+        morph_list = [] # 한 리뷰당
+        for word in okt.pos(i, stem = True):
+            if word[1] in ['Noun']:
+                morph_list.append(word[0])
+        total.append(morph_list)
+    return total
 
 def preprocessing_text(df):
     df = duplicate_drop(df)
@@ -152,7 +190,7 @@ def week_no():
 
     return f'{month}월 {(target_day - firstday).days // 7 + 1}주차' 
 
-def get_matcher(answer_df,show_df):
+def get_matcher(cat,answer_df,show_df):
     data = []
     answer_list = answer_df['token']
     for i,answer in enumerate(answer_list):
@@ -166,14 +204,34 @@ def get_matcher(answer_df,show_df):
             similar = sm.ratio()*100
             if similar >= 25:
                 #print(show_df['제목'][j],similar)
-                data.append({"유사콘텐츠":answer_df['제목'][i],'제목':show_df['제목'][j],'유사도':round(similar,2),'이미지URL':show_df['이미지url'][j],'상세URL':show_df['url'][j]})
+                data.append({'카테고리':cat,"콘텐츠제목":answer_df['제목'][i],'제목':show_df['제목'][j],'유사도':round(similar,2),
+                             '공연날짜':show_df['기간'][j],'장소':show_df['장소'][j],'이미지URL':show_df['이미지url'][j],'상세URL':show_df['url'][j]})
     df = pd.DataFrame(data)
-    df.sort_values(by=['유사콘텐츠','유사도'], inplace=True, ignore_index=True, ascending=False)
+    df.sort_values(by=['콘텐츠제목','유사도'], inplace=True, ignore_index=True, ascending=False)
+    df.drop('유사도',axis=1,inplace=True)
     return df
-movie_simm_df = get_matcher(movie_df, show_df)
-drama_simm_df = get_matcher(drama_df, show_df)
+movie_simm_df = get_matcher('영화',movie_df, show_df)
+drama_simm_df = get_matcher('드라마',drama_df, show_df)
 
-movie_simm_df.to_csv(f'./Keywi/Modeling/final/{week_no()}_영화유사공연.csv',index=False)
-drama_simm_df.to_csv(f'./Keywi/Modeling/final/{week_no()}_드라마유사공연.csv',index=False)
+final_df = pd.concat([movie_simm_df,drama_simm_df], axis=0, ignore_index=True)
+final_df.to_csv(f'./Keywi/Modeling/final/{week_no()}_유사공연.csv',index=False)
+
+# DB에 올리기
+conn = pymysql.connect(host='admin.ckaurvkcjohj.eu-north-1.rds.amazonaws.com', user='hashtag', password='hashtag123', db='KEYWIDB', charset='utf8')
+# 커서 생성
+db = conn.cursor()
+# 쿼리 실행
+sql_state = """DELETE FROM KEYWIDB.SimmShow"""
+db.execute(sql_state)
+sql_state = """ALTER TABLE KEYWIDB.SimmShow AUTO_INCREMENT = 1"""
+db.execute(sql_state)
+# DB 올릴때 더 빠른 방법 없을까 ?? 165개 업로드하는데 1분 걸림
+for cat,cont_name,show_name,show_venue,show_date,show_url,img_url in tqdm(zip(final_df['카테고리'],final_df['콘텐츠제목'],final_df['제목'],final_df['장소'],final_df['공연날짜'],final_df['상세URL'],final_df['이미지URL'])):
+    sql_state = """INSERT INTO KEYWIDB.SimmShow(category,cont_name,show_name,show_venue,show_date,show_url,img_url) 
+                VALUES ("%s", "%s", "%s", "%s", "%s", "%s", "%s")"""%(tuple([cat,cont_name,show_name,show_venue,show_date,show_url,img_url]))
+    db.execute(sql_state)
+
+conn.commit()
+conn.close()
 
 
