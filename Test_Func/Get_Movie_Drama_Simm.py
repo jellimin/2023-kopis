@@ -221,13 +221,13 @@ conn = pymysql.connect(host='admin.ckaurvkcjohj.eu-north-1.rds.amazonaws.com', u
 # 커서 생성
 db = conn.cursor()
 # 쿼리 실행
-sql_state = """DELETE FROM KEYWIDB.SimmShow"""
+sql_state = """DELETE FROM KEYWIDB.HotInfo"""
 db.execute(sql_state)
-sql_state = """ALTER TABLE KEYWIDB.SimmShow AUTO_INCREMENT = 1"""
+sql_state = """ALTER TABLE KEYWIDB.HotInfo AUTO_INCREMENT = 1"""
 db.execute(sql_state)
 # DB 올릴때 더 빠른 방법 없을까 ?? 165개 업로드하는데 1분 걸림
 for cat,cont_name,show_name,show_venue,show_date,show_url,img_url in tqdm(zip(final_df['카테고리'],final_df['콘텐츠제목'],final_df['제목'],final_df['장소'],final_df['공연날짜'],final_df['상세URL'],final_df['이미지URL'])):
-    sql_state = """INSERT INTO KEYWIDB.SimmShow(category,cont_name,show_name,show_venue,show_date,show_url,img_url) 
+    sql_state = """INSERT INTO KEYWIDB.HotInfo(category,cont_name,show_name,show_venue,show_date,show_url,img_url) 
                 VALUES ("%s", "%s", "%s", "%s", "%s", "%s", "%s")"""%(tuple([cat,cont_name,show_name,show_venue,show_date,show_url,img_url]))
     db.execute(sql_state)
 
