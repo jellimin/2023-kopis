@@ -58,6 +58,8 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.js"></script> 
     <!-- 메인페이지 css로 수정하는 방법 -->
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <!-- 좋아요 하트 이모티콘 -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
     <title>{% block title %}Home{% endblock %}</title>
 </head>
@@ -146,5 +148,18 @@
     <script src="https://zelkun.tistory.com/attachment/cfile8.uf@99BB7A3D5D45C065343307.js"></script>
     <script src="{{ url_for('static', filename='address.js')}}"></script>
     <script src="{{ url_for('static', filename='banner.js')}}"></script>
+    <script src="{{ url_for('static', filename='heart.js')}}"></script>
+    {% block script %}
+    <script type='text/javascript'>
+    const delete_elements = document.getElementsByClassName("delete");
+    Array.from(delete_elements).forEach(function(element) {
+        element.addEventListener('click', function() {
+            if(confirm("정말로 삭제하시겠습니까?")) {
+                location.href = this.dataset.uri;
+            };
+        });
+    });
+    </script>
+    {% endblock %}
 </body>
 </html>

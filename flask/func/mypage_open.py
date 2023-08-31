@@ -1,20 +1,26 @@
-### 메인페이지 오픈 정보 관련 함수
+### 마이페이지 좋아하는 오픈 공연 관련 함수
 
 import pandas as pd
 import sys, os
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
-def open_info():
-    # search User in database & compare password
+def open_like(user_info):
     from website import mysql
+    # 좋아하는 오픈 공연 정보 가져오기 
+    sql = """SELECT op.show_id, op.name, op.detail_url, op.image_url, op.open_date 
+             FROM OpenInfo AS op 
+             JOIN OpenLiked AS ol 
+             ON op.show_id = ol.show_id 
+             WHERE ol.u_id = '%s'
+             LIMIT 4""" %(user_info)
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute("select * from KEYWIDB.OpenInfo limit 8")
+    cursor.execute(sql)
     data = cursor.fetchall()
     cursor.close()
     conn.close()
 
-    open = []
+    open_like = []
     for i in range(len(data)):
         id = data[i][0]
         title = data[i][1]
@@ -28,20 +34,25 @@ def open_info():
             'date' : date,
             'image' : image
         }
-        open.append(open_info)
-    return open
+        open_like.append(open_info)
+    return open_like
 
-def open_info_all():
-    # search User in database & compare password
+def open_like_all(user_info):
     from website import mysql
+    # 좋아하는 오픈 공연 정보 가져오기 
+    sql = """SELECT op.show_id, op.name, op.detail_url, op.image_url, op.open_date 
+             FROM OpenInfo AS op 
+             JOIN OpenLiked AS ol 
+             ON op.show_id = ol.show_id 
+             WHERE ol.u_id = '%s'""" %(user_info)
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute("select * from KEYWIDB.OpenInfo")
+    cursor.execute(sql)
     data = cursor.fetchall()
     cursor.close()
     conn.close()
 
-    open = []
+    open_like = []
     for i in range(len(data)):
         id = data[i][0]
         title = data[i][1]
@@ -55,22 +66,6 @@ def open_info_all():
             'date' : date,
             'image' : image
         }
-        open.append(open_info)
-    return open
+        open_like.append(open_info)
+    return open_like
 
-from datetime import datetime 
-from datetime import timedelta
-
-def week_no():
-    s = datetime.today().strftime("%Y-%m-%d") 
-    month = datetime.today().month
-    target_day = datetime.strptime(s, "%Y-%m-%d")
-
-    firstday = target_day.replace(day=1)
-    while firstday.weekday() != 0: 
-      firstday += timedelta(days=1)
-      
-    if target_day < firstday: 
-      return 0
-  
-    return f'{month}월 {(target_day - firstday).days // 7 + 1}주차' 

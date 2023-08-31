@@ -1,3 +1,5 @@
+// 유형 테스트 배너 jquery
+
 // 기본 위치(top)값
 var floatPosition = parseInt($(".sideBanner").css('top'))
 
