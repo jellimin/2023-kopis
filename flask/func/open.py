@@ -1,6 +1,7 @@
 ### 메인페이지 오픈 정보 관련 함수
 
 import pandas as pd
+<<<<<<< HEAD
 import sys, os
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
@@ -14,6 +15,13 @@ def open_info():
     cursor.close()
     conn.close()
 
+=======
+path = 'C:/Users/alsru/Desktop/Project/Flask_git/2023-kopis/flask/website/data/interpark_open_data.csv'
+def open_info():
+
+    df = pd.read_csv(path)
+    df = df.loc[:5, ['제목', 'URL', '티켓오픈일시', '이미지URL']]
+>>>>>>> c67feb001b0120fe490ce3cf484a2d2f815c99a1
     open = []
     for i in range(len(data)):
         id = data[i][0]
@@ -69,8 +77,8 @@ def week_no():
     firstday = target_day.replace(day=1)
     while firstday.weekday() != 0: 
       firstday += timedelta(days=1)
-      
+
     if target_day < firstday: 
       return 0
-  
+
     return f'{month}월 {(target_day - firstday).days // 7 + 1}주차' 
