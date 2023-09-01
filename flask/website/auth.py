@@ -10,6 +10,8 @@ import importlib
 
 auth = Blueprint('auth', __name__)
 
+SECRET_KEY = 'secret_key'
+
 @auth.route('/sign-in', methods=['GET', 'POST'])
 def sign_in():
     # login

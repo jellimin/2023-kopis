@@ -1,3 +1,5 @@
+// 회원가입 입력하는 주소 관련 jquery
+
 document.addEventListener("DOMContentLoaded", function () {
     // sido option 추가
     hangjungdong.sido.forEach(function (code) {

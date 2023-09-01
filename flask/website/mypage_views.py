@@ -5,13 +5,17 @@ from flask_login import login_required, current_user
 import os
 from werkzeug.utils import secure_filename
 import re
+from func.mypage_open import open_like, open_like_all
 
 mypage_views = Blueprint('mypage_views', __name__)
 
 # 나의 정보 페이지
 @mypage_views.route('/mypage', methods=['GET','POST'])
 def mypage():
-    return render_template('mypage.html')
+    user_info = session['u_id']
+    op_like = open_like(user_info)
+
+    return render_template('mypage.html', op_like = op_like)
 
 # 프로필 이미지 확장자 목록
 ALLOWED_EXTENSIONS = ['png','jpg','jpeg','gif']
@@ -156,3 +160,25 @@ def mypage_update():
             return redirect(request.url)
 
     return render_template('mypage_update.html')
+
+# 좋아하는 공연 더보기
+@mypage_views.route('/mypage/pre_shows')
+def pre_shows():
+    user_info = session['u_id']
+    op_like = open_like_all(user_info)
+
+    return render_template('pre_shows.html', op_like = op_like)
+
+# 좋아하는 공연 삭제하기
+@mypage_views.route('/mypage/pre_shows/delete/<int:show_id>')
+def delete(show_id):
+    user_info = session['u_id']
+    sql = "DELETE FROM OpenLiked WHERE u_id = '%s' AND show_id = '%s'" % (user_info, show_id)
+    from . import mysql
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return redirect(url_for('mypage_views.pre_shows'))

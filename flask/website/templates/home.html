@@ -23,15 +23,38 @@
         </div>
         <div class="row">
             {% for info in open %}
-            <div class="col-md-2">
-                <div style="font-size:13px; width:180px; height:50px; background-color:rgb(255, 170, 0)">
+            <div class="col-md-3" id="{{info._id}}">
+                <div style="width:300px; height:50px; background-color:rgb(255, 170, 0)">
                     <p>{{info['title']}}</p>
                 </div>
-                <div style="width:180px; height:30px; background-color:rgb(0, 174, 255)">
+                <div style="width:300px; height:30px; background-color:rgb(0, 174, 255)">
                     <p style="text-align:right">{{info['date']}}</p>
                 </div>
+                {% if user_info %}
+                <div class="level-left">
+                    <!-- 좋아요를 누르면 toggle_like 함수가 실행된다. -->
+                    <!-- toggle like 함수는 게시글의 id와, 어떤 이모티콘을 눌렀는지 type에 대한 정보를 인자로 제공한다. -->
+                    <a class="level-item is-sparta" aria-label="heart" onclick="toggle_like2('{{info._id}}', 'heart')">
+                        <span class="icon is-small">
+                            <!-- 사용자가 좋아요를 누른 경우 -->
+                            {% if info.heart_by_me == True %}
+                            <i class="fa fa-heart" aria-hidden="true"></i>
+                            <!-- 사용자가 좋아요를 누르지 않은 경우 -->
+                            {% else %}
+                            <i class="fa fa-heart-o" aria-hidden="true"></i>
+                            {% endif %}
+                        </span>&nbsp;
+                        <span class="like-num">{{info.count_heart}}</span>
+                    </a>
+                </div>
+                {% endif %}
                 <div style="text-align : center;">
-                    <img src="{{info['image']}}" style="width:150px; height:130px;"/>
+                    {% if info['image']=='nan' %}
+                    <img src="{{ url_for('static', filename='no_image.png')}}" alt="기본이미지"
+                                        class="rounded mx-auto d-block" style="width:200px; height:250px;">
+                    {% else %}
+                    <img src="{{info['image']}}" style="width:200px; height:250px;"/>
+                    {% endif %}
                 </div>
                 <div style=" text-align: center;">
                     <p><a style= "background-color:rgb(0, 255, 200)" class="btn btn-default" href="{{info['url']}}">공연 상세보기 &raquo;</a></p>

@@ -1,3 +1,5 @@
+/* 유형 테스트 배너 css */
+
 body { height: 2000px; }
 
 .sideBanner {
@@ -7,5 +9,5 @@ body { height: 2000px; }
   top: 70px;
   left: 1330px;
   background-color: #ffffff;
-  color: #fffffff;
+  color: #ffffff;
 }
