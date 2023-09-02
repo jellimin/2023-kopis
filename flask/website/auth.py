@@ -1,3 +1,5 @@
+### 로그인, 로그아웃, 회원가입 관련
+
 from flask import Blueprint, render_template, session, request, flash, redirect, url_for
 from werkzeug.security import generate_password_hash, check_password_hash # 비밀번호 해싱
 from flask_login import login_user, login_required, logout_user, current_user
@@ -12,6 +14,7 @@ auth = Blueprint('auth', __name__)
 
 SECRET_KEY = 'secret_key'
 
+# 1. 로그인
 @auth.route('/sign-in', methods=['GET', 'POST'])
 def sign_in():
     # login
@@ -37,12 +40,14 @@ def sign_in():
 
     return render_template('sign_in.html')
 
+# 2. 로그아웃
 @auth.route('/logout')
 def logout():
     session.pop('u_id',None)
     session.pop('image_url',None)
     return redirect(url_for('auth.sign_in')) # 로그인할 수 있는 화면으로 돌아감
 
+# 3. 회원가입
 @auth.route('/sign-up', methods=['GET', 'POST'])
 def sign_up():
     if request.method == 'POST':

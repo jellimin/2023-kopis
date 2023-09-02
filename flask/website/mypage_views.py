@@ -1,21 +1,26 @@
+### 마이페이지
+
 from flask import Blueprint, redirect, render_template, request, flash, url_for, jsonify, session
 from flask_login import login_required, current_user
-# from .models import Note, User
-# from . import db
 import os
 from werkzeug.utils import secure_filename
 import re
-from func.mypage_open import open_like, open_like_all
+from func.mypage_fun import open_like_all, hot_like_all
+import random
 
 mypage_views = Blueprint('mypage_views', __name__)
 
-# 나의 정보 페이지
+# 1. 마이페이지
 @mypage_views.route('/mypage', methods=['GET','POST'])
 def mypage():
     user_info = session['u_id']
-    op_like = open_like(user_info)
+    op_like = open_like_all(user_info)
+    ho_like = hot_like_all(user_info)
+    tmp = op_like + ho_like
+    show_all_like = random.sample(tmp, 4)
+    return render_template('mypage.html', show_all_like = show_all_like)
 
-    return render_template('mypage.html', op_like = op_like)
+# 2. 마이페이지 정보 수정
 
 # 프로필 이미지 확장자 목록
 ALLOWED_EXTENSIONS = ['png','jpg','jpeg','gif']
@@ -25,8 +30,6 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-
-# 나의 정보 수정 페이지
 @mypage_views.route('/mypage/update', methods=['GET','POST'])
 def mypage_update():
 
@@ -161,19 +164,34 @@ def mypage_update():
 
     return render_template('mypage_update.html')
 
-# 좋아하는 공연 더보기
+# 3. 마이페이지 좋아하는 공연
 @mypage_views.route('/mypage/pre_shows')
 def pre_shows():
     user_info = session['u_id']
     op_like = open_like_all(user_info)
+    ho_like = hot_like_all(user_info)
 
-    return render_template('pre_shows.html', op_like = op_like)
+    return render_template('pre_shows.html', op_like = op_like, ho_like = ho_like)
 
-# 좋아하는 공연 삭제하기
-@mypage_views.route('/mypage/pre_shows/delete/<int:show_id>')
-def delete(show_id):
+# 4. 마이페이지 좋아하는 오픈 공연 정보 삭제하기
+@mypage_views.route('/mypage/pre_shows/open_delete/<int:show_id>')
+def open_delete(show_id):
     user_info = session['u_id']
     sql = "DELETE FROM OpenLiked WHERE u_id = '%s' AND show_id = '%s'" % (user_info, show_id)
+    from . import mysql
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return redirect(url_for('mypage_views.pre_shows'))
+
+# 5. 마이페이지 좋아하는 핫 공연 정보 삭제하기
+@mypage_views.route('/mypage/pre_shows/hot_delete/<int:show_id>')
+def hot_delete(show_id):
+    user_info = session['u_id']
+    sql = "DELETE FROM HotLiked WHERE u_id = '%s' AND show_id = '%s'" % (user_info, show_id)
     from . import mysql
     conn = mysql.connect()
     cursor = conn.cursor()

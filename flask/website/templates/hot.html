@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 
-{% block title %}Open Show{% endblock %}
+{% block title %}Hot Show{% endblock %}
 
 {% block content %}
 
+<!-- n월 n주차 정보 -->
 <div class="container">
     <h1 style="text-align:center"><b>&lt;{{week}}&gt;</b></h1>
 </div>
@@ -11,7 +12,7 @@
 <br></br>
 
 <div class="row">
-    {% for info in open %}
+    {% for info in hot %}
     <div class="col-md-3" id="{{info._id}}">
         <div style="width:300px; height:50px; background-color:rgb(255, 170, 0)">
             <p>{{info['title']}}</p>
@@ -24,7 +25,7 @@
         <div class="level-left">
             <!-- 좋아요를 누르면 toggle_like 함수가 실행된다. -->
             <!-- toggle like 함수는 게시글의 id와, 어떤 이모티콘을 눌렀는지 type에 대한 정보를 인자로 제공한다. -->
-            <a class="level-item is-sparta" aria-label="heart" onclick="toggle_like_open_open('{{info._id}}', 'heart')">
+            <a class="level-item is-sparta" aria-label="heart" onclick="toggle_like_hot_hot('{{info._id}}', 'heart')">
                 <span class="icon is-small">
                     <!-- 사용자가 좋아요를 누른 경우 -->
                     {% if info.heart_by_me == True %}
@@ -43,7 +44,7 @@
             {% if info['image']=='nan' %}
             <img src="{{ url_for('static', filename='no_image.png')}}" alt="기본이미지"
                                 class="rounded mx-auto d-block" style="width:200px; height:250px;">
-            <!-- 사용자 지정 이미지가 있을 경우 -->
+            <!-- 사용자 지정 이미지가 없을 경우 -->
             {% else %}
             <img src="{{info['image']}}" style="width:200px; height:250px;"/>
             {% endif %}

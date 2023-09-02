@@ -1,7 +1,7 @@
 <!-- mypage.html -->
 {% extends "base.html" %}
 
-{% block title %}Title - Mypage{% endblock %}
+{% block title %}Mypage{% endblock %}
 
 {% block content %}
 
@@ -10,6 +10,7 @@
         <div class="col-sm-6"> -->
             <form method="GET" action="/mypage/update">
                 <div class="my-container">
+                    <!-- 1. 프로필 영역 -->
                     <div class="my-box my-box-one">
                         <fieldset disabled="disabled">
                             <h2 align="center">Profile</h2>
@@ -37,14 +38,15 @@
                         </fieldset>
                         <button type="submit" class="btn btn-primary">정보 수정</button>
                     </div>
-
+                    
+                    <!-- 2. 선호 공연 영역 -->
                     <div class="my-box my-box-two">
                         <p style="font-size:30px">1. Pre_shows</p>
                         <div style="text-align:right">
                             <button type="button" class="extra-button" onclick="location.href='/mypage/pre_shows'">더보기</button>
                         </div>
                         <div class="row">
-                            {% for info in op_like %}
+                            {% for info in show_all_like %}
                             <div class="col-md-3" id="{{info._id}}">
                                 <div style="width:300px; height:50px; background-color:rgb(255, 170, 0)">
                                     <p>{{info['title']}}</p>
@@ -68,10 +70,7 @@
                         </div>
                     </div>
 
-                    <!-- <div class="my-box my-box-three">
-                        <p style="font-size:30px">Pre_keywords</p>
-                    </div> -->
-
+                    <!-- 3. 선호 콘텐츠 영역 -->
                     <div class="my-box my-box-four">
                         <p style="font-size:30px">2. Pre_contents</p>
                     </div>
