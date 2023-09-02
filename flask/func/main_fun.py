@@ -8,7 +8,6 @@ sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
 # 메인페이지 오픈공연 함수
 def open_info():
-    # search User in database & compare password
     from website import mysql
     conn = mysql.connect()
     cursor = conn.cursor()
@@ -40,7 +39,7 @@ def hot_info():
     from website import mysql
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute("select id, concat('[', cont_name, '와 유사한', ']', ' ', show_name) as title, show_url, show_date, img_url from KEYWIDB.HotInfo limit 4")
+    cursor.execute("select id, concat('[', category, ' ', cont_name, ' ', '와/과 유사한', ']', ' ', show_name) as title, show_url, show_date, img_url from KEYWIDB.HotInfo limit 4")
     data = cursor.fetchall()
     cursor.close()
     conn.close()
@@ -64,7 +63,6 @@ def hot_info():
 
 # 더보기 오픈페이지 오픈 공연 함수
 def open_info_all():
-    # search User in database & compare password
     from website import mysql
     conn = mysql.connect()
     cursor = conn.cursor()
@@ -96,7 +94,7 @@ def hot_info_all():
     from website import mysql
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute("select id, concat('[', cont_name, '와 유사한', ']', ' ', show_name) as title, show_url, show_date, img_url from KEYWIDB.HotInfo")
+    cursor.execute("select id, concat('[', category, ' ', cont_name, ' ', '와/과 유사한', ']', ' ', show_name) as title, show_url, show_date, img_url from KEYWIDB.HotInfo")
     data = cursor.fetchall()
     cursor.close()
     conn.close()

@@ -5,6 +5,7 @@ from flask_login import login_required, current_user
 import pandas as pd
 from func.main_fun import open_info, open_info_all, hot_info, hot_info_all, week_no
 from func.like_fun import main_open, main_hot, open_open, hot_hot, update_like_in, update_like_in_hot
+from flask_paginate import Pagination, get_page_args
 
 # 블루프린트를 이용하면 App의 모든 url을 한 곳에서 관리하지 않아도 됨
 # 즉, 여러 파일에서 url에 대한 정의를 선언 가능
@@ -47,9 +48,38 @@ def home():
 # 2. 오픈 정보 페이지
 @views.route('/open')
 def open_all():
-    # 오픈 정보 보여주기
-    opens = open_info_all()
+    # 주차 정보 보여주기
     week = week_no()
+
+    # 페이지네이션 관련
+    per_page = 8
+    page, _, offset = get_page_args(per_page = per_page)
+    
+    from . import mysql
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute("select count(*) from KEYWIDB.OpenInfo")
+    total = cursor.fetchone()[0]
+    cursor.execute("select * from KEYWIDB.OpenInfo LIMIT %s OFFSET %s;", (per_page, offset))
+    data = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    opens = []
+    for i in range(len(data)):
+        id = data[i][0]
+        title = data[i][1]
+        url = data[i][2]
+        date = data[i][4]
+        image = data[i][3]
+        open_info = {
+            '_id' : id,
+            'title' : title,
+            'url' : url,
+            'date' : date,
+            'image' : image
+        }
+        opens.append(open_info)
 
     # 좋아요 관련
     try:
@@ -58,16 +88,66 @@ def open_all():
 
             opens = open_open(opens, user_info)
 
-            return render_template('open.html', open = opens, week = week, user_info = user_info)
+            return render_template('open.html', 
+                                   open = opens, week = week, user_info = user_info, 
+                                   pagination=Pagination(page=page,  # 지금 우리가 보여줄 페이지는 1 또는 2, 3, 4, ... 페이지인데,
+                                                        total=total,  # 총 몇 개의 포스트인지를 미리 알려주고,
+                                                        per_page=per_page,  # 한 페이지당 몇 개의 포스트를 보여줄지 알려주고,
+                                                        prev_label="<<",  # 전 페이지와,
+                                                        next_label=">>",  # 후 페이지로 가는 링크의 버튼 모양을 알려주고,
+                                                        format_total=True,  # 총 몇 개의 포스트 중 몇 개의 포스트를 보여주고있는지 시각화,
+                                                        ),
+                                   search=True,  # 페이지 검색 기능을 주고,
+                                   bs_version=5,  # Bootstrap 사용시 이를 활용할 수 있게 버전을 알려줍니다.
+                                   )
     except:
-        return render_template('open.html', open = opens, week = week)
+        return render_template('open.html', open = opens, week = week,
+                                            pagination=Pagination(page=page,  # 지금 우리가 보여줄 페이지는 1 또는 2, 3, 4, ... 페이지인데,
+                                                        total=total,  # 총 몇 개의 포스트인지를 미리 알려주고,
+                                                        per_page=per_page,  # 한 페이지당 몇 개의 포스트를 보여줄지 알려주고,
+                                                        prev_label="<<",  # 전 페이지와,
+                                                        next_label=">>",  # 후 페이지로 가는 링크의 버튼 모양을 알려주고,
+                                                        format_total=True,  # 총 몇 개의 포스트 중 몇 개의 포스트를 보여주고있는지 시각화,
+                                                        ),
+                                search=True,  # 페이지 검색 기능을 주고,
+                                bs_version=5,  # Bootstrap 사용시 이를 활용할 수 있게 버전을 알려줍니다.
+                                )
     
 # 3. 핫 정보 페이지
 @views.route('/hot')
 def hot_all():
-    # 오픈 정보 보여주기
-    hots = hot_info_all()
+    # 주차 정보 보여주기
     week = week_no()
+
+    # 페이지네이션 관련
+    per_page = 8
+    page, _, offset = get_page_args(per_page = per_page)
+    
+    from . import mysql
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute("select count(*) from KEYWIDB.HotInfo")
+    total = cursor.fetchone()[0]
+    cursor.execute("select id, concat('[', category, ' ', cont_name, ' ', '와/과 유사한', ']', ' ', show_name) as title, show_url, show_date, img_url from KEYWIDB.HotInfo LIMIT %s OFFSET %s;", (per_page, offset))
+    data = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    hots = []
+    for i in range(len(data)):
+        id = data[i][0]
+        title = data[i][1]
+        url = data[i][2]
+        date = data[i][3]
+        image = data[i][4]
+        hot_info = {
+            '_id' : id,
+            'title' : title,
+            'url' : url,
+            'date' : date,
+            'image' : image
+        }
+        hots.append(hot_info)
 
     # 좋아요 관련
     try:
@@ -76,9 +156,31 @@ def hot_all():
 
             hots = hot_hot(hots, user_info)
 
-            return render_template('hot.html', hot = hots, week = week, user_info = user_info)
+            return render_template('hot.html', 
+                                   hot = hots, week = week, user_info = user_info, 
+                                   pagination=Pagination(page=page,  # 지금 우리가 보여줄 페이지는 1 또는 2, 3, 4, ... 페이지인데,
+                                                        total=total,  # 총 몇 개의 포스트인지를 미리 알려주고,
+                                                        per_page=per_page,  # 한 페이지당 몇 개의 포스트를 보여줄지 알려주고,
+                                                        prev_label="<<",  # 전 페이지와,
+                                                        next_label=">>",  # 후 페이지로 가는 링크의 버튼 모양을 알려주고,
+                                                        format_total=True,  # 총 몇 개의 포스트 중 몇 개의 포스트를 보여주고있는지 시각화,
+                                                        ),
+                                   search=True,  # 페이지 검색 기능을 주고,
+                                   bs_version=5,  # Bootstrap 사용시 이를 활용할 수 있게 버전을 알려줍니다.
+                                   )
     except:
-        return render_template('hot.html', hot = hots, week = week)
+        return render_template('hot.html', 
+                                hot = hots, week = week,
+                                pagination=Pagination(page=page,  # 지금 우리가 보여줄 페이지는 1 또는 2, 3, 4, ... 페이지인데,
+                                                    total=total,  # 총 몇 개의 포스트인지를 미리 알려주고,
+                                                    per_page=per_page,  # 한 페이지당 몇 개의 포스트를 보여줄지 알려주고,
+                                                    prev_label="<<",  # 전 페이지와,
+                                                    next_label=">>",  # 후 페이지로 가는 링크의 버튼 모양을 알려주고,
+                                                    format_total=True,  # 총 몇 개의 포스트 중 몇 개의 포스트를 보여주고있는지 시각화,
+                                                    ),
+                                search=True,  # 페이지 검색 기능을 주고,
+                                bs_version=5,  # Bootstrap 사용시 이를 활용할 수 있게 버전을 알려줍니다.
+                                )
 
 # 4. 메인페이지 오픈 정보 좋아요
 @views.route('/update_like', methods=['POST'])
