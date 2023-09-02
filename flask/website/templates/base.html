@@ -66,7 +66,9 @@
 
 <body>
     <header>
+        <!-- 로고 -->
         <img src="{{ url_for('static', filename='logo.png') }}" style="width:150px; height:150px;" class = 'img-logo'/>
+        <!-- 네비게이션바, 카테고리 -->
         <div class = 'nav'>
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -74,8 +76,8 @@
                 </button>
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav">
-                            {% if session['u_id'] %}
                             <!-- 로그인 되었을 때 -->
+                            {% if session['u_id'] %}
                             <li class="nav-item">
                                 <a href="/service" class="nav-link">서비스 소개</a>
                             </li>
@@ -91,8 +93,8 @@
                             <li class="nav-item">
                                 <a href="/mypage" class="nav-link">My Page</a>
                             </li>
-                            {% else %}
                             <!-- 로그인 안되었을 때 -->
+                            {% else %}
                             <li class="nav-item">
                                 <a href="/service" class="nav-link">서비스 소개</a>
                             </li>
@@ -114,8 +116,7 @@
             </nav>
         </div>
 
-        <!-- Message Flashing -->
-        
+        <!-- 메시지 플래싱, 오류 혹은 성공 메시지 -->
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}

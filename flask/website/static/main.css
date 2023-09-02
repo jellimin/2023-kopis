@@ -11,7 +11,7 @@ main {
   /* margin: auto; */
   display: grid;
   grid-template-columns: 600px; /* 각 행(세로줄)의 길이 */
-  grid-template-rows: repeat(3, 400px);/* 각 열(가로줄)의 길이, 400px로 3등분 */
+  grid-template-rows: repeat(4, 400px);/* 각 열(가로줄)의 길이, 400px로 3등분 */
   gap: 10px; /* 자식요소간의 간격 */
 }
 .temp-box {

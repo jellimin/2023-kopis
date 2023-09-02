@@ -1,3 +1,5 @@
+### 데이터베이스 연결, flask 앱 생성
+
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager

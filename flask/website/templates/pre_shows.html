@@ -2,11 +2,12 @@
 
 {% extends "base.html" %}
 
-{% block title %}Title - Home{% endblock %}
+{% block title %}MyPage Preshow{% endblock %}
 
 {% block content %}
 
-<p style="font-size:30px">1. Pre_shows</p>
+<!-- 1. 선호 오픈 공연 -->
+<p style="font-size:30px">1. 선호 오픈 공연</p>
     <div class="row">
         {% for info in op_like %}
         <div class="col-md-3" id="{{info._id}}">
@@ -17,7 +18,34 @@
                 <p style="text-align:right">{{info['date']}}</p>
             </div>
             <a href="javascript:void(0)" class="delete btn btn-sm btn-outline-secondary"
-               data-uri="{{ url_for('mypage_views.delete', show_id = info._id) }}">삭제</a>
+               data-uri="{{ url_for('mypage_views.open_delete', show_id = info._id) }}">삭제</a>
+            <div style="text-align : center;">
+                {% if info['image']=='nan' %}
+                <img src="{{ url_for('static', filename='no_image.png')}}" alt="기본이미지"
+                                    class="rounded mx-auto d-block" style="width:200px; height:250px;">
+                {% else %}
+                <img src="{{info['image']}}" style="width:200px; height:250px;"/>
+                {% endif %}
+            </div>
+            <div style=" text-align: center;">
+                <p><a style= "background-color:rgb(0, 255, 200)" class="btn btn-default" href="{{info['url']}}">공연 상세보기 &raquo;</a></p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+<!-- 2. 선호 핫 공연 -->
+<p style="font-size:30px">2. 선호 핫 공연</p>
+    <div class="row">
+        {% for info in ho_like %}
+        <div class="col-md-3" id="{{info._id}}">
+            <div style="width:300px; height:50px; background-color:rgb(255, 170, 0)">
+                <p>{{info['title']}}</p>
+            </div>
+            <div style="width:300px; height:30px; background-color:rgb(0, 174, 255)">
+                <p style="text-align:right">{{info['date']}}</p>
+            </div>
+            <a href="javascript:void(0)" class="delete btn btn-sm btn-outline-secondary"
+               data-uri="{{ url_for('mypage_views.hot_delete', show_id = info._id) }}">삭제</a>
             <div style="text-align : center;">
                 {% if info['image']=='nan' %}
                 <img src="{{ url_for('static', filename='no_image.png')}}" alt="기본이미지"
