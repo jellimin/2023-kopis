@@ -76,8 +76,8 @@ def update_DB():
                 VALUES ("%s", "%s", "%s","%s", "%s", "%s", "%s", "%s", "%s", "%s")"""%(tuple([show_name, show_summary, show_detail, show_venue, show_address, show_date, show_genre, show_url, img_url, is_review ]))
         db.execute(sql_state)
 
-        # 메세지 보내기
-        ContentCrawler.send_message({'content':'DB업데이트를 완료했습니다.'})
+        
+    ContentCrawler.send_message({'content':'DB업데이트를 완료했습니다.'})
 
     conn.commit()
     # 연결 종료
