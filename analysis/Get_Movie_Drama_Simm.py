@@ -1,4 +1,3 @@
-from Crawler.content_code import PerformCrawler
 # 패키지 불러오기
 import pandas as pd
 import numpy as np
@@ -31,7 +30,7 @@ try:
 finally:
     movie_df = pd.DataFrame(movie_result,columns = ['제목','content'])
     drama_df = pd.DataFrame(drama_result,columns = ['제목','content'])
-    show_df = pd.DataFrame(show_result,columns=['제목','줄거리','작품설명','장소','주소','기간','이미지url','url'] )
+    show_df = pd.DataFrame(show_result,columns=['제목','줄거리','작품설명','장소','주소','기간','이미지url','url','후기유무'] )
     conn.close()
 
 # 전처리 함수 정의
@@ -201,32 +200,49 @@ def get_matcher(cat,answer_df,show_df):
             similar = sm.ratio()*100
             if similar >= 25:
                 #print(show_df['제목'][j],similar)
-                data.append({'카테고리':cat,"콘텐츠제목":answer_df['제목'][i],'제목':show_df['제목'][j],'유사도':round(similar,2),
-                             '공연날짜':show_df['기간'][j],'장소':show_df['장소'][j],'이미지URL':show_df['이미지url'][j],'상세URL':show_df['url'][j]})
+                data.append({'카테고리':cat, "콘텐츠제목":answer_df['제목'][i],'제목':show_df['제목'][j],'유사도':round(similar,2),
+                             '공연날짜':show_df['기간'][j],'장소':show_df['장소'][j],'주소':show_df['주소'][j],'이미지URL':show_df['이미지url'][j],'상세URL':show_df['url'][j]})
     df = pd.DataFrame(data)
     df.sort_values(by=['콘텐츠제목','유사도'], inplace=True, ignore_index=True, ascending=False)
     df.drop('유사도',axis=1,inplace=True)
     return df
+
 movie_simm_df = get_matcher('영화',movie_df, show_df)
 drama_simm_df = get_matcher('드라마',drama_df, show_df)
 
 final_df = pd.concat([movie_simm_df,drama_simm_df], axis=0, ignore_index=True)
-final_df.to_csv(f'./Keywi/Modeling/final/{week_no()}_유사공연.csv',index=False)
+#final_df.to_csv(f'./Keywi/Modeling/final/{week_no()}_유사공연.csv',index=False)
+num = 0
+cat_num = []
+    
+for name in final_df['콘텐츠제목'].unique():
+    for i in range(len(final_df)):
+        if final_df.loc[i,'콘텐츠제목'] == name:
+            # print(num,name)
+            cat_num.append(num)
+    num += 1
 
+final_df['콘텐츠번호'] = cat_num
 # DB에 올리기
 conn = pymysql.connect(host='admin.ckaurvkcjohj.eu-north-1.rds.amazonaws.com', user='hashtag', password='hashtag123', db='KEYWIDB', charset='utf8')
 # 커서 생성
 db = conn.cursor()
 # 쿼리 실행
-sql_state = """DELETE FROM KEYWIDB.HotInfo"""
+sql_state = """alter table KEYWIDB.HotLiked drop foreign key HotLiked_ibfk_2""" # 참조하는 경우 테이블 삭제 안되므로 외래키 제거
+db.execute(sql_state)
+sql_state = """TRUNCATE KEYWIDB.HotInfo"""
 db.execute(sql_state)
 sql_state = """ALTER TABLE KEYWIDB.HotInfo AUTO_INCREMENT = 1"""
 db.execute(sql_state)
 # DB 올릴때 더 빠른 방법 없을까 ?? 165개 업로드하는데 1분 걸림
-for cat,cont_name,show_name,show_venue,show_date,show_url,img_url in tqdm(zip(final_df['카테고리'],final_df['콘텐츠제목'],final_df['제목'],final_df['장소'],final_df['공연날짜'],final_df['상세URL'],final_df['이미지URL'])):
-    sql_state = """INSERT INTO KEYWIDB.HotInfo(category,cont_name,show_name,show_venue,show_date,show_url,img_url) 
-                VALUES ("%s", "%s", "%s", "%s", "%s", "%s", "%s")"""%(tuple([cat,cont_name,show_name,show_venue,show_date,show_url,img_url]))
+for cat,cont_num,cont_name,show_name,show_venue,show_address,show_date,show_url,img_url in tqdm(zip(final_df['카테고리'],final_df['콘텐츠번호'],final_df['콘텐츠제목'],final_df['제목'],final_df['장소'],final_df['주소'],final_df['공연날짜'],final_df['상세URL'],final_df['이미지URL'])):
+    sql_state = """INSERT INTO KEYWIDB.HotInfo(category,cont_num,cont_name,show_name,show_venue,show_address,show_date,show_url,img_url) 
+                VALUES ("%s","%s","%s", "%s", "%s", "%s", "%s", "%s", "%s")"""%(tuple([cat,cont_num,cont_name,show_name,show_venue,show_address,show_date,show_url,img_url]))
     db.execute(sql_state)
+
+# 외래키 다시 추가하기
+sql_state = """alter table KEYWIDB.HotLiked add constraint HotLiked_ibfk_2 foreign key(show_id) references KEYWIDB.HotInfo(id) ON DELETE CASCADE"""
+db.execute(sql_state)
 
 conn.commit()
 conn.close()

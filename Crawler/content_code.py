@@ -216,7 +216,7 @@ class PerformCrawler:
             query = f"http://www.playdb.co.kr/playdb/playdblist.asp?sReqMainCategory=00000{i}&sReqSubCategory=&sReqDistrict=&sReqTab=2&sPlayType=2&sStartYear=&sSelectType=1" # 사이트 주소
             driver = webdriver.Chrome()
             driver.get(query)
-            driver.implicitly_wait(10)
+            driver.implicitly_wait(3)
 
             c = '//*[@id="contents"]/div[1]/ul/li[{}]/a/img'.format(i) # 장르
             cc = driver.find_element(By.XPATH, c).get_attribute('alt')
@@ -243,12 +243,12 @@ class PerformCrawler:
                         if (page==0 & j < 10):
                             botton = '//*[@id="contents"]/div[2]/table/tbody/tr[11]/td/table/tbody/tr[35]/td/a[{}]'.format(j)
                             driver.find_element(By.XPATH, botton).send_keys(Keys.ENTER)
-                            driver.implicitly_wait(10)
+                            driver.implicitly_wait(5)
 
                         elif (page > 0 & j < 10):
                             botton = '//*[@id="contents"]/div[2]/table/tbody/tr[11]/td/table/tbody/tr[35]/td/a[{}]'.format(j+1)
                             driver.find_element(By.XPATH, botton).send_keys(Keys.ENTER)
-                            driver.implicitly_wait(10)
+                            driver.implicitly_wait(5)
 
                         #10번 다음페이지
                         elif (page == 1 & j == 10):
@@ -262,7 +262,7 @@ class PerformCrawler:
                             driver.implicitly_wait(5)
 
                     page += 1
-                            
+                    print(page)
                 except: # 더이상 없으면 멈춤
                     break
 
@@ -270,7 +270,7 @@ class PerformCrawler:
             query = f"http://www.playdb.co.kr/playdb/playdblist.asp?sReqMainCategory=00000{i}&sReqSubCategory=&sReqDistrict=&sReqTab=2&sPlayType=2&sStartYear=&sSelectType=1" # 사이트 주소
             driver = webdriver.Chrome()
             driver.get(query)
-            driver.implicitly_wait(10)
+            driver.implicitly_wait(5)
 
             c = '//*[@id="contents"]/div[1]/ul/li[{}]/a/img'.format(i) # 장르
             cc = driver.find_element(By.XPATH, c).get_attribute('alt')
@@ -297,12 +297,12 @@ class PerformCrawler:
                         if (page==0 & j < 10):
                             botton = '//*[@id="contents"]/div[2]/table/tbody/tr[9]/td/table/tbody/tr[35]/td/a[{}]'.format(j)
                             driver.find_element(By.XPATH, botton).send_keys(Keys.ENTER)
-                            driver.implicitly_wait(10)
+                            driver.implicitly_wait(5)
 
                         elif (page > 0 & j < 10):
                             botton = '//*[@id="contents"]/div[2]/table/tbody/tr[9]/td/table/tbody/tr[35]/td/a[{}]'.format(j+1)
                             driver.find_element(By.XPATH, botton).send_keys(Keys.ENTER)
-                            driver.implicitly_wait(10)
+                            driver.implicitly_wait(5)
 
                         #10번 다음페이지
                         elif (page == 1 & j == 10):
@@ -324,7 +324,7 @@ class PerformCrawler:
             query = f"http://www.playdb.co.kr/playdb/playdblist.asp?sReqMainCategory=00000{i}&sReqSubCategory=&sReqDistrict=&sReqTab=2&sPlayType=2&sStartYear=&sSelectType=1" # 사이트 주소
             driver = webdriver.Chrome()
             driver.get(query)
-            driver.implicitly_wait(10)
+            driver.implicitly_wait(5)
 
             c = '//*[@id="contents"]/div[1]/ul/li[{}]/a/img'.format(i) # 장르
             cc = driver.find_element(By.XPATH, c).get_attribute('alt')
@@ -351,12 +351,12 @@ class PerformCrawler:
                         if (page==0 & j < 10):
                             botton = '//*[@id="contents"]/div[2]/table/tbody/tr[8]/td/table/tbody/tr[35]/td/a[{}]'.format(j)
                             driver.find_element(By.XPATH, botton).send_keys(Keys.ENTER)
-                            driver.implicitly_wait(10)
+                            driver.implicitly_wait(5)
 
                         elif (page > 0 & j < 10):
                             botton = '//*[@id="contents"]/div[2]/table/tbody/tr[8]/td/table/tbody/tr[35]/td/a[{}]'.format(j+1)
                             driver.find_element(By.XPATH, botton).send_keys(Keys.ENTER)
-                            driver.implicitly_wait(10)
+                            driver.implicitly_wait(5)
 
                         #10번 다음페이지
                         elif (page == 1 & j == 10):
