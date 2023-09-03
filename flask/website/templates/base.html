@@ -17,9 +17,9 @@
           text-decoration: underline; /* 마우스 커서가 올라갔을 때 밑줄을 생성합니다*/
         }
         header {
-          background: #ffdc8b;
+          background: #ffffff;
           margin: auto; /* header의 양쪽 여백(margin)을 동등하게 맞춤 -> 수평가운데정렬 */
-          width: 1350px;
+          width: 1200px;
           height: 215px;
           display: flex;
           align-items: center; /* 하위 요소들 수직 가운데정렬 */
@@ -28,14 +28,13 @@
         .img-logo {
             position: relative;
             bottom: 30px;
-            left: 110px;
+            left: 125px;
         }
         .nav {
             position: relative;
             top: 70px;
-            right: 110px;
+            right: 125px;
         }
-        /* nav */
         /* main {
           margin: auto;
           background: #ffff00;
@@ -44,9 +43,9 @@
         } */
         footer {
           margin: auto;
-          background: rgb(0, 255, 255);
+          background: rgb(255, 255, 255);
           width: 1350px;
-          height: 310px;
+          height: 50px;
         }
     </style>
 
@@ -56,10 +55,14 @@
     <!-- 플로팅 배너 -->
     <link rel="stylesheet" href="{{ url_for('static', filename='banner.css') }}">
     <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.js"></script> 
-    <!-- 메인페이지 css로 수정하는 방법 -->
+    <!-- css로 수정 -->
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='mypage.css') }}">
     <!-- 좋아요 하트 이모티콘 -->
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        a {text-decoration-line: none;}
+    </style>
 
     <title>{% block title %}Home{% endblock %}</title>
 </head>
@@ -67,10 +70,12 @@
 <body>
     <header>
         <!-- 로고 -->
-        <img src="{{ url_for('static', filename='logo.png') }}" style="width:150px; height:150px;" class = 'img-logo'/>
+        <div class = 'img-logo'>
+            <img src="{{ url_for('static', filename='logo.png') }}" style="width:150px; height:150px;" />
+        </div>
         <!-- 네비게이션바, 카테고리 -->
         <div class = 'nav'>
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <nav class="navbar navbar-expand-lg navbar-light bg-white">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -79,10 +84,10 @@
                             <!-- 로그인 되었을 때 -->
                             {% if session['u_id'] %}
                             <li class="nav-item">
-                                <a href="/service" class="nav-link">서비스 소개</a>
+                                <a href="/service" class="nav-link">Service</a>
                             </li>
                             <li class="nav-item">
-                                <a href="/curation" class="nav-link">큐레이션</a>
+                                <a href="/curation" class="nav-link">Curation</a>
                             </li>
                             <li class="nav-item">
                                 <a href="/" class="nav-link">Home</a>
@@ -96,10 +101,10 @@
                             <!-- 로그인 안되었을 때 -->
                             {% else %}
                             <li class="nav-item">
-                                <a href="/service" class="nav-link">서비스 소개</a>
+                                <a href="/service" class="nav-link">Service</a>
                             </li>
                             <li class="nav-item">
-                                <a href="/curation" class="nav-link">큐레이션</a>
+                                <a href="/curation" class="nav-link">Curation</a>
                             </li>
                             <li class="nav-item">
                                 <a href="/" class="nav-link">Home</a>

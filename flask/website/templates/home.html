@@ -8,122 +8,133 @@
     <!-- 1. HotInfo -->
     <div class="temp-box box-one">
         <div style="text-align:center">
-            <p style="font-size:30px"><b>1-2. HotInfo</b></p>
-        </div>
-        <div style="text-align:right">
-            <button type="button" class="extra-button" onclick="location.href='/hot'">더보기</button>
+            <p style="font-size:30px"><b>영화, 드라마와 유사한 공연</b></p>
         </div>
         <div class="row">
             {% for info in hot %}
-            <div class="col-md-3" id="{{info._id}}">
-                <div style="width:300px; height:50px; background-color:rgb(255, 170, 0)">
-                    <p>{{info['title']}}</p>
-                </div>
-                <div style="width:300px; height:30px; background-color:rgb(0, 174, 255)">
-                    <p style="text-align:right">{{info['date']}}</p>
+            <div class="col-sm-2" id="{{info._id}}">
+                <div style=" cursor: pointer;" onclick="location.href='{{info.url}}';">
+                    <div style="text-align : center;">
+                        <!-- 사용자 지정 이미지가 없을 경우 -->
+                        {% if info['image']=='nan' %}
+                        <img src="{{ url_for('static', filename='no_image.png')}}" alt="기본이미지"
+                                            class="radius_img" style="width:180px; height:270px;">
+                        <!-- 사용자 지정 이미지가 있을 경우 -->
+                        {% else %}
+                        <img src="{{info['image']}}" class="radius_img" style="width:180px; height:270px;"/>
+                        {% endif %}
+                    </div>
+                    <div style="width:180px; height:10px;"></div>
+                    <div style="width:180px; height:75px;">
+                        <p><b>{{info['title']}}</b></p>
+                    </div>
+                    <div style="width:180px; height:25px;">
+                        <p style="text-align:right; font-size:85%; color:#999">{{info['date']}}</p>
+                    </div>
                 </div>
                 <!-- 로그인을 한 경우, 좋아요 버튼이 보이도록 -->
                 {% if user_info %}
-                <div class="level-left">
+                <div class="level-left" style="text-align:right;">
                     <!-- 좋아요를 누르면 toggle_like 함수가 실행된다. -->
                     <!-- toggle like 함수는 게시글의 id와, 어떤 이모티콘을 눌렀는지 type에 대한 정보를 인자로 제공한다. -->
-                    <a class="level-item is-sparta" aria-label="heart" onclick="toggle_like_main_hot('{{info._id}}', 'heart')">
+                    <a class="level-item is-sparta" aria-label="heart" style="cursor: pointer;" onclick="toggle_like_main_hot('{{info._id}}', 'heart')">
                         <span class="icon is-small">
                             <!-- 사용자가 좋아요를 누른 경우 -->
                             {% if info.heart_by_me == True %}
-                            <i class="fa fa-heart" aria-hidden="true"></i>
+                            <i class="fa fa-heart" style="color:red" aria-hidden="true"></i>
                             <!-- 사용자가 좋아요를 누르지 않은 경우 -->
                             {% else %}
-                            <i class="fa fa-heart-o" aria-hidden="true"></i>
+                            <i class="fa fa-heart-o" style="color:red" aria-hidden="true"></i>
                             {% endif %}
-                        </span>&nbsp;
-                        <span class="like-num">{{info.count_heart}}</span>
+                        </span>
+                        <span class="like-num" style="color:black">{{info.count_heart}}</span>
                     </a>
                 </div>
                 {% endif %}
-                <div style="text-align : center;">
-                    <!-- 사용자 지정 이미지가 없을 경우 -->
-                    {% if info['image']=='nan' %}
-                    <img src="{{ url_for('static', filename='no_image.png')}}" alt="기본이미지"
-                                        class="rounded mx-auto d-block" style="width:100px; height:125px;">
-                    <!-- 사용자 지정 이미지가 있을 경우 -->
-                    {% else %}
-                    <img src="{{info['image']}}" style="width:100px; height:125px;"/>
-                    {% endif %}
-                </div>
-                <div style=" text-align: center;">
-                    <p><a style= "background-color:rgb(0, 255, 200)" class="btn btn-default" href="{{info['url']}}">공연 상세보기 &raquo;</a></p>
-                </div>
             </div>
             {% endfor %}
+        </div>
+        <div style="width:180px; height:5px;"></div>
+        <div class="custom-panel_btn__MCCL4">
+            <button class="custom-button_btn__vsWav" onclick="location.href='/hot'">
+                영화, 드라마와 유사한 공연 전체보기
+                <img alt="" src="https://tickets.interpark.com/_next/static/media/line.2a9386f0.svg" width="13" height="12" decoding="async" data-nimg="1" loading="lazy" style="color: transparent;">
+            </button>
         </div>
     </div>
     <!-- 2. Keyword -->
     <div class="temp-box box-two">
-        <p style="font-size:30px">3. Keyword Searching</p>
+        <div style="text-align:center">
+            <p style="font-size:30px"><b>키워드 공연</b></p>
+        </div>
     </div>
     <!-- 3. Curation -->
     <div class="temp-box box-three">
-        <p style="font-size:30px">2. Curation</p>
+        <div style="text-align:center">
+            <p style="font-size:30px"><b>큐레이션</b></p>
+        </div>
     </div>
     <!-- 4. OpenInfo -->
     <div class="temp-box box-four">
         <div style="text-align:center">
-            <p style="font-size:30px"><b>1-1. OpenInfo</b></p>
-        </div>
-        <div style="text-align:right">
-            <button type="button" class="extra-button" onclick="location.href='/open'">더보기</button>
+            <p style="font-size:30px"><b>오픈 공연</b></p>
         </div>
         <div class="row">
             {% for info in open %}
-            <div class="col-md-3" id="{{info._id}}">
-                <div style="width:300px; height:50px; background-color:rgb(255, 170, 0)">
-                    <p>{{info['title']}}</p>
-                </div>
-                <div style="width:300px; height:30px; background-color:rgb(0, 174, 255)">
-                    <p style="text-align:right">{{info['date']}}</p>
+            <div class="col-sm-2" id="{{info._id}}">
+                <div style="cursor: pointer;" onclick="location.href='{{info.url}}';">
+                    <div style="text-align : center;">
+                        <!-- 사용자 지정 이미지가 없을 경우 -->
+                        {% if info['image']=='nan' %}
+                        <img src="{{ url_for('static', filename='no_image.png')}}" alt="기본이미지"
+                                            class="radius_img" style="width:180px; height:270px;">
+                        <!-- 사용자 지정 이미지가 있을 경우 -->
+                        {% else %}
+                        <img src="{{info['image']}}" class="radius_img" style="width:180px; height:270px;"/>
+                        {% endif %}
+                    </div>
+                    <div style="width:180px; height:10px;"></div>
+                    <div style="width:180px; height:75px;">
+                        <p><b>{{info['title']}}</b></p>
+                    </div>
+                    <div style="width:180px; height:25px;">
+                        <p style="text-align:right; font-size:85%; color:#999">{{info['date']}}</p>
+                    </div>
                 </div>
                 <!-- 로그인을 한 경우, 좋아요 버튼이 보이도록 -->
                 {% if user_info %}
-                <div class="level-left">
+                <div class="level-left" style="text-align:right;">
                     <!-- 좋아요를 누르면 toggle_like 함수가 실행된다. -->
                     <!-- toggle like 함수는 게시글의 id와, 어떤 이모티콘을 눌렀는지 type에 대한 정보를 인자로 제공한다. -->
-                    <a class="level-item is-sparta" aria-label="heart" onclick="toggle_like_main_open('{{info._id}}', 'heart')">
+                    <a class="level-item is-sparta" aria-label="heart" style="cursor: pointer;" onclick="toggle_like_main_open('{{info._id}}', 'heart')">
                         <span class="icon is-small">
                             <!-- 사용자가 좋아요를 누른 경우 -->
                             {% if info.heart_by_me == True %}
-                            <i class="fa fa-heart" aria-hidden="true"></i>
+                            <i class="fa fa-heart" style="color:red" aria-hidden="true"></i>
                             <!-- 사용자가 좋아요를 누르지 않은 경우 -->
                             {% else %}
-                            <i class="fa fa-heart-o" aria-hidden="true"></i>
+                            <i class="fa fa-heart-o" style="color:red" aria-hidden="true"></i>
                             {% endif %}
-                        </span>&nbsp;
-                        <span class="like-num">{{info.count_heart}}</span>
+                        </span>
+                        <span class="like-num" style="color:black">{{info.count_heart}}</span>
                     </a>
                 </div>
                 {% endif %}
-                <div style="text-align : center;">
-                    <!-- 사용자 지정 이미지가 없을 경우 -->
-                    {% if info['image']=='nan' %}
-                    <img src="{{ url_for('static', filename='no_image.png')}}" alt="기본이미지"
-                                        class="rounded mx-auto d-block" style="width:100px; height:1250px;">
-                    <!-- 사용자 지정 이미지가 없을 경우 -->
-                    {% else %}
-                    <img src="{{info['image']}}" style="width:100px; height:125px;"/>
-                    {% endif %}
-                </div>
-                <div style=" text-align: center;">
-                    <p><a style= "background-color:rgb(0, 255, 200)" class="btn btn-default" href="{{info['url']}}">공연 상세보기 &raquo;</a></p>
-                </div>
             </div>
             {% endfor %}
+        </div>
+        <div style="width:180px; height:5px;"></div>
+        <div class="custom-panel_btn__MCCL4">
+            <button class="custom-button_btn__vsWav" onclick="location.href='/open'">
+                오픈공연 전체보기
+                <img alt="" src="https://tickets.interpark.com/_next/static/media/line.2a9386f0.svg" width="13" height="12" decoding="async" data-nimg="1" loading="lazy" style="color: transparent;">
+            </button>
         </div>
     </div>
 </div>
 
-<div class="sideBanner">
+<div class="sideBanner" style=" cursor: pointer;" onclick="location.href='/test'">
     <img src="{{ url_for('static', filename='banner.png') }}">
-    <button type="button" class="extra-button" onclick="location.href='/test'">유형테스트 하러 가기</button>
 </div>
 
 {% endblock %}
