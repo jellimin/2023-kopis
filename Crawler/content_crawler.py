@@ -71,13 +71,13 @@ def update_DB():
     sql_state = """ALTER TABLE KEYWIDB.NewShow AUTO_INCREMENT = 1"""
     db.execute(sql_state)
     for show_name, show_summary, show_detail, show_venue, show_address, show_date, show_genre, show_url, img_url, is_review in tqdm(zip(simm_df['제목'],simm_df['줄거리'],simm_df['작품설명'],simm_df['장소'],simm_df['주소'],simm_df['기간']
-                                                                                        ,simm_df['이미지URL'],simm_df['상세URL'],simm_df['세부장르'],simm_df['후기유무'])):
-        sql_state = """INSERT INTO KEYWIDB.NewShow(show_name, show_summary, show_detail show_venue, show_address, show_date, show_genre, show_url, img_url, is_review ) 
-                    VALUES ("%s", "%s", "%s","%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s")"""%(tuple([show_name, show_summary, show_detail, show_venue, show_address, show_date, show_genre, show_url, img_url, is_review ]))
+                                                                                    ,simm_df['이미지url'],simm_df['상세url'],simm_df['세부장르'],simm_df['후기유무'])):
+        sql_state = """INSERT INTO KEYWIDB.NewShow(show_name, show_summary, show_detail,show_venue, show_address, show_date, show_genre, show_url, img_url, is_review) 
+                VALUES ("%s", "%s", "%s","%s", "%s", "%s", "%s", "%s", "%s", "%s")"""%(tuple([show_name, show_summary, show_detail, show_venue, show_address, show_date, show_genre, show_url, img_url, is_review ]))
         db.execute(sql_state)
 
         
-    ContentCrawler.send_message({'content':'DB업데이트를 완료했습니다.'})
+        ContentCrawler.send_message({'content':'DB업데이트를 완료했습니다.'})
 
     conn.commit()
     # 연결 종료

@@ -394,7 +394,7 @@ class PerformCrawler:
         # 공연 사이트 주소
             try:
                 query = f"http://www.playdb.co.kr/playdb/playdbDetail.asp?sReqPlayno={df['URL'][k]}" # 사이트 주소
-                driver = webdriver.Chrome(executable_path = "./chromedriver.exe")
+                driver = webdriver.Chrome()
 
                 driver.get(query)
                 driver.implicitly_wait(5)
@@ -468,7 +468,7 @@ class PerformCrawler:
         # 공연 사이트 주소
             try:
                 query = f"{df['장소url'][k]}" # 사이트 주소
-                driver = webdriver.Chrome(executable_path = "./chromedriver.exe")
+                driver = webdriver.Chrome()
 
                 driver.get(query)
                 driver.implicitly_wait(5)
@@ -524,7 +524,7 @@ class PerformCrawler:
             # 공연 사이트 주소 + 상품 정보 없으면 넘어가는 코드 (try-except 이용)
             try:
                 query = f"{data['상세url'][k]}" # 사이트 주소
-                driver = webdriver.Chrome("./chromedriver.exe")
+                driver = webdriver.Chrome()
                 driver.get(query)
                 driver.implicitly_wait(5)
                 # 예매안내 관련 팝업이 있다면 팝업 닫기
@@ -713,6 +713,10 @@ class PerformCrawler:
         df2.reset_index(drop=True, inplace=True)
         df2['줄거리'] = df_ad['줄거리']
         df2['작품설명'] = df_ad['작품설명']
+        df2['작품설명'] = df2['작품설명'].apply(lambda x : x.replace('"',""))
+        df2['작품설명'] = df2['작품설명'].apply(lambda x : x.replace("'",""))
+        df2['줄거리'] = df2['줄거리'].apply(lambda x : x.replace('"',""))
+        df2['줄거리'] = df2['줄거리'].apply(lambda x : x.replace("'",""))
 
         now = self.week_no()
         #df2.to_csv(f'./Crawling/data/{now}_현재공연중_줄거리.csv',index=False)
