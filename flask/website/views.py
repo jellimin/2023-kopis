@@ -52,7 +52,7 @@ def open_all():
     week = week_no()
 
     # 페이지네이션 관련
-    per_page = 8
+    per_page = 24
     page, _, offset = get_page_args(per_page = per_page)
     
     from . import mysql
@@ -120,7 +120,7 @@ def hot_all():
     week = week_no()
 
     # 페이지네이션 관련
-    per_page = 8
+    per_page = 24
     page, _, offset = get_page_args(per_page = per_page)
     
     from . import mysql
@@ -161,8 +161,8 @@ def hot_all():
                                    pagination=Pagination(page=page,  # 지금 우리가 보여줄 페이지는 1 또는 2, 3, 4, ... 페이지인데,
                                                         total=total,  # 총 몇 개의 포스트인지를 미리 알려주고,
                                                         per_page=per_page,  # 한 페이지당 몇 개의 포스트를 보여줄지 알려주고,
-                                                        prev_label="<<",  # 전 페이지와,
-                                                        next_label=">>",  # 후 페이지로 가는 링크의 버튼 모양을 알려주고,
+                                                        prev_label="<",  # 전 페이지와,
+                                                        next_label=">",  # 후 페이지로 가는 링크의 버튼 모양을 알려주고,
                                                         format_total=True,  # 총 몇 개의 포스트 중 몇 개의 포스트를 보여주고있는지 시각화,
                                                         ),
                                    search=True,  # 페이지 검색 기능을 주고,
@@ -174,8 +174,8 @@ def hot_all():
                                 pagination=Pagination(page=page,  # 지금 우리가 보여줄 페이지는 1 또는 2, 3, 4, ... 페이지인데,
                                                     total=total,  # 총 몇 개의 포스트인지를 미리 알려주고,
                                                     per_page=per_page,  # 한 페이지당 몇 개의 포스트를 보여줄지 알려주고,
-                                                    prev_label="<<",  # 전 페이지와,
-                                                    next_label=">>",  # 후 페이지로 가는 링크의 버튼 모양을 알려주고,
+                                                    prev_label="<",  # 전 페이지와,
+                                                    next_label=">",  # 후 페이지로 가는 링크의 버튼 모양을 알려주고,
                                                     format_total=True,  # 총 몇 개의 포스트 중 몇 개의 포스트를 보여주고있는지 시각화,
                                                     ),
                                 search=True,  # 페이지 검색 기능을 주고,

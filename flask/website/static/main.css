@@ -1,25 +1,36 @@
-/* 메인페이지, 마이페이지 css */
-
+/* 레이아웃 */
 main {
   margin: auto;
-  background: #ffff00;
-  width: 1350px;
+  background: #ffffff;
+  width: 1200px;
   min-height: 700px;
 }
 .main-container {
   width: 1200px;
   /* margin: auto; */
   display: grid;
-  grid-template-columns: 600px; /* 각 행(세로줄)의 길이 */
-  grid-template-rows: repeat(4, 400px);/* 각 열(가로줄)의 길이, 400px로 3등분 */
+  grid-template-columns: 1200px; /* 각 행(세로줄)의 길이 */
+  grid-template-rows: repeat(4, 550px);/* 각 열(가로줄)의 길이, 400px로 3등분 */
   gap: 10px; /* 자식요소간의 간격 */
 }
+.hot-container {
+  width: 1200px;
+  /* margin: auto; */
+  /* display: grid; */
+  grid-template-columns: 1200px;
+  grid-template-rows: 550px;
+  gap: 10px; 
+}
+.hot-one {
+  grid-column: 1 / 3;
+  grid-row:1 / 1;
+}
 .temp-box {
-  background: rgb(184, 255, 108);
+  background: rgb(255, 255, 255);
   /* width: 100%;
   height: 100%; */
   /* font-size: 15px; */
-  border: 1px solid #dee3eb;
+  /* border: 1px solid #dee3eb; */
   /* text-align: center; */
 }
 .box-one {
@@ -39,36 +50,51 @@ main {
   grid-row:4 / 5;
 }
 
-/* 마이페이지 나중에 css 나누기 */
-.my-container {
-  width: 1200px;
-  /* margin: auto; */
-  display: grid;
-  grid-template-columns: 400px 850px; /* 각 행(세로줄)의 길이 */
-  grid-template-rows: repeat(2, 400px);/* 각 열(가로줄)의 길이, 400px로 2등분 */
-  gap: 10px; /* 자식요소간의 간격 */
+/* 이미지 둥글게 */
+.radius_img {
+  border-radius: 10%;
 }
-.my-box {
-  background: rgb(184, 255, 108);
-  /* width: 100%;
-  height: 100%; */
-  /* font-size: 15px; */
-  border: 1px solid #dee3eb;
-  /* text-align: center; */
+
+/* 네비게이션 */
+.nav-link {
+  color:black;
+  font-weight:bold;
 }
-.my-box-one {
-  grid-column: 1 / 2;
-  grid-row:1 / 2;
+
+/* 공연 더보기 버튼 */
+.custom-button_btn__vsWav {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0.8rem 2rem;
+  gap: 0.4rem;
+  border: 1px solid #ddd;
+  border-radius: 3.2rem;
+  background-color: #fff;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 0.8rem;
+  line-height: 150%;
+  text-align: center;
+  color: #000;
+  cursor: pointer;
 }
-.my-box-two {
-  grid-column: 2 / 3;
-  grid-row:1 / 2;
+.custom-panel_btn__MCCL4 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0.8rem;
+  width: 100%;
 }
-/* .my-box-three {
-  grid-column: 1 / 2;
-  grid-row:2 / 3;
-} */
-.my-box-four {
-  grid-column: 2 / 3;
-  grid-row:2 / 3;
+
+/* 페이지네이션 */
+.pagination {
+  justify-content: center;
 }
+.pagination a {text-decoration: none; color: inherit;}
+.page-item .page-link:hover { color: #6c757d; }
+.page-item.active .page-link { background-color: #6c757d; border-color: #6c757d; }
+.page-item.active .page-link:hover { color: white; }
