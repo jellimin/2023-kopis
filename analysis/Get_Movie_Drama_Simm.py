@@ -124,7 +124,7 @@ show_df.drop(['작품설명','줄거리'],axis=1,inplace=True)
 movie_df = preprocessing_text(movie_df)
 drama_df = preprocessing_text(drama_df)
 
-stop_word = pd.read_csv('./Keywi/Modeling/data/중간불용어_조정_완성.csv')
+stop_word = pd.read_csv('C:/Users/alsru/Desktop/Project/Flask_git/2023-kopis/analysis/data/중간불용어_조정_완성.csv')
 stop_word_list = stop_word['stopword'].tolist()
 add_list = ['가젔습', '갈껍니', '갈렵', '감쩌', '강추핮', '강츄입', '강츄합', '걑습', '거깉', '거랍',
             '거슬렀', '거웠습', '것과', '것깉', '겉습', '견지', '관계', '관랍했', '구기', '군무', '굴렸습',
