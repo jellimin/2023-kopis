@@ -1,3 +1,4 @@
+from Crawler.content_code import PerformCrawler
 # 패키지 불러오기
 import pandas as pd
 import numpy as np
@@ -10,36 +11,32 @@ import pymysql
 from datetime import timedelta
 from datetime import datetime
 
-show_df = pd.read_csv('./Keywi/Modeling/data/total_show_df.csv')
-
 # MYSQL에서 데이터 가져오기
 conn = pymysql.connect(host='admin.ckaurvkcjohj.eu-north-1.rds.amazonaws.com', user='hashtag', password='hashtag123', db='KEYWIDB', charset='utf8')
 try:
     cursor = conn.cursor()
     sql = "SELECT mv_name,mv_cont FROM KEYWIDB.Movie"
     cursor.execute(sql)
-    result = cursor.fetchall()
-    movie_data = []
-    for record in result:
-        movie_data.append(record)
+    movie_result = cursor.fetchall()
 
     sql = "SELECT dr_name,dr_cont FROM KEYWIDB.Drama"
     cursor.execute(sql)
-    result = cursor.fetchall()
-    drama_data = []
-    for record in result:
-        drama_data.append(record)
-        
+    drama_result = cursor.fetchall()
+    # show_name, rating, review, show_venue, show_address, show_date, img_url, show_url, show_genre, is_review
+    # ['제목','장르','줄거리','작품설명','기간','장소','url','이미지url']
+    sql = "SELECT show_name, show_summary, show_detail, show_venue, show_address, show_date, img_url, show_url, is_review FROM KEYWIDB.NewShow"
+    cursor.execute(sql)
+    show_result = cursor.fetchall()
+
 finally:
-    movie_df = pd.DataFrame(movie_data)
-    movie_df.columns = ['제목','content']
-    drama_df = pd.DataFrame(drama_data)
-    drama_df.columns = ['제목','content']
+    movie_df = pd.DataFrame(movie_result,columns = ['제목','content'])
+    drama_df = pd.DataFrame(drama_result,columns = ['제목','content'])
+    show_df = pd.DataFrame(show_result,columns=['제목','줄거리','작품설명','장소','주소','기간','이미지url','url'] )
     conn.close()
 
 # 전처리 함수 정의
-def replace_cont():
-    show_df = pd.read_csv('./Keywi/Modeling/data/공연중상세정보.csv')[['제목','장르','줄거리','작품설명','기간','장소','url','이미지url']]
+def replace_cont(show_df):
+    
     content = []
     for i in range(0,show_df.shape[0]):
         row = show_df.iloc[i]
@@ -52,8 +49,8 @@ def replace_cont():
         else: # 둘 다 있는 경우 - 줄거리 사용
             content.append(row.줄거리)
     show_df['content'] = content
-    show_df.to_csv('./Keywi/Modeling/data/total_show_df.csv', index=False)
-    return
+    #show_df.to_csv('./Keywi/Modeling/data/total_show_df.csv', index=False)
+    return show_df
 
 # 중복데이터 제거
 def duplicate_drop(df):
@@ -119,7 +116,7 @@ def preprocessing_text(df):
     df['content'] = df['content'].apply(lambda x: extract_num_eng(x))
     return df
 
-replace_cont() # 공연 내용 - 줄거리,작품설명으로 채우기
+show_df = replace_cont(show_df) # 공연 내용 - 줄거리,작품설명으로 채우기
 
 # 전처리
 show_df = preprocessing_text(show_df)
