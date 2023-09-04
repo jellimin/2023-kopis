@@ -39,7 +39,8 @@ def hot_info():
     from website import mysql
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute("select id, concat('[', category, ' ', cont_name, ' ', '와/과 유사한', ']', ' ', show_name) as title, show_url, show_date, img_url from KEYWIDB.HotInfo limit 6")
+    # 
+    cursor.execute("select id, cont_num, concat('[', category, ' ', cont_name, ' ', '와/과 유사한', ']') as cont_name, show_name as title, show_url, show_date, img_url from KEYWIDB.HotInfo limit 6")
     data = cursor.fetchall()
     cursor.close()
     conn.close()
@@ -47,12 +48,16 @@ def hot_info():
     hot = []
     for i in range(len(data)):
         id = data[i][0]
-        title = data[i][1]
-        url = data[i][2]
-        date = data[i][3]
-        image = data[i][4]
+        cont_num = data[i][1]
+        cont_name = data[i][2]
+        title = data[i][3]
+        url = data[i][4]
+        date = data[i][5]
+        image = data[i][6]
         hot_info = {
             '_id' : id,
+            'num' : cont_num,
+            'name' : cont_name,
             'title' : title,
             'url' : url,
             'date' : date,
@@ -94,7 +99,7 @@ def hot_info_all():
     from website import mysql
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute("select id, concat('[', category, ' ', cont_name, ' ', '와/과 유사한', ']', ' ', show_name) as title, show_url, show_date, img_url from KEYWIDB.HotInfo")
+    cursor.execute("select id, concat('[', category, ' ', cont_name, ' ', '와/과 유사한', ']')as cont_name, show_name as title, show_url, show_date, img_url from KEYWIDB.HotInfo")
     data = cursor.fetchall()
     cursor.close()
     conn.close()
@@ -102,12 +107,14 @@ def hot_info_all():
     hot = []
     for i in range(len(data)):
         id = data[i][0]
-        title = data[i][1]
-        url = data[i][2]
-        date = data[i][3]
-        image = data[i][4]
+        cont_name = data[i][1]
+        title = data[i][2]
+        url = data[i][3]
+        date = data[i][4]
+        image = data[i][5]
         hot_info = {
             '_id' : id,
+            'name': cont_name,
             'title' : title,
             'url' : url,
             'date' : date,
