@@ -371,7 +371,7 @@ class PerformCrawler:
             bb2 = driver.find_element(By.XPATH, b).get_attribute("href")
             cc = driver.find_element(By.XPATH, c).get_attribute('src')
             dd = driver.find_element(By.XPATH, d).text
-            print(aa,bb,bb2,cc,dd)
+            #print(aa,bb,bb2,cc,dd)
             date.append(aa)
             place.append(bb)
             place_url.append(bb2)

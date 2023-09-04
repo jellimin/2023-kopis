@@ -25,10 +25,10 @@
                         {% endif %}
                     </div>
                     <div style="width:180px; height:10px;"></div>
-                    <div style="width:180px; height:75px;">
+                    <div style="text-align:center; width:180px; height:40px;">
                         <p><b>{{info['title']}}</b></p>
                     </div>
-                    <div style="width:180px; height:25px;">
+                    <div style="position:relative; width:180px; height:25px;"> 
                         <p style="text-align:right; font-size:85%; color:#999">{{info['date']}}</p>
                     </div>
                 </div>
@@ -145,7 +145,7 @@
 </div>
 
 <div class="sideBanner" style=" cursor: pointer;" onclick="location.href='/test'">
-    <img src="{{ url_for('static', filename='banner.png') }}">
+    <img src="{{ url_for('static', filename='banner.png') }}" width="100px" height="150px">
 </div>
 
 {% endblock %}

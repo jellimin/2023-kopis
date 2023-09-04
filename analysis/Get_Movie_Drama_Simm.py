@@ -198,13 +198,13 @@ def get_matcher(cat,answer_df,show_df):
 
             sm = difflib.SequenceMatcher(None, answer_bytes_list, show_bytes_list)
             similar = sm.ratio()*100
-            if similar >= 25:
+            if similar >= 30:
                 #print(show_df['제목'][j],similar)
                 data.append({'카테고리':cat, "콘텐츠제목":answer_df['제목'][i],'제목':show_df['제목'][j],'유사도':round(similar,2),
                              '공연날짜':show_df['기간'][j],'장소':show_df['장소'][j],'주소':show_df['주소'][j],'이미지URL':show_df['이미지url'][j],'상세URL':show_df['url'][j]})
     df = pd.DataFrame(data)
     df.sort_values(by=['콘텐츠제목','유사도'], inplace=True, ignore_index=True, ascending=False)
-    df.drop('유사도',axis=1,inplace=True)
+    #df.drop('유사도',axis=1,inplace=True)
     return df
 
 movie_simm_df = get_matcher('영화',movie_df, show_df)
@@ -235,9 +235,10 @@ db.execute(sql_state)
 sql_state = """ALTER TABLE KEYWIDB.HotInfo AUTO_INCREMENT = 1"""
 db.execute(sql_state)
 # DB 올릴때 더 빠른 방법 없을까 ?? 165개 업로드하는데 1분 걸림
-for cat,cont_num,cont_name,show_name,show_venue,show_address,show_date,show_url,img_url in tqdm(zip(final_df['카테고리'],final_df['콘텐츠번호'],final_df['콘텐츠제목'],final_df['제목'],final_df['장소'],final_df['주소'],final_df['공연날짜'],final_df['상세URL'],final_df['이미지URL'])):
-    sql_state = """INSERT INTO KEYWIDB.HotInfo(category,cont_num,cont_name,show_name,show_venue,show_address,show_date,show_url,img_url) 
-                VALUES ("%s","%s","%s", "%s", "%s", "%s", "%s", "%s", "%s")"""%(tuple([cat,cont_num,cont_name,show_name,show_venue,show_address,show_date,show_url,img_url]))
+for cat, cont_num, cont_name, simm, show_name, show_venue, show_address, show_date, img_url, show_url in tqdm(zip(final_df['카테고리'], final_df['콘텐츠번호'], final_df['콘텐츠제목'], final_df['유사도'], final_df['제목'], 
+                                                                                                                  final_df['장소'], final_df['주소'], final_df['공연날짜'], final_df['이미지URL'], final_df['상세URL'])):
+    sql_state = """INSERT INTO KEYWIDB.HotInfo(category,cont_num,cont_name,simm,show_name,show_venue,show_address,show_date,show_url,img_url) 
+                VALUES ("%s","%s","%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s")"""%(tuple([cat,cont_num,cont_name,simm,show_name,show_venue,show_address,show_date,img_url,show_url]))
     db.execute(sql_state)
 
 # 외래키 다시 추가하기
