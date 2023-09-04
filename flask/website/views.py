@@ -6,7 +6,7 @@ import pandas as pd
 from func.main_fun import open_info, open_info_all, hot_info, hot_info_all, week_no
 from func.like_fun import main_open, main_hot, main_key, open_open, hot_hot, update_like_in, update_like_in_hot, update_like_in_key
 from flask_paginate import Pagination, get_page_args
-from func.search import uniq_keyword, search_keyword1, search_keyword2, search_keyword3, search_keyword4, search_keyword5, search_keyword6, search_keyword1_6, search_keyword2_6,search_keyword3_6,search_keyword4_6,search_keyword5_6,search_keyword6_6
+from func.search import uniq_keyword, search_keyword1, search_keyword2, search_keyword3, search_keyword4, search_keyword5, search_keyword6, search_keyword7, search_keyword1_6, search_keyword2_6,search_keyword3_6,search_keyword4_6,search_keyword5_6,search_keyword6_6,search_keyword7_6
 
 
 # 블루프린트를 이용하면 App의 모든 url을 한 곳에서 관리하지 않아도 됨
@@ -30,6 +30,7 @@ def home():
     keyword4 = search_keyword4_6()
     keyword5 = search_keyword5_6()
     keyword6 = search_keyword6_6()
+    keyword7 = search_keyword7_6()
 
     ### OpenInfo 플로팅
     opens = open_info()
@@ -69,6 +70,10 @@ def home():
     for key in keyword6:
         main_key6_id.append(key['_id'])
 
+    main_key7_id = []
+    for key in keyword7:
+        main_key7_id.append(key['_id'])
+
     # 좋아요 관련
     try:
         if session['u_id']: # 로그인한 이력이 있는 경우
@@ -82,10 +87,11 @@ def home():
             keyword4 = main_key(main_key4_id, keyword1, user_info)
             keyword5 = main_key(main_key5_id, keyword2, user_info)
             keyword6 = main_key(main_key6_id, keyword3, user_info)
+            keyword7 = main_key(main_key7_id, keyword3, user_info)
 
-            return render_template('home.html', open = opens, hot = hots, keyword = keyword, user_info = user_info, keyword1=keyword1, keyword2=keyword2, keyword3=keyword3, keyword4=keyword4, keyword5=keyword5, keyword6=keyword6)
+            return render_template('home.html', open = opens, hot = hots, keyword = keyword, user_info = user_info, keyword1=keyword1, keyword2=keyword2, keyword3=keyword3, keyword4=keyword4, keyword5=keyword5, keyword6=keyword6, keyword7=keyword7)
     except:
-        return render_template('home.html', open = opens, hot = hots, keyword = keyword, keyword1=keyword1, keyword2=keyword2, keyword3=keyword3, keyword4=keyword4, keyword5=keyword5, keyword6=keyword6)
+        return render_template('home.html', open = opens, hot = hots, keyword = keyword, keyword1=keyword1, keyword2=keyword2, keyword3=keyword3, keyword4=keyword4, keyword5=keyword5, keyword6=keyword6, keyword7=keyword7)
 
 # 2. 오픈 정보 페이지
 @views.route('/open')
@@ -546,6 +552,47 @@ def search_page6():
                                 search=True,  # 페이지 검색 기능을 주고,
                                 bs_version=5,  # Bootstrap 사용시 이를 활용할 수 있게 버전을 알려줍니다.
                                 )
+
+@views.route('/keyword7')
+def search_page7():
+    keyword7= search_keyword7()
+    keyword = uniq_keyword()[6]
+
+    # 페이지네이션 관련
+    per_page = 24
+    page, _, offset = get_page_args(per_page = per_page)
+    
+    total = len(keyword7)
+    
+    # 좋아요 관련
+    try:
+        if session['u_id']: # 로그인한 이력이 있는 경우
+            user_info = session['u_id']
+            
+            return render_template('keyword7.html', keyword7 = keyword7, keyword = keyword, user_info=user_info,
+                                   pagination=Pagination(page=page,  # 지금 우리가 보여줄 페이지는 1 또는 2, 3, 4, ... 페이지인데,
+                                                         total=total,  # 총 몇 개의 포스트인지를 미리 알려주고,
+                                                         per_page=per_page,  # 한 페이지당 몇 개의 포스트를 보여줄지 알려주고,
+                                                         prev_label="<",  # 전 페이지와,
+                                                         next_label=">",  # 후 페이지로 가는 링크의 버튼 모양을 알려주고,
+                                                         format_total=True,  # 총 몇 개의 포스트 중 몇 개의 포스트를 보여주고있는지 시각화,
+                                                         ),
+                                                         search=True,  # 페이지 검색 기능을 주고,
+                                                         bs_version=5,  # Bootstrap 사용시 이를 활용할 수 있게 버전을 알려줍니다.
+                                                         )
+    except:
+        return render_template('keyword7.html', keyword7 = keyword7, keyword = keyword,
+                                pagination=Pagination(page=page,  # 지금 우리가 보여줄 페이지는 1 또는 2, 3, 4, ... 페이지인데,
+                                                    total=total,  # 총 몇 개의 포스트인지를 미리 알려주고,
+                                                    per_page=per_page,  # 한 페이지당 몇 개의 포스트를 보여줄지 알려주고,
+                                                    prev_label="<",  # 전 페이지와,
+                                                    next_label=">",  # 후 페이지로 가는 링크의 버튼 모양을 알려주고,
+                                                    format_total=True,  # 총 몇 개의 포스트 중 몇 개의 포스트를 보여주고있는지 시각화,
+                                                    ),
+                                search=True,  # 페이지 검색 기능을 주고,
+                                bs_version=5,  # Bootstrap 사용시 이를 활용할 수 있게 버전을 알려줍니다.
+                                )
+    
 # 핫플 소개 페이지
 @views.route('/map', methods=['GET', 'POST'])
 def map_page():
