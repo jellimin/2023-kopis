@@ -76,40 +76,39 @@
     <div class="temp-box box-two">
         <div style="text-align:center">
             <p style="font-size:30px"><b>키워드 공연</b></p>
-            <style>
-                .tab_menu{position:relative; text-align: center; display:table; margin-left:auto; margin-right:auto;}
-                .tab_menu .list{display: inline-block; list-style: none; padding: 0;}
-                .tab_menu .list li{float:left; margin-right:14px;}
-                .tab_menu .list li.is_on .btn{font-weight:bold; color:green;}
-                .tab_menu .list .btn{font-size:17px;}
-                .tab_menu .cont_area{margin-top:10px;}
-                .tab_menu .cont_area .cont{display:none; background:#fff; color:#fff; text-align:center;}
-              </style>
-              
-              <div class="tab_menu">
-                <ul class="list">
-                  <li class="is_on">
+        </div>
+        <style>
+            .tab_menu{position:relative; text-align: center; display:table; margin-left:auto; margin-right:auto;}
+            .tab_menu .list{display: inline-block; list-style: none; padding: 0;}
+            .tab_menu .list li{float:left; margin-right:14px;}
+            .tab_menu .list li.is_on .btn{font-weight:bold; color:green;}
+            .tab_menu .list .btn{font-size:17px;}
+            .tab_menu .cont_area{margin-top:10px;}
+            .tab_menu .cont_area .cont{display:none; background:#fff; color:#fff; text-align:center;}
+        </style>
+        <div class="tab_menu">
+            <ul class="list">
+                <li class="is_on">
                     <a href="#tab1" class="btn">함께 보기 좋은</a>
-                  </li>
-                  <li>
+                </li>
+                <li>
                     <a href="#tab2" class="btn">연출이 완벽한</a>
-                  </li>
-                  <li>
+                </li>
+                <li>
                     <a href="#tab3" class="btn">웃기고 유쾌한</a>
-                  </li>
-                  <li>
+                </li>
+                <li>
                     <a href="#tab4" class="btn">기다려지는</a>
-                  </li>
-                  <li>
+                </li>
+                <li>
                     <a href="#tab5" class="btn">따뜻한 위로가 되는</a>
-                  </li>
-                  <li>
+                </li>
+                <li>
                     <a href="#tab6" class="btn">웅장한</a>
-                  </li>
-                </ul>
-                
-                <div class="cont_area">
-                  <div id="tab1" class="cont">
+                </li>
+            </ul>
+            <div class="cont_area">
+                <div id="tab1" class="cont">
                     <div class="row">
                         {% for info in keyword1 %}
                         <div class="col-sm-2" id="{{info._id}}">
@@ -117,8 +116,8 @@
                                 <div style="text-align : center;">
                                     <!-- 사용자 지정 이미지가 없을 경우 -->
                                     {% if info['image']=='nan' %}
-                                    <img src="{{ url_for('static', filename='no_image.png')}}" alt="기본이미지"
-                                                        class="radius_img" style="width:180px; height:270px;">
+                                    <img src="{{ url_for('static', filename='no_image.png')}}" alt="기본이미지" 
+                                    class="radius_img" style="width:180px; height:270px;">
                                     <!-- 사용자 지정 이미지가 있을 경우 -->
                                     {% else %}
                                     <img src="{{info['image']}}" class="radius_img" style="width:180px; height:270px;"/>
@@ -176,8 +175,8 @@
                                 <div style="text-align : center;">
                                     <!-- 사용자 지정 이미지가 없을 경우 -->
                                     {% if info['image']=='nan' %}
-                                    <img src="{{ url_for('static', filename='no_image.png')}}" alt="기본이미지"
-                                                        class="radius_img" style="width:180px; height:270px;">
+                                    <img src="{{ url_for('static', filename='no_image.png')}}" alt="기본이미지" 
+                                    class="radius_img" style="width:180px; height:270px;">
                                     <!-- 사용자 지정 이미지가 있을 경우 -->
                                     {% else %}
                                     <img src="{{info['image']}}" class="radius_img" style="width:180px; height:270px;"/>
@@ -236,7 +235,7 @@
                                     <!-- 사용자 지정 이미지가 없을 경우 -->
                                     {% if info['image']=='nan' %}
                                     <img src="{{ url_for('static', filename='no_image.png')}}" alt="기본이미지"
-                                                        class="radius_img" style="width:180px; height:270px;">
+                                    class="radius_img" style="width:180px; height:270px;">
                                     <!-- 사용자 지정 이미지가 있을 경우 -->
                                     {% else %}
                                     <img src="{{info['image']}}" class="radius_img" style="width:180px; height:270px;"/>
@@ -295,7 +294,7 @@
                                     <!-- 사용자 지정 이미지가 없을 경우 -->
                                     {% if info['image']=='nan' %}
                                     <img src="{{ url_for('static', filename='no_image.png')}}" alt="기본이미지"
-                                                        class="radius_img" style="width:180px; height:270px;">
+                                    class="radius_img" style="width:180px; height:270px;">
                                     <!-- 사용자 지정 이미지가 있을 경우 -->
                                     {% else %}
                                     <img src="{{info['image']}}" class="radius_img" style="width:180px; height:270px;"/>
@@ -354,7 +353,7 @@
                                     <!-- 사용자 지정 이미지가 없을 경우 -->
                                     {% if info['image']=='nan' %}
                                     <img src="{{ url_for('static', filename='no_image.png')}}" alt="기본이미지"
-                                                        class="radius_img" style="width:180px; height:270px;">
+                                    class="radius_img" style="width:180px; height:270px;">
                                     <!-- 사용자 지정 이미지가 있을 경우 -->
                                     {% else %}
                                     <img src="{{info['image']}}" class="radius_img" style="width:180px; height:270px;"/>
@@ -377,8 +376,8 @@
                             <!-- 로그인을 한 경우, 좋아요 버튼이 보이도록 -->
                             {% if user_info %}
                             <div class="level-left" style="text-align:right;">
-                                <!-- 좋아요를 누르면 toggle_like 함수가 실행된다. -->
-                                <!-- toggle like 함수는 게시글의 id와, 어떤 이모티콘을 눌렀는지 type에 대한 정보를 인자로 제공한다. -->
+                            <!-- 좋아요를 누르면 toggle_like 함수가 실행된다. -->
+                            <!-- toggle like 함수는 게시글의 id와, 어떤 이모티콘을 눌렀는지 type에 대한 정보를 인자로 제공한다. -->
                                 <a class="level-item is-sparta" aria-label="heart" style="cursor: pointer;" onclick="toggle_like_main_open('{{info._id}}', 'heart')">
                                     <span class="icon is-small">
                                         <!-- 사용자가 좋아요를 누른 경우 -->
@@ -413,7 +412,7 @@
                                     <!-- 사용자 지정 이미지가 없을 경우 -->
                                     {% if info['image']=='nan' %}
                                     <img src="{{ url_for('static', filename='no_image.png')}}" alt="기본이미지"
-                                                        class="radius_img" style="width:180px; height:270px;">
+                                    class="radius_img" style="width:180px; height:270px;">
                                     <!-- 사용자 지정 이미지가 있을 경우 -->
                                     {% else %}
                                     <img src="{{info['image']}}" class="radius_img" style="width:180px; height:270px;"/>
@@ -462,41 +461,38 @@
                             <img alt="" src="https://tickets.interpark.com/_next/static/media/line.2a9386f0.svg" width="13" height="12" decoding="async" data-nimg="1" loading="lazy" style="color: transparent;">
                         </button>
                     </div>
-                  </div>
                 </div>
             </div>
-              
-                <script>
-                const tabList = document.querySelectorAll('.tab_menu .list li');
-                const contents = document.querySelectorAll('.tab_menu .cont_area .cont')
-                let activeCont = ''; // 현재 활성화 된 컨텐츠 (기본:#tab1 활성화)
-                
-                  // 초기화: 첫 번째 탭 활성화
-                tabList[0].classList.add('is_on');
-                activeCont = tabList[0].querySelector('.btn').getAttribute('href');
-                document.querySelector(activeCont).style.display = 'block';
-
-                for(var i = 0; i < tabList.length; i++){
-                  tabList[i].querySelector('.btn').addEventListener('click', function(e){
-                    e.preventDefault();
-                    for(var j = 0; j < tabList.length; j++){
-                      // 나머지 버튼 클래스 제거
-                      tabList[j].classList.remove('is_on');
-              
-                      // 나머지 컨텐츠 display:none 처리
-                      contents[j].style.display = 'none';
-                    }
-              
-                    // 버튼 관련 이벤트
-                    this.parentNode.classList.add('is_on');
-              
-                    // 버튼 클릭시 컨텐츠 전환
-                    activeCont = this.getAttribute('href');
-                    document.querySelector(activeCont).style.display = 'block';
-                  });
-                }
-              </script>
+        </div>
     </div>
+    <script>
+    const tabList = document.querySelectorAll('.tab_menu .list li');
+    const contents = document.querySelectorAll('.tab_menu .cont_area .cont')
+    let activeCont = ''; // 현재 활성화 된 컨텐츠 (기본:#tab1 활성화)
+                
+    // 초기화: 첫 번째 탭 활성화
+    tabList[0].classList.add('is_on');
+    activeCont = tabList[0].querySelector('.btn').getAttribute('href');
+    document.querySelector(activeCont).style.display = 'block';
+
+    for(var i = 0; i < tabList.length; i++){
+        tabList[i].querySelector('.btn').addEventListener('click', function(e){
+        e.preventDefault();
+        for(var j = 0; j < tabList.length; j++){
+        // 나머지 버튼 클래스 제거
+        tabList[j].classList.remove('is_on');
+              
+        // 나머지 컨텐츠 display:none 처리
+        contents[j].style.display = 'none';}
+        // 버튼 관련 이벤트
+        this.parentNode.classList.add('is_on');
+              
+        // 버튼 클릭시 컨텐츠 전환
+        activeCont = this.getAttribute('href');
+        document.querySelector(activeCont).style.display = 'block';});
+    }
+    </script>
+    
     <!-- 3. Curation -->
     <div class="temp-box box-three">
         <div style="text-align:center">

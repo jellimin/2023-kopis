@@ -52,7 +52,7 @@ def home():
             opens = main_open(main_open_id, opens, user_info)
             hots = main_hot(main_hot_id, hots, user_info)
 
-            return render_template('home.html', open = opens, hot = hots, keyword = keyword, user_info = user_info)
+            return render_template('home.html', open = opens, hot = hots, keyword = keyword, user_info = user_info, keyword1=keyword1, keyword2=keyword2, keyword3=keyword3, keyword4=keyword4, keyword5=keyword5, keyword6=keyword6)
     except:
         return render_template('home.html', open = opens, hot = hots, keyword = keyword, keyword1=keyword1, keyword2=keyword2, keyword3=keyword3, keyword4=keyword4, keyword5=keyword5, keyword6=keyword6)
 
