@@ -311,33 +311,237 @@ def service():
 def search_page1():
     keyword1 = search_keyword1()
     keyword = uniq_keyword()[0]
-    return render_template('keyword1.html', keyword1 = keyword1, keyword = keyword)
+    
+    # 페이지네이션 관련
+    per_page = 24
+    page, _, offset = get_page_args(per_page = per_page)
+    
+    total = len(keyword1)
+    
+    # 좋아요 관련
+    try:
+        if session['u_id']: # 로그인한 이력이 있는 경우
+            user_info = session['u_id']
+            
+            return render_template('keyword1.html', keyword1 = keyword1, keyword = keyword, user_info=user_info,
+                                   pagination=Pagination(page=page,  # 지금 우리가 보여줄 페이지는 1 또는 2, 3, 4, ... 페이지인데,
+                                                         total=total,  # 총 몇 개의 포스트인지를 미리 알려주고,
+                                                         per_page=per_page,  # 한 페이지당 몇 개의 포스트를 보여줄지 알려주고,
+                                                         prev_label="<",  # 전 페이지와,
+                                                         next_label=">",  # 후 페이지로 가는 링크의 버튼 모양을 알려주고,
+                                                         format_total=True,  # 총 몇 개의 포스트 중 몇 개의 포스트를 보여주고있는지 시각화,
+                                                         ),
+                                                         search=True,  # 페이지 검색 기능을 주고,
+                                                         bs_version=5,  # Bootstrap 사용시 이를 활용할 수 있게 버전을 알려줍니다.
+                                                         )
+    except:
+        return render_template('keyword1.html', keyword1 = keyword1, keyword = keyword,
+                                pagination=Pagination(page=page,  # 지금 우리가 보여줄 페이지는 1 또는 2, 3, 4, ... 페이지인데,
+                                                    total=total,  # 총 몇 개의 포스트인지를 미리 알려주고,
+                                                    per_page=per_page,  # 한 페이지당 몇 개의 포스트를 보여줄지 알려주고,
+                                                    prev_label="<",  # 전 페이지와,
+                                                    next_label=">",  # 후 페이지로 가는 링크의 버튼 모양을 알려주고,
+                                                    format_total=True,  # 총 몇 개의 포스트 중 몇 개의 포스트를 보여주고있는지 시각화,
+                                                    ),
+                                search=True,  # 페이지 검색 기능을 주고,
+                                bs_version=5,  # Bootstrap 사용시 이를 활용할 수 있게 버전을 알려줍니다.
+                                )
+    
 @views.route('/keyword2')
 def search_page2():
     keyword2 = search_keyword2()
     keyword = uniq_keyword()[1]
-    return render_template('keyword2.html', keyword2 = keyword2, keyword = keyword)
+    
+    # 페이지네이션 관련
+    per_page = 24
+    page, _, offset = get_page_args(per_page = per_page)
+    
+    total = len(keyword2)
+    
+    # 좋아요 관련
+    try:
+        if session['u_id']: # 로그인한 이력이 있는 경우
+            user_info = session['u_id']
+            
+            return render_template('keyword2.html', keyword2 = keyword2, keyword = keyword, user_info=user_info,
+                                   pagination=Pagination(page=page,  # 지금 우리가 보여줄 페이지는 1 또는 2, 3, 4, ... 페이지인데,
+                                                         total=total,  # 총 몇 개의 포스트인지를 미리 알려주고,
+                                                         per_page=per_page,  # 한 페이지당 몇 개의 포스트를 보여줄지 알려주고,
+                                                         prev_label="<",  # 전 페이지와,
+                                                         next_label=">",  # 후 페이지로 가는 링크의 버튼 모양을 알려주고,
+                                                         format_total=True,  # 총 몇 개의 포스트 중 몇 개의 포스트를 보여주고있는지 시각화,
+                                                         ),
+                                                         search=True,  # 페이지 검색 기능을 주고,
+                                                         bs_version=5,  # Bootstrap 사용시 이를 활용할 수 있게 버전을 알려줍니다.
+                                                         )
+    except:
+        return render_template('keyword1.html', keyword2 = keyword2, keyword = keyword,
+                                pagination=Pagination(page=page,  # 지금 우리가 보여줄 페이지는 1 또는 2, 3, 4, ... 페이지인데,
+                                                    total=total,  # 총 몇 개의 포스트인지를 미리 알려주고,
+                                                    per_page=per_page,  # 한 페이지당 몇 개의 포스트를 보여줄지 알려주고,
+                                                    prev_label="<",  # 전 페이지와,
+                                                    next_label=">",  # 후 페이지로 가는 링크의 버튼 모양을 알려주고,
+                                                    format_total=True,  # 총 몇 개의 포스트 중 몇 개의 포스트를 보여주고있는지 시각화,
+                                                    ),
+                                search=True,  # 페이지 검색 기능을 주고,
+                                bs_version=5,  # Bootstrap 사용시 이를 활용할 수 있게 버전을 알려줍니다.
+                                )
 @views.route('/keyword3')
 def search_page3():
     keyword3 = search_keyword3()
     keyword = uniq_keyword()[2]
-    return render_template('keyword3.html', keyword3 = keyword3, keyword = keyword)
+    
+    # 페이지네이션 관련
+    per_page = 24
+    page, _, offset = get_page_args(per_page = per_page)
+    
+    total = len(keyword3)
+    
+    # 좋아요 관련
+    try:
+        if session['u_id']: # 로그인한 이력이 있는 경우
+            user_info = session['u_id']
+            
+            return render_template('keyword3.html', keyword3 = keyword3, keyword = keyword, user_info=user_info,
+                                   pagination=Pagination(page=page,  # 지금 우리가 보여줄 페이지는 1 또는 2, 3, 4, ... 페이지인데,
+                                                         total=total,  # 총 몇 개의 포스트인지를 미리 알려주고,
+                                                         per_page=per_page,  # 한 페이지당 몇 개의 포스트를 보여줄지 알려주고,
+                                                         prev_label="<",  # 전 페이지와,
+                                                         next_label=">",  # 후 페이지로 가는 링크의 버튼 모양을 알려주고,
+                                                         format_total=True,  # 총 몇 개의 포스트 중 몇 개의 포스트를 보여주고있는지 시각화,
+                                                         ),
+                                                         search=True,  # 페이지 검색 기능을 주고,
+                                                         bs_version=5,  # Bootstrap 사용시 이를 활용할 수 있게 버전을 알려줍니다.
+                                                         )
+    except:
+        return render_template('keyword3.html', keyword3 = keyword3, keyword = keyword,
+                                pagination=Pagination(page=page,  # 지금 우리가 보여줄 페이지는 1 또는 2, 3, 4, ... 페이지인데,
+                                                    total=total,  # 총 몇 개의 포스트인지를 미리 알려주고,
+                                                    per_page=per_page,  # 한 페이지당 몇 개의 포스트를 보여줄지 알려주고,
+                                                    prev_label="<",  # 전 페이지와,
+                                                    next_label=">",  # 후 페이지로 가는 링크의 버튼 모양을 알려주고,
+                                                    format_total=True,  # 총 몇 개의 포스트 중 몇 개의 포스트를 보여주고있는지 시각화,
+                                                    ),
+                                search=True,  # 페이지 검색 기능을 주고,
+                                bs_version=5,  # Bootstrap 사용시 이를 활용할 수 있게 버전을 알려줍니다.
+                                )
 @views.route('/keyword4')
 def search_page4():
     keyword4 = search_keyword4()
     keyword = uniq_keyword()[3]
-    return render_template('keyword4.html', keyword4 = keyword4, keyword = keyword)
+    
+    # 페이지네이션 관련
+    per_page = 24
+    page, _, offset = get_page_args(per_page = per_page)
+    
+    total = len(keyword4)
+    
+    # 좋아요 관련
+    try:
+        if session['u_id']: # 로그인한 이력이 있는 경우
+            user_info = session['u_id']
+            
+            return render_template('keyword4.html', keyword4 = keyword4, keyword = keyword, user_info=user_info,
+                                   pagination=Pagination(page=page,  # 지금 우리가 보여줄 페이지는 1 또는 2, 3, 4, ... 페이지인데,
+                                                         total=total,  # 총 몇 개의 포스트인지를 미리 알려주고,
+                                                         per_page=per_page,  # 한 페이지당 몇 개의 포스트를 보여줄지 알려주고,
+                                                         prev_label="<",  # 전 페이지와,
+                                                         next_label=">",  # 후 페이지로 가는 링크의 버튼 모양을 알려주고,
+                                                         format_total=True,  # 총 몇 개의 포스트 중 몇 개의 포스트를 보여주고있는지 시각화,
+                                                         ),
+                                                         search=True,  # 페이지 검색 기능을 주고,
+                                                         bs_version=5,  # Bootstrap 사용시 이를 활용할 수 있게 버전을 알려줍니다.
+                                                         )
+    except:
+        return render_template('keyword4.html', keyword4 = keyword4, keyword = keyword,
+                                pagination=Pagination(page=page,  # 지금 우리가 보여줄 페이지는 1 또는 2, 3, 4, ... 페이지인데,
+                                                    total=total,  # 총 몇 개의 포스트인지를 미리 알려주고,
+                                                    per_page=per_page,  # 한 페이지당 몇 개의 포스트를 보여줄지 알려주고,
+                                                    prev_label="<",  # 전 페이지와,
+                                                    next_label=">",  # 후 페이지로 가는 링크의 버튼 모양을 알려주고,
+                                                    format_total=True,  # 총 몇 개의 포스트 중 몇 개의 포스트를 보여주고있는지 시각화,
+                                                    ),
+                                search=True,  # 페이지 검색 기능을 주고,
+                                bs_version=5,  # Bootstrap 사용시 이를 활용할 수 있게 버전을 알려줍니다.
+                                )
 @views.route('/keyword5')
 def search_page5():
     keyword5 = search_keyword5()
     keyword = uniq_keyword()[4]
-    return render_template('keyword5.html', keyword5 = keyword5, keyword = keyword)
+
+    # 페이지네이션 관련
+    per_page = 24
+    page, _, offset = get_page_args(per_page = per_page)
+    
+    total = len(keyword5)
+    
+    # 좋아요 관련
+    try:
+        if session['u_id']: # 로그인한 이력이 있는 경우
+            user_info = session['u_id']
+            
+            return render_template('keyword5.html', keyword5 = keyword5, keyword = keyword, user_info=user_info,
+                                   pagination=Pagination(page=page,  # 지금 우리가 보여줄 페이지는 1 또는 2, 3, 4, ... 페이지인데,
+                                                         total=total,  # 총 몇 개의 포스트인지를 미리 알려주고,
+                                                         per_page=per_page,  # 한 페이지당 몇 개의 포스트를 보여줄지 알려주고,
+                                                         prev_label="<",  # 전 페이지와,
+                                                         next_label=">",  # 후 페이지로 가는 링크의 버튼 모양을 알려주고,
+                                                         format_total=True,  # 총 몇 개의 포스트 중 몇 개의 포스트를 보여주고있는지 시각화,
+                                                         ),
+                                                         search=True,  # 페이지 검색 기능을 주고,
+                                                         bs_version=5,  # Bootstrap 사용시 이를 활용할 수 있게 버전을 알려줍니다.
+                                                         )
+    except:
+        return render_template('keyword5.html', keyword5 = keyword5, keyword = keyword,
+                                pagination=Pagination(page=page,  # 지금 우리가 보여줄 페이지는 1 또는 2, 3, 4, ... 페이지인데,
+                                                    total=total,  # 총 몇 개의 포스트인지를 미리 알려주고,
+                                                    per_page=per_page,  # 한 페이지당 몇 개의 포스트를 보여줄지 알려주고,
+                                                    prev_label="<",  # 전 페이지와,
+                                                    next_label=">",  # 후 페이지로 가는 링크의 버튼 모양을 알려주고,
+                                                    format_total=True,  # 총 몇 개의 포스트 중 몇 개의 포스트를 보여주고있는지 시각화,
+                                                    ),
+                                search=True,  # 페이지 검색 기능을 주고,
+                                bs_version=5,  # Bootstrap 사용시 이를 활용할 수 있게 버전을 알려줍니다.
+                                )
 @views.route('/keyword6')
 def search_page6():
     keyword6= search_keyword6()
     keyword = uniq_keyword()[5]
-    return render_template('keyword6.html', keyword6 = keyword6, keyword = keyword)
 
+    # 페이지네이션 관련
+    per_page = 24
+    page, _, offset = get_page_args(per_page = per_page)
+    
+    total = len(keyword6)
+    
+    # 좋아요 관련
+    try:
+        if session['u_id']: # 로그인한 이력이 있는 경우
+            user_info = session['u_id']
+            
+            return render_template('keyword6.html', keyword6 = keyword6, keyword = keyword, user_info=user_info,
+                                   pagination=Pagination(page=page,  # 지금 우리가 보여줄 페이지는 1 또는 2, 3, 4, ... 페이지인데,
+                                                         total=total,  # 총 몇 개의 포스트인지를 미리 알려주고,
+                                                         per_page=per_page,  # 한 페이지당 몇 개의 포스트를 보여줄지 알려주고,
+                                                         prev_label="<",  # 전 페이지와,
+                                                         next_label=">",  # 후 페이지로 가는 링크의 버튼 모양을 알려주고,
+                                                         format_total=True,  # 총 몇 개의 포스트 중 몇 개의 포스트를 보여주고있는지 시각화,
+                                                         ),
+                                                         search=True,  # 페이지 검색 기능을 주고,
+                                                         bs_version=5,  # Bootstrap 사용시 이를 활용할 수 있게 버전을 알려줍니다.
+                                                         )
+    except:
+        return render_template('keyword6.html', keyword6 = keyword6, keyword = keyword,
+                                pagination=Pagination(page=page,  # 지금 우리가 보여줄 페이지는 1 또는 2, 3, 4, ... 페이지인데,
+                                                    total=total,  # 총 몇 개의 포스트인지를 미리 알려주고,
+                                                    per_page=per_page,  # 한 페이지당 몇 개의 포스트를 보여줄지 알려주고,
+                                                    prev_label="<",  # 전 페이지와,
+                                                    next_label=">",  # 후 페이지로 가는 링크의 버튼 모양을 알려주고,
+                                                    format_total=True,  # 총 몇 개의 포스트 중 몇 개의 포스트를 보여주고있는지 시각화,
+                                                    ),
+                                search=True,  # 페이지 검색 기능을 주고,
+                                bs_version=5,  # Bootstrap 사용시 이를 활용할 수 있게 버전을 알려줍니다.
+                                )
 # 핫플 소개 페이지
 @views.route('/map', methods=['GET', 'POST'])
 def map_page():
