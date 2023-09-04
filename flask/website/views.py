@@ -4,8 +4,8 @@ from flask import Blueprint, render_template, request, session, redirect, url_fo
 # from flask_login import login_required, current_user
 import pandas as pd
 from func.main_fun import open_info, open_info_all, hot_info, hot_info_all, week_no
-from func.like_fun import main_open, main_hot, open_open, hot_hot, update_like_in, update_like_in_hot
-# from flask_paginate import Pagination, get_page_args
+from func.like_fun import main_open, main_hot, main_key, open_open, hot_hot, update_like_in, update_like_in_hot, update_like_in_key
+from flask_paginate import Pagination, get_page_args
 from func.search import uniq_keyword, search_keyword1, search_keyword2, search_keyword3, search_keyword4, search_keyword5, search_keyword6, search_keyword1_6, search_keyword2_6,search_keyword3_6,search_keyword4_6,search_keyword5_6,search_keyword6_6
 
 
@@ -44,6 +44,31 @@ def home():
     for hot in hots:
         main_hot_id.append(hot['_id'])
 
+    # main에 띄워진 키워드공연 id 가져오기
+    main_key1_id = []
+    for key in keyword1:
+        main_key1_id.append(key['_id'])
+    
+    main_key2_id = []
+    for key in keyword2:
+        main_key2_id.append(key['_id'])
+    
+    main_key3_id = []
+    for key in keyword3:
+        main_key3_id.append(key['_id'])
+    
+    main_key4_id = []
+    for key in keyword4:
+        main_key4_id.append(key['_id'])
+
+    main_key5_id = []
+    for key in keyword5:
+        main_key5_id.append(key['_id'])
+
+    main_key6_id = []
+    for key in keyword6:
+        main_key6_id.append(key['_id'])
+
     # 좋아요 관련
     try:
         if session['u_id']: # 로그인한 이력이 있는 경우
@@ -51,6 +76,12 @@ def home():
 
             opens = main_open(main_open_id, opens, user_info)
             hots = main_hot(main_hot_id, hots, user_info)
+            keyword1 = main_key(main_key1_id, keyword1, user_info)
+            keyword2 = main_key(main_key2_id, keyword2, user_info)
+            keyword3 = main_key(main_key3_id, keyword3, user_info)
+            keyword4 = main_key(main_key4_id, keyword1, user_info)
+            keyword5 = main_key(main_key5_id, keyword2, user_info)
+            keyword6 = main_key(main_key6_id, keyword3, user_info)
 
             return render_template('home.html', open = opens, hot = hots, keyword = keyword, user_info = user_info, keyword1=keyword1, keyword2=keyword2, keyword3=keyword3, keyword4=keyword4, keyword5=keyword5, keyword6=keyword6)
     except:
@@ -215,6 +246,48 @@ def main_hot_update_like():
 @views.route('/hot/update_like', methods=['POST'])
 def hot_update_like():
         count = update_like_in_hot()
+        return jsonify({"result": "success", 'msg': 'updated', "count": count})
+
+# 6. 메인페이지 키워드 정보 좋아요
+@views.route('/update_like_key', methods=['POST'])
+def main_key_update_like():
+        count = update_like_in_key()
+        return jsonify({"result": "success", 'msg': 'updated', "count": count})
+
+# 7. 더보기 키워드1 정보 좋아요
+@views.route('/keyword1/update_like', methods=['POST'])
+def key1_update_like():
+        count = update_like_in_key()
+        return jsonify({"result": "success", 'msg': 'updated', "count": count})
+
+# 7. 더보기 키워드2 정보 좋아요
+@views.route('/keyword2/update_like', methods=['POST'])
+def key2_update_like():
+        count = update_like_in_key()
+        return jsonify({"result": "success", 'msg': 'updated', "count": count})
+
+# 7. 더보기 키워드3 정보 좋아요
+@views.route('/keyword3/update_like', methods=['POST'])
+def key3_update_like():
+        count = update_like_in_key()
+        return jsonify({"result": "success", 'msg': 'updated', "count": count})
+
+# 7. 더보기 키워드4 정보 좋아요
+@views.route('/keyword4/update_like', methods=['POST'])
+def key4_update_like():
+        count = update_like_in_key()
+        return jsonify({"result": "success", 'msg': 'updated', "count": count})
+
+# 7. 더보기 키워드5 정보 좋아요
+@views.route('/keyword5/update_like', methods=['POST'])
+def key5_update_like():
+        count = update_like_in_key()
+        return jsonify({"result": "success", 'msg': 'updated', "count": count})
+
+# 7. 더보기 키워드6 정보 좋아요
+@views.route('/keyword6/update_like', methods=['POST'])
+def key6_update_like():
+        count = update_like_in_key()
         return jsonify({"result": "success", 'msg': 'updated', "count": count})
 
 # 8. 큐레이션 페이지
