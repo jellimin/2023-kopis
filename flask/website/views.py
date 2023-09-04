@@ -271,4 +271,4 @@ def map_page():
     if request.method == 'POST':
         dat = {'address':str(request.form['address']),
                'place':str(request.form['place'])}
-    return render_template('map.html', dat=dat)
+    return render_template('map.html', dat=dat) 
