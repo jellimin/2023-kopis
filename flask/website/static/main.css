@@ -1,17 +1,33 @@
+/*폰트 : "SPoqaHanSansNeo"*/
+
+@import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
+
 /* 레이아웃 */
+body{
+  max-width: 100%;
+  width: 1400px;
+  overflow-x: hidden;
+}
+
 main {
   margin: auto;
   background: #ffffff;
   width: 1200px;
   min-height: 700px;
+  font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+  overflow-x: hidden ;
 }
+
+
 .main-container {
+  margin: 0 125px 0 25px;  
   width: 1200px;
   /* margin: auto; */
   display: grid;
   grid-template-columns: 1200px; /* 각 행(세로줄)의 길이 */
   grid-template-rows: repeat(4, 550px);/* 각 열(가로줄)의 길이, 400px로 3등분 */
-  gap: 10px; /* 자식요소간의 간격 */
+  gap: 10px; /* 자식요소간의 간격 - 각 콘텐츠간 간격 */
+  
 }
 .hot-container {
   width: 1200px;
@@ -36,6 +52,7 @@ main {
 .box-one {
   grid-column: 1 / 3;
   grid-row:1 / 2;
+  font-size: small
 }
 .box-two {
   grid-column: 1 / 3;
@@ -48,6 +65,71 @@ main {
 .box-four {
   grid-column: 1 / 3;
   grid-row:4 / 5;
+  font-size: small
+}
+
+body div{
+  display: block;
+}
+.cont-name{
+  height: 10px;
+  padding: 0px 10px 0px 10px;
+}
+
+.info-thumnail{
+  height: 270px ;
+  padding-top: 20px;
+  padding-bottom: 10px ;
+}
+/* 공연이름 텍스트 두줄 이상일 시, 생략기호로 표시 */
+.info-name{
+  position: relative;
+  overflow : hidden;
+  text-overflow : ellipsis;
+  height : 25px; 
+  /* 대신 height를 설정해준다. 텍스트 크기에 맞춰 height가 1줄인 경우를 생각하자.*/
+  word-wrap : break-word; 
+  display : -webkit-box;
+  -webkit-line-clamp : 1; 
+  /* 줄 개수를 설정한다. 만약 2줄이상이라면 height와 해당 값을 수정한다. */
+  -webkit-box-orient: vertical; 
+  padding-top: 8px;
+  padding-bottom: 10px;
+}
+.info-date{
+  position:relative;
+  width:180px;
+  height:10px;
+  padding-top: 5px;
+  padding-bottom: 10px;
+}
+
+.open-name{
+  width: 50px;
+  display: -webkit-box;
+  word-wrap : break-word;
+  -webkit-line-clamp : 1;  
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  /* width: 5px;  */
+  overflow : hidden;
+  line-height: 15px;
+  height: 20px;
+  /* 대신 height를 설정해준다. 텍스트 크기에 맞춰 height가 1줄인 경우를 생각하자.*/
+
+  /* 줄 개수를 설정한다. 만약 2줄이상이라면 height와 해당 값을 수정한다. */
+  -webkit-box-orient: vertical; 
+  padding-top: 8px;
+  padding-bottom: 5px;
+
+}
+
+.open-date{
+  position:relative;
+  width:180px;
+  height:5px;
+  padding-top: 5px;
+  padding-bottom: 10px;
 }
 
 /* 이미지 둥글게 */
