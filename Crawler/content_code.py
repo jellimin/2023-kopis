@@ -20,6 +20,7 @@ import ssl
 from urllib.error import HTTPError, URLError
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
@@ -211,130 +212,97 @@ class PerformCrawler:
 
     def get_perform_list(self):
         # 현재 공연중 -> 공연 리스트 먼저
+        options = webdriver.ChromeOptions()
+        options.add_argument("headless")
+
         perform_list = []
-        for i in [1, 2, 3, 5]:   
-            query = f"http://www.playdb.co.kr/playdb/playdblist.asp?sReqMainCategory=00000{i}&sReqSubCategory=&sReqDistrict=&sReqTab=2&sPlayType=2&sStartYear=&sSelectType=1" # 사이트 주소
-            driver = webdriver.Chrome()
+        for i in [1, 2 ,3, 5]:
+            print(i)
+            query = f"http://www.playdb.co.kr/playdb/playdblist.asp?Page=1&sReqMainCategory=00000{i}&sReqSubCategory=&sReqDistrict=&sReqTab=2&sPlayType=2&sStartYear=&sSelectType=1" # 사이트 주소
+            driver = webdriver.Chrome(options=options)
             driver.get(query)
-            driver.implicitly_wait(3)
+            driver.implicitly_wait(2)
 
             c = '//*[@id="contents"]/div[1]/ul/li[{}]/a/img'.format(i) # 장르
             cc = driver.find_element(By.XPATH, c).get_attribute('alt')
-                        
-            page = 0
+            path_top =  driver.find_elements(By.XPATH,'//*[@id="contents"]/div[2]/table/tbody/tr[11]/td/table/tbody/tr[1]/following-sibling::*')
+            page_x = path_top[-1]
+            page = int(page_x.text[-2])
+            num_cont = (len(path_top)-5)//2+1 # 한 탭당 공연 개수
+            #print(len(path_top),num_cont)
+            for num in tqdm(range(1,page+1)):
+                query = f"http://www.playdb.co.kr/playdb/playdblist.asp?Page={num}&sReqMainCategory=00000{i}&sReqSubCategory=&sReqDistrict=&sReqTab=2&sPlayType=2&sStartYear=&sSelectType=1" # 사이트 주소
+                driver = webdriver.Chrome(options=options)
+                driver.get(query)
+                driver.implicitly_wait(2)
+                for k in range(1,num_cont+1):
+                    kk = 2*k + 1
+                    a = "/html/body/div[1]/div[2]/div[2]/table/tbody/tr[11]/td/table/tbody/tr[{}]/td/table/tbody/tr/td[1]/table/tbody/tr/td[3]/table/tbody/tr[1]/td/b/font/a".format(kk) # 제목
+                    b = '//*[@id="contents"]/div[2]/table/tbody/tr[11]/td/table/tbody/tr[{}]/td/table/tbody/tr/td[1]/table/tbody/tr/td[3]/table/tbody/tr[1]/td/b/font/a'.format(kk) # url
+                
+                    aa = driver.find_element(By.XPATH, a).text
+                    bb = driver.find_element(By.XPATH, b).get_attribute('onclick')
+                    
+                    bb = re.sub(r'[^0-9]', '', bb)
 
-            while(True):
-                try:
-                    for j in range(1, 11): # 10개의 탭 존재
-                        for k in range(1, 16): # 한 탭에 15개의 공연 존재
-                            kk = 2*k + 1
-                            
-                            a = "/html/body/div[1]/div[2]/div[2]/table/tbody/tr[11]/td/table/tbody/tr[{}]/td/table/tbody/tr/td[1]/table/tbody/tr/td[3]/table/tbody/tr[1]/td/b/font/a".format(kk) # 제목
-                            b = '//*[@id="contents"]/div[2]/table/tbody/tr[11]/td/table/tbody/tr[{}]/td/table/tbody/tr/td[1]/table/tbody/tr/td[3]/table/tbody/tr[1]/td/b/font/a'.format(kk) # url
-                            
-                            aa = driver.find_element(By.XPATH, a).text
-                            bb = driver.find_element(By.XPATH, b).get_attribute('onclick')
-                            
-                            bb = re.sub(r'[^0-9]', '', bb)
+                    perform_list.append({"제목":aa, "URL":bb, '장르':cc})
 
-                            perform_list.append({"제목":aa, "URL":bb, '장르':cc})
-
-                        # 다음페이지 클릭
-                        if (page==0 & j < 10):
-                            botton = '//*[@id="contents"]/div[2]/table/tbody/tr[11]/td/table/tbody/tr[35]/td/a[{}]'.format(j)
-                            driver.find_element(By.XPATH, botton).send_keys(Keys.ENTER)
-                            driver.implicitly_wait(5)
-
-                        elif (page > 0 & j < 10):
-                            botton = '//*[@id="contents"]/div[2]/table/tbody/tr[11]/td/table/tbody/tr[35]/td/a[{}]'.format(j+1)
-                            driver.find_element(By.XPATH, botton).send_keys(Keys.ENTER)
-                            driver.implicitly_wait(5)
-
-                        #10번 다음페이지
-                        elif (page == 1 & j == 10):
-                            botton_2 = '//*[@id="contents"]/div[2]/table/tbody/tr[11]/td/table/tbody/tr[35]/td/a[10]'
-                            driver.find_element(By.XPATH, botton_2).send_keys(Keys.ENTER)
-                            driver.implicitly_wait(5)
-
-                        else:
-                            botton_2 = '//*[@id="contents"]/div[2]/table/tbody/tr[11]/td/table/tbody/tr[35]/td/a[11]'
-                            driver.find_element(By.XPATH, botton_2).send_keys(Keys.ENTER)
-                            driver.implicitly_wait(5)
-
-                    page += 1
-                    print(page)
-                except: # 더이상 없으면 멈춤
-                    break
-
-        for i in [4, 7]:      
+        for i in [4, 7]:
+            print(i)   
             query = f"http://www.playdb.co.kr/playdb/playdblist.asp?sReqMainCategory=00000{i}&sReqSubCategory=&sReqDistrict=&sReqTab=2&sPlayType=2&sStartYear=&sSelectType=1" # 사이트 주소
-            driver = webdriver.Chrome()
+            driver = webdriver.Chrome(options=options)
             driver.get(query)
             driver.implicitly_wait(5)
 
             c = '//*[@id="contents"]/div[1]/ul/li[{}]/a/img'.format(i) # 장르
             cc = driver.find_element(By.XPATH, c).get_attribute('alt')
+            path_top =  driver.find_elements(By.XPATH,'//*[@id="contents"]/div[2]/table/tbody/tr[9]/td/table/tbody/tr[1]/following-sibling::*')
+            page_x = path_top[-1]
+            page = int(page_x.text[-2])
+            num_cont = (len(path_top)-5)//2+1 # 한 탭당 공연 개수
+            # print(len(path_top),num_cont)
+            for num in tqdm(range(1,page+1)):
+                query = f"http://www.playdb.co.kr/playdb/playdblist.asp?Page={num}&sReqMainCategory=00000{i}&sReqSubCategory=&sReqDistrict=&sReqTab=2&sPlayType=2&sStartYear=&sSelectType=1" # 사이트 주소
+                driver = webdriver.Chrome(options=options)
+                driver.get(query)
+                driver.implicitly_wait(2)
+                for j in range(1, 11): # 10개의 탭 존재
+                    for k in range(1,num_cont+1): # 한 탭에 15개의 공연 존재
+                        kk = 2*k + 1
                         
-            page = 0
+                        a = "/html/body/div[1]/div[2]/div[2]/table/tbody/tr[9]/td/table/tbody/tr[{}]/td/table/tbody/tr/td[1]/table/tbody/tr/td[3]/table/tbody/tr[1]/td/b/font/a".format(kk) # 제목
+                        b = '//*[@id="contents"]/div[2]/table/tbody/tr[9]/td/table/tbody/tr[{}]/td/table/tbody/tr/td[1]/table/tbody/tr/td[3]/table/tbody/tr[1]/td/b/font/a'.format(kk) # url
+                        
+                        aa = driver.find_element(By.XPATH, a).text
+                        bb = driver.find_element(By.XPATH, b).get_attribute('onclick')
+                        
+                        bb = re.sub(r'[^0-9]', '', bb)
 
-            while(True):
-                try:
+                        perform_list.append({"제목":aa, "URL":bb, '장르':cc})
+
+        for i in [6]: 
+            print(i)
+            try:     
+                query = f"http://www.playdb.co.kr/playdb/playdblist.asp?sReqMainCategory=00000{i}&sReqSubCategory=&sReqDistrict=&sReqTab=2&sPlayType=2&sStartYear=&sSelectType=1" # 사이트 주소
+                driver = webdriver.Chrome(options=options)
+                driver.get(query)
+                driver.implicitly_wait(5)
+
+                c = '//*[@id="contents"]/div[1]/ul/li[{}]/a/img'.format(i) # 장르
+                cc = driver.find_element(By.XPATH, c).get_attribute('alt')
+                            
+                path_top =  driver.find_elements(By.XPATH,'//*[@id="contents"]/div[2]/table/tbody/tr[8]/td/table/tbody/tr[1]/following-sibling::*')
+                page_x = path_top[-1]
+                page = int(page_x.text[-2])
+                num_cont = (len(path_top)-5)//2+1 # 한 탭당 공연 개수
+                # print(len(path_top),num_cont)
+                for num in tqdm(range(1,page+1)):
+                    query = f"http://www.playdb.co.kr/playdb/playdblist.asp?Page={num}&sReqMainCategory=00000{i}&sReqSubCategory=&sReqDistrict=&sReqTab=2&sPlayType=2&sStartYear=&sSelectType=1" # 사이트 주소
+                    driver = webdriver.Chrome(options=options)
+                    driver.get(query)
+                    driver.implicitly_wait(2)
                     for j in range(1, 11): # 10개의 탭 존재
-                        for k in range(1, 16): # 한 탭에 15개의 공연 존재
-                            kk = 2*k + 1
-                            
-                            a = "/html/body/div[1]/div[2]/div[2]/table/tbody/tr[9]/td/table/tbody/tr[{}]/td/table/tbody/tr/td[1]/table/tbody/tr/td[3]/table/tbody/tr[1]/td/b/font/a".format(kk) # 제목
-                            b = '//*[@id="contents"]/div[2]/table/tbody/tr[9]/td/table/tbody/tr[{}]/td/table/tbody/tr/td[1]/table/tbody/tr/td[3]/table/tbody/tr[1]/td/b/font/a'.format(kk) # url
-                            
-                            aa = driver.find_element(By.XPATH, a).text
-                            bb = driver.find_element(By.XPATH, b).get_attribute('onclick')
-                            
-                            bb = re.sub(r'[^0-9]', '', bb)
-
-                            perform_list.append({"제목":aa, "URL":bb, '장르':cc})
-                        
-                        # 다음페이지 클릭
-                        if (page==0 & j < 10):
-                            botton = '//*[@id="contents"]/div[2]/table/tbody/tr[9]/td/table/tbody/tr[35]/td/a[{}]'.format(j)
-                            driver.find_element(By.XPATH, botton).send_keys(Keys.ENTER)
-                            driver.implicitly_wait(5)
-
-                        elif (page > 0 & j < 10):
-                            botton = '//*[@id="contents"]/div[2]/table/tbody/tr[9]/td/table/tbody/tr[35]/td/a[{}]'.format(j+1)
-                            driver.find_element(By.XPATH, botton).send_keys(Keys.ENTER)
-                            driver.implicitly_wait(5)
-
-                        #10번 다음페이지
-                        elif (page == 1 & j == 10):
-                            botton_2 = '//*[@id="contents"]/div[2]/table/tbody/tr[9]/td/table/tbody/tr[35]/td/a[10]'
-                            driver.find_element(By.XPATH, botton_2).send_keys(Keys.ENTER)
-                            driver.implicitly_wait(5)
-
-                        else:
-                            botton_2 = '//*[@id="contents"]/div[2]/table/tbody/tr[9]/td/table/tbody/tr[35]/td/a[11]'
-                            driver.find_element(By.XPATH, botton_2).send_keys(Keys.ENTER)
-                            driver.implicitly_wait(5)
-
-                    page += 1
-                            
-                except: # 더이상 없으면 멈춤
-                    break
-
-        for i in [6]:      
-            query = f"http://www.playdb.co.kr/playdb/playdblist.asp?sReqMainCategory=00000{i}&sReqSubCategory=&sReqDistrict=&sReqTab=2&sPlayType=2&sStartYear=&sSelectType=1" # 사이트 주소
-            driver = webdriver.Chrome()
-            driver.get(query)
-            driver.implicitly_wait(5)
-
-            c = '//*[@id="contents"]/div[1]/ul/li[{}]/a/img'.format(i) # 장르
-            cc = driver.find_element(By.XPATH, c).get_attribute('alt')
-                        
-            page = 0
-
-            while(True):
-                try:
-                    for j in range(1, 11): # 10개의 탭 존재
-                        for k in range(1, 16): # 한 탭에 15개의 공연 존재
+                        for k in range(1, num_cont+1): # 한 탭에 15개의 공연 존재
                             kk = 2*k + 1
                             
                             a = "/html/body/div[1]/div[2]/div[2]/table/tbody/tr[8]/td/table/tbody/tr[{}]/td/table/tbody/tr/td[1]/table/tbody/tr/td[3]/table/tbody/tr[1]/td/b/font/a".format(kk) # 제목
@@ -346,35 +314,11 @@ class PerformCrawler:
                             bb = re.sub(r'[^0-9]', '', bb)
 
                             perform_list.append({"제목":aa, "URL":bb, '장르':cc})
-                        
-                        # 다음페이지 클릭
-                        if (page==0 & j < 10):
-                            botton = '//*[@id="contents"]/div[2]/table/tbody/tr[8]/td/table/tbody/tr[35]/td/a[{}]'.format(j)
-                            driver.find_element(By.XPATH, botton).send_keys(Keys.ENTER)
-                            driver.implicitly_wait(5)
-
-                        elif (page > 0 & j < 10):
-                            botton = '//*[@id="contents"]/div[2]/table/tbody/tr[8]/td/table/tbody/tr[35]/td/a[{}]'.format(j+1)
-                            driver.find_element(By.XPATH, botton).send_keys(Keys.ENTER)
-                            driver.implicitly_wait(5)
-
-                        #10번 다음페이지
-                        elif (page == 1 & j == 10):
-                            botton_2 = '//*[@id="contents"]/div[2]/table/tbody/tr[8]/td/table/tbody/tr[35]/td/a[10]'
-                            driver.find_element(By.XPATH, botton_2).send_keys(Keys.ENTER)
-                            driver.implicitly_wait(5)
-
-                        else:
-                            botton_2 = '//*[@id="contents"]/div[2]/table/tbody/tr[8]/td/table/tbody/tr[35]/td/a[11]'
-                            driver.find_element(By.XPATH, botton_2).send_keys(Keys.ENTER)
-                            driver.implicitly_wait(5)
-
-                    page += 1
-                            
-                except: # 더이상 없으면 멈춤
-                    break
-
+            except:
+                pass         
         df = pd.DataFrame(perform_list)
+        print("=======공연 리스트수집완료=======")
+
         return df
 
     def get_perform_detail(self):
@@ -389,12 +333,16 @@ class PerformCrawler:
         info_url = []
         genre2 = []
         df = self.get_perform_list()
+        print("=======공연 상세정보 수집시작=======")
+        options = webdriver.ChromeOptions()
+        options.add_argument("headless")
+
         # for문을 이용해 data의 링크에 하나씩 접근
         for k in tqdm(range(len(df))):
         # 공연 사이트 주소
             try:
                 query = f"http://www.playdb.co.kr/playdb/playdbDetail.asp?sReqPlayno={df['URL'][k]}" # 사이트 주소
-                driver = webdriver.Chrome()
+                driver = webdriver.Chrome(options=options)
 
                 driver.get(query)
                 driver.implicitly_wait(5)
@@ -456,11 +404,15 @@ class PerformCrawler:
         df['줄거리'] = content
         df['작품설명'] = detail
         df['상세url'] = info_url
+        print("=======공연 상세정보 수집완료=======")
+        
 
         return df
 
     def get_perform_address(self):
-        
+        options = webdriver.ChromeOptions()
+        options.add_argument("headless")
+
         df = self.get_perform_detail()
         address = []
         # for문을 이용해 data의 링크에 하나씩 접근
@@ -468,7 +420,7 @@ class PerformCrawler:
         # 공연 사이트 주소
             try:
                 query = f"{df['장소url'][k]}" # 사이트 주소
-                driver = webdriver.Chrome()
+                driver = webdriver.Chrome(options=options)
 
                 driver.get(query)
                 driver.implicitly_wait(5)
@@ -521,10 +473,13 @@ class PerformCrawler:
             genre2 = []
             address = []
             review_ox = []
+            options = webdriver.ChromeOptions()
+            options.add_argument("headless")
+
             # 공연 사이트 주소 + 상품 정보 없으면 넘어가는 코드 (try-except 이용)
             try:
                 query = f"{data['상세url'][k]}" # 사이트 주소
-                driver = webdriver.Chrome()
+                driver = webdriver.Chrome(options=options)
                 driver.get(query)
                 driver.implicitly_wait(5)
                 # 예매안내 관련 팝업이 있다면 팝업 닫기
