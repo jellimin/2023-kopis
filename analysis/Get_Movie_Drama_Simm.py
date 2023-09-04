@@ -10,36 +10,32 @@ import pymysql
 from datetime import timedelta
 from datetime import datetime
 
-show_df = pd.read_csv('./Keywi/Modeling/data/total_show_df.csv')
-
 # MYSQL에서 데이터 가져오기
 conn = pymysql.connect(host='admin.ckaurvkcjohj.eu-north-1.rds.amazonaws.com', user='hashtag', password='hashtag123', db='KEYWIDB', charset='utf8')
 try:
     cursor = conn.cursor()
     sql = "SELECT mv_name,mv_cont FROM KEYWIDB.Movie"
     cursor.execute(sql)
-    result = cursor.fetchall()
-    movie_data = []
-    for record in result:
-        movie_data.append(record)
+    movie_result = cursor.fetchall()
 
     sql = "SELECT dr_name,dr_cont FROM KEYWIDB.Drama"
     cursor.execute(sql)
-    result = cursor.fetchall()
-    drama_data = []
-    for record in result:
-        drama_data.append(record)
-        
+    drama_result = cursor.fetchall()
+    # show_name, rating, review, show_venue, show_address, show_date, img_url, show_url, show_genre, is_review
+    # ['제목','장르','줄거리','작품설명','기간','장소','url','이미지url']
+    sql = "SELECT show_name, show_summary, show_detail, show_venue, show_address, show_date, img_url, show_url, is_review FROM KEYWIDB.NewShow"
+    cursor.execute(sql)
+    show_result = cursor.fetchall()
+
 finally:
-    movie_df = pd.DataFrame(movie_data)
-    movie_df.columns = ['제목','content']
-    drama_df = pd.DataFrame(drama_data)
-    drama_df.columns = ['제목','content']
+    movie_df = pd.DataFrame(movie_result,columns = ['제목','content'])
+    drama_df = pd.DataFrame(drama_result,columns = ['제목','content'])
+    show_df = pd.DataFrame(show_result,columns=['제목','줄거리','작품설명','장소','주소','기간','이미지url','url','후기유무'] )
     conn.close()
 
 # 전처리 함수 정의
-def replace_cont():
-    show_df = pd.read_csv('./Keywi/Modeling/data/공연중상세정보.csv')[['제목','장르','줄거리','작품설명','기간','장소','url','이미지url']]
+def replace_cont(show_df):
+    
     content = []
     for i in range(0,show_df.shape[0]):
         row = show_df.iloc[i]
@@ -52,8 +48,8 @@ def replace_cont():
         else: # 둘 다 있는 경우 - 줄거리 사용
             content.append(row.줄거리)
     show_df['content'] = content
-    show_df.to_csv('./Keywi/Modeling/data/total_show_df.csv', index=False)
-    return
+    #show_df.to_csv('./Keywi/Modeling/data/total_show_df.csv', index=False)
+    return show_df
 
 # 중복데이터 제거
 def duplicate_drop(df):
@@ -119,7 +115,7 @@ def preprocessing_text(df):
     df['content'] = df['content'].apply(lambda x: extract_num_eng(x))
     return df
 
-replace_cont() # 공연 내용 - 줄거리,작품설명으로 채우기
+show_df = replace_cont(show_df) # 공연 내용 - 줄거리,작품설명으로 채우기
 
 # 전처리
 show_df = preprocessing_text(show_df)
@@ -127,7 +123,7 @@ show_df.drop(['작품설명','줄거리'],axis=1,inplace=True)
 movie_df = preprocessing_text(movie_df)
 drama_df = preprocessing_text(drama_df)
 
-stop_word = pd.read_csv('./Keywi/Modeling/data/중간불용어_조정_완성.csv')
+stop_word = pd.read_csv('C:/Users/alsru/Desktop/Project/Flask_git/2023-kopis/analysis/data/중간불용어_조정_완성.csv')
 stop_word_list = stop_word['stopword'].tolist()
 add_list = ['가젔습', '갈껍니', '갈렵', '감쩌', '강추핮', '강츄입', '강츄합', '걑습', '거깉', '거랍',
             '거슬렀', '거웠습', '것과', '것깉', '겉습', '견지', '관계', '관랍했', '구기', '군무', '굴렸습',
@@ -202,34 +198,52 @@ def get_matcher(cat,answer_df,show_df):
 
             sm = difflib.SequenceMatcher(None, answer_bytes_list, show_bytes_list)
             similar = sm.ratio()*100
-            if similar >= 25:
+            if similar >= 30:
                 #print(show_df['제목'][j],similar)
-                data.append({'카테고리':cat,"콘텐츠제목":answer_df['제목'][i],'제목':show_df['제목'][j],'유사도':round(similar,2),
-                             '공연날짜':show_df['기간'][j],'장소':show_df['장소'][j],'이미지URL':show_df['이미지url'][j],'상세URL':show_df['url'][j]})
+                data.append({'카테고리':cat, "콘텐츠제목":answer_df['제목'][i],'제목':show_df['제목'][j],'유사도':round(similar,2),
+                             '공연날짜':show_df['기간'][j],'장소':show_df['장소'][j],'주소':show_df['주소'][j],'이미지URL':show_df['이미지url'][j],'상세URL':show_df['url'][j]})
     df = pd.DataFrame(data)
     df.sort_values(by=['콘텐츠제목','유사도'], inplace=True, ignore_index=True, ascending=False)
-    df.drop('유사도',axis=1,inplace=True)
+    #df.drop('유사도',axis=1,inplace=True)
     return df
+
 movie_simm_df = get_matcher('영화',movie_df, show_df)
 drama_simm_df = get_matcher('드라마',drama_df, show_df)
 
 final_df = pd.concat([movie_simm_df,drama_simm_df], axis=0, ignore_index=True)
-final_df.to_csv(f'./Keywi/Modeling/final/{week_no()}_유사공연.csv',index=False)
+#final_df.to_csv(f'./Keywi/Modeling/final/{week_no()}_유사공연.csv',index=False)
+num = 0
+cat_num = []
+    
+for name in final_df['콘텐츠제목'].unique():
+    for i in range(len(final_df)):
+        if final_df.loc[i,'콘텐츠제목'] == name:
+            # print(num,name)
+            cat_num.append(num)
+    num += 1
 
+final_df['콘텐츠번호'] = cat_num
 # DB에 올리기
 conn = pymysql.connect(host='admin.ckaurvkcjohj.eu-north-1.rds.amazonaws.com', user='hashtag', password='hashtag123', db='KEYWIDB', charset='utf8')
 # 커서 생성
 db = conn.cursor()
 # 쿼리 실행
-sql_state = """DELETE FROM KEYWIDB.HotInfo"""
+sql_state = """alter table KEYWIDB.HotLiked drop foreign key HotLiked_ibfk_2""" # 참조하는 경우 테이블 삭제 안되므로 외래키 제거
+db.execute(sql_state)
+sql_state = """TRUNCATE KEYWIDB.HotInfo"""
 db.execute(sql_state)
 sql_state = """ALTER TABLE KEYWIDB.HotInfo AUTO_INCREMENT = 1"""
 db.execute(sql_state)
 # DB 올릴때 더 빠른 방법 없을까 ?? 165개 업로드하는데 1분 걸림
-for cat,cont_name,show_name,show_venue,show_date,show_url,img_url in tqdm(zip(final_df['카테고리'],final_df['콘텐츠제목'],final_df['제목'],final_df['장소'],final_df['공연날짜'],final_df['상세URL'],final_df['이미지URL'])):
-    sql_state = """INSERT INTO KEYWIDB.HotInfo(category,cont_name,show_name,show_venue,show_date,show_url,img_url) 
-                VALUES ("%s", "%s", "%s", "%s", "%s", "%s", "%s")"""%(tuple([cat,cont_name,show_name,show_venue,show_date,show_url,img_url]))
+for cat, cont_num, cont_name, simm, show_name, show_venue, show_address, show_date, img_url, show_url in tqdm(zip(final_df['카테고리'], final_df['콘텐츠번호'], final_df['콘텐츠제목'], final_df['유사도'], final_df['제목'], 
+                                                                                                                  final_df['장소'], final_df['주소'], final_df['공연날짜'], final_df['이미지URL'], final_df['상세URL'])):
+    sql_state = """INSERT INTO KEYWIDB.HotInfo(category,cont_num,cont_name,simm,show_name,show_venue,show_address,show_date,img_url,show_url) 
+                VALUES ("%s","%s","%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s")"""%(tuple([cat,cont_num,cont_name,simm,show_name,show_venue,show_address,show_date,img_url,show_url]))
     db.execute(sql_state)
+
+# 외래키 다시 추가하기
+sql_state = """alter table KEYWIDB.HotLiked add constraint HotLiked_ibfk_2 foreign key(show_id) references KEYWIDB.HotInfo(id) ON DELETE CASCADE"""
+db.execute(sql_state)
 
 conn.commit()
 conn.close()

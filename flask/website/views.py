@@ -1,11 +1,13 @@
 # 메인페이지 + 메인페이지에 연결된 페이지들
 
 from flask import Blueprint, render_template, request, session, redirect, url_for, jsonify
-from flask_login import login_required, current_user
+# from flask_login import login_required, current_user
 import pandas as pd
 from func.main_fun import open_info, open_info_all, hot_info, hot_info_all, week_no
 from func.like_fun import main_open, main_hot, open_open, hot_hot, update_like_in, update_like_in_hot
-from flask_paginate import Pagination, get_page_args
+# from flask_paginate import Pagination, get_page_args
+from func.search import uniq_keyword, search_keyword1, search_keyword2, search_keyword3, search_keyword4, search_keyword5, search_keyword6, search_keyword1_6, search_keyword2_6,search_keyword3_6,search_keyword4_6,search_keyword5_6,search_keyword6_6
+
 
 # 블루프린트를 이용하면 App의 모든 url을 한 곳에서 관리하지 않아도 됨
 # 즉, 여러 파일에서 url에 대한 정의를 선언 가능
@@ -19,6 +21,15 @@ def home():
 
     ### HotInfo 플로팅
     hots = hot_info()
+
+    ### ShowInfo 플로팅
+    keyword = uniq_keyword()
+    keyword1 = search_keyword1_6()
+    keyword2 = search_keyword2_6()
+    keyword3 = search_keyword3_6()
+    keyword4 = search_keyword4_6()
+    keyword5 = search_keyword5_6()
+    keyword6 = search_keyword6_6()
 
     ### OpenInfo 플로팅
     opens = open_info()
@@ -41,9 +52,9 @@ def home():
             opens = main_open(main_open_id, opens, user_info)
             hots = main_hot(main_hot_id, hots, user_info)
 
-            return render_template('home.html', open = opens, hot = hots, user_info = user_info)
+            return render_template('home.html', open = opens, hot = hots, keyword = keyword, user_info = user_info, keyword1=keyword1, keyword2=keyword2, keyword3=keyword3, keyword4=keyword4, keyword5=keyword5, keyword6=keyword6)
     except:
-        return render_template('home.html', open = opens, hot = hots)
+        return render_template('home.html', open = opens, hot = hots, keyword = keyword, keyword1=keyword1, keyword2=keyword2, keyword3=keyword3, keyword4=keyword4, keyword5=keyword5, keyword6=keyword6)
 
 # 2. 오픈 정보 페이지
 @views.route('/open')
@@ -220,3 +231,44 @@ def test():
 @views.route('/service')
 def service():
     return render_template('service.html')
+
+# 11. 키워드 검색 페이지
+# 키워드 검색 페이지
+@views.route('/keyword1')
+def search_page1():
+    keyword1 = search_keyword1()
+    keyword = uniq_keyword()[0]
+    return render_template('keyword1.html', keyword1 = keyword1, keyword = keyword)
+@views.route('/keyword2')
+def search_page2():
+    keyword2 = search_keyword2()
+    keyword = uniq_keyword()[1]
+    return render_template('keyword2.html', keyword2 = keyword2, keyword = keyword)
+@views.route('/keyword3')
+def search_page3():
+    keyword3 = search_keyword3()
+    keyword = uniq_keyword()[2]
+    return render_template('keyword3.html', keyword3 = keyword3, keyword = keyword)
+@views.route('/keyword4')
+def search_page4():
+    keyword4 = search_keyword4()
+    keyword = uniq_keyword()[3]
+    return render_template('keyword4.html', keyword4 = keyword4, keyword = keyword)
+@views.route('/keyword5')
+def search_page5():
+    keyword5 = search_keyword5()
+    keyword = uniq_keyword()[4]
+    return render_template('keyword5.html', keyword5 = keyword5, keyword = keyword)
+@views.route('/keyword6')
+def search_page6():
+    keyword6= search_keyword6()
+    keyword = uniq_keyword()[5]
+    return render_template('keyword6.html', keyword6 = keyword6, keyword = keyword)
+
+# 핫플 소개 페이지
+@views.route('/map', methods=['GET', 'POST'])
+def map_page():
+    if request.method == 'POST':
+        dat = {'address':str(request.form['address']),
+               'place':str(request.form['place'])}
+    return render_template('map.html', dat=dat) 
