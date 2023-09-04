@@ -170,7 +170,7 @@ def hot_all():
     cursor = conn.cursor()
     cursor.execute("select count(*) from KEYWIDB.HotInfo")
     total = cursor.fetchone()[0]
-    cursor.execute("select id, concat('[', category, ' ', cont_name, ' ', '와/과 유사한', ']', ' ', show_name) as title, show_url, show_date, img_url from KEYWIDB.HotInfo LIMIT %s OFFSET %s;", (per_page, offset))
+    cursor.execute("select id, concat('[', category, ' ', cont_name, ' ', '와/과 유사한', ']', ' ', show_name) as title, show_url, show_date, img_url, show_address, show_venue from KEYWIDB.HotInfo LIMIT %s OFFSET %s;", (per_page, offset))
     data = cursor.fetchall()
     cursor.close()
     conn.close()
@@ -182,12 +182,16 @@ def hot_all():
         url = data[i][2]
         date = data[i][3]
         image = data[i][4]
+        address = data[i][5]
+        venue = data[i][6]
         hot_info = {
             '_id' : id,
             'title' : title,
             'url' : url,
             'date' : date,
-            'image' : image
+            'image' : image,
+            'address' : address,
+            'place' : venue
         }
         hots.append(hot_info)
 
