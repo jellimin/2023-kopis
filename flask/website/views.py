@@ -1,12 +1,12 @@
 # 메인페이지 + 메인페이지에 연결된 페이지들
 
 from flask import Blueprint, render_template, request, session, redirect, url_for, jsonify
-from flask_login import login_required, current_user
+# from flask_login import login_required, current_user
 import pandas as pd
 from func.main_fun import open_info, open_info_all, hot_info, hot_info_all, week_no
 from func.like_fun import main_open, main_hot, open_open, hot_hot, update_like_in, update_like_in_hot
-from flask_paginate import Pagination, get_page_args
-from func.search import uniq_keyword, search_keyword1, search_keyword2, search_keyword3, search_keyword4, search_keyword5, search_keyword6
+# from flask_paginate import Pagination, get_page_args
+from func.search import uniq_keyword, search_keyword1, search_keyword2, search_keyword3, search_keyword4, search_keyword5, search_keyword6, search_keyword1_6, search_keyword2_6,search_keyword3_6,search_keyword4_6,search_keyword5_6,search_keyword6_6
 
 
 # 블루프린트를 이용하면 App의 모든 url을 한 곳에서 관리하지 않아도 됨
@@ -24,6 +24,12 @@ def home():
 
     ### ShowInfo 플로팅
     keyword = uniq_keyword()
+    keyword1 = search_keyword1_6()
+    keyword2 = search_keyword2_6()
+    keyword3 = search_keyword3_6()
+    keyword4 = search_keyword4_6()
+    keyword5 = search_keyword5_6()
+    keyword6 = search_keyword6_6()
 
     ### OpenInfo 플로팅
     opens = open_info()
@@ -48,7 +54,7 @@ def home():
 
             return render_template('home.html', open = opens, hot = hots, keyword = keyword, user_info = user_info)
     except:
-        return render_template('home.html', open = opens, hot = hots, keyword = keyword)
+        return render_template('home.html', open = opens, hot = hots, keyword = keyword, keyword1=keyword1, keyword2=keyword2, keyword3=keyword3, keyword4=keyword4, keyword5=keyword5, keyword6=keyword6)
 
 # 2. 오픈 정보 페이지
 @views.route('/open')
