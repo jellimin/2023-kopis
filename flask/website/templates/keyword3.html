@@ -43,7 +43,7 @@
                 <div class="level-left" style="text-align:right;">
                     <!-- 좋아요를 누르면 toggle_like 함수가 실행된다. -->
                     <!-- toggle like 함수는 게시글의 id와, 어떤 이모티콘을 눌렀는지 type에 대한 정보를 인자로 제공한다. -->
-                    <a class="level-item is-sparta" aria-label="heart" style="cursor: pointer;" onclick="toggle_like_main_keyword('{{info._id}}', 'heart')">
+                    <a class="level-item is-sparta" aria-label="heart" style="cursor: pointer;" onclick="toggle_like_key3('{{info._id}}', 'heart')">
                         <span class="icon is-small">
                             <!-- 사용자가 좋아요를 누른 경우 -->
                             {% if info.heart_by_me == True %}
