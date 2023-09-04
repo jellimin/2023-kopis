@@ -4,7 +4,7 @@ from flask import Blueprint, render_template, request, session, redirect, url_fo
 # from flask_login import login_required, current_user
 import pandas as pd
 from func.main_fun import open_info, open_info_all, hot_info, hot_info_all, week_no
-from func.like_fun import main_open, main_hot, main_key, open_open, hot_hot, update_like_in, update_like_in_hot, update_like_in_key
+from func.like_fun import main_open, main_hot, main_key, open_open, hot_hot, key_key, update_like_in, update_like_in_hot, update_like_in_key
 from flask_paginate import Pagination, get_page_args
 from func.search import uniq_keyword, search_keyword1, search_keyword2, search_keyword3, search_keyword4, search_keyword5, search_keyword6, search_keyword1_6, search_keyword2_6,search_keyword3_6,search_keyword4_6,search_keyword5_6,search_keyword6_6
 
@@ -322,7 +322,7 @@ def search_page1():
     try:
         if session['u_id']: # 로그인한 이력이 있는 경우
             user_info = session['u_id']
-            
+            keyword1 = key_key(keyword1, user_info)
             return render_template('keyword1.html', keyword1 = keyword1, keyword = keyword, user_info=user_info,
                                    pagination=Pagination(page=page,  # 지금 우리가 보여줄 페이지는 1 또는 2, 3, 4, ... 페이지인데,
                                                          total=total,  # 총 몇 개의 포스트인지를 미리 알려주고,
@@ -362,7 +362,7 @@ def search_page2():
     try:
         if session['u_id']: # 로그인한 이력이 있는 경우
             user_info = session['u_id']
-            
+            keyword2 = key_key(keyword2, user_info)
             return render_template('keyword2.html', keyword2 = keyword2, keyword = keyword, user_info=user_info,
                                    pagination=Pagination(page=page,  # 지금 우리가 보여줄 페이지는 1 또는 2, 3, 4, ... 페이지인데,
                                                          total=total,  # 총 몇 개의 포스트인지를 미리 알려주고,
@@ -401,7 +401,7 @@ def search_page3():
     try:
         if session['u_id']: # 로그인한 이력이 있는 경우
             user_info = session['u_id']
-            
+            keyword3 = key_key(keyword3, user_info)
             return render_template('keyword3.html', keyword3 = keyword3, keyword = keyword, user_info=user_info,
                                    pagination=Pagination(page=page,  # 지금 우리가 보여줄 페이지는 1 또는 2, 3, 4, ... 페이지인데,
                                                          total=total,  # 총 몇 개의 포스트인지를 미리 알려주고,
@@ -440,7 +440,7 @@ def search_page4():
     try:
         if session['u_id']: # 로그인한 이력이 있는 경우
             user_info = session['u_id']
-            
+            keyword4 = key_key(keyword4, user_info)
             return render_template('keyword4.html', keyword4 = keyword4, keyword = keyword, user_info=user_info,
                                    pagination=Pagination(page=page,  # 지금 우리가 보여줄 페이지는 1 또는 2, 3, 4, ... 페이지인데,
                                                          total=total,  # 총 몇 개의 포스트인지를 미리 알려주고,
@@ -479,7 +479,7 @@ def search_page5():
     try:
         if session['u_id']: # 로그인한 이력이 있는 경우
             user_info = session['u_id']
-            
+            keyword5 = key_key(keyword5, user_info)
             return render_template('keyword5.html', keyword5 = keyword5, keyword = keyword, user_info=user_info,
                                    pagination=Pagination(page=page,  # 지금 우리가 보여줄 페이지는 1 또는 2, 3, 4, ... 페이지인데,
                                                          total=total,  # 총 몇 개의 포스트인지를 미리 알려주고,
@@ -518,7 +518,7 @@ def search_page6():
     try:
         if session['u_id']: # 로그인한 이력이 있는 경우
             user_info = session['u_id']
-            
+            keyword6 = key_key(keyword6, user_info)
             return render_template('keyword6.html', keyword6 = keyword6, keyword = keyword, user_info=user_info,
                                    pagination=Pagination(page=page,  # 지금 우리가 보여줄 페이지는 1 또는 2, 3, 4, ... 페이지인데,
                                                          total=total,  # 총 몇 개의 포스트인지를 미리 알려주고,
