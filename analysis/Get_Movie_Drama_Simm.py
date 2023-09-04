@@ -237,7 +237,7 @@ db.execute(sql_state)
 # DB 올릴때 더 빠른 방법 없을까 ?? 165개 업로드하는데 1분 걸림
 for cat, cont_num, cont_name, simm, show_name, show_venue, show_address, show_date, img_url, show_url in tqdm(zip(final_df['카테고리'], final_df['콘텐츠번호'], final_df['콘텐츠제목'], final_df['유사도'], final_df['제목'], 
                                                                                                                   final_df['장소'], final_df['주소'], final_df['공연날짜'], final_df['이미지URL'], final_df['상세URL'])):
-    sql_state = """INSERT INTO KEYWIDB.HotInfo(category,cont_num,cont_name,simm,show_name,show_venue,show_address,show_date,show_url,img_url) 
+    sql_state = """INSERT INTO KEYWIDB.HotInfo(category,cont_num,cont_name,simm,show_name,show_venue,show_address,show_date,img_url,show_url) 
                 VALUES ("%s","%s","%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s")"""%(tuple([cat,cont_num,cont_name,simm,show_name,show_venue,show_address,show_date,img_url,show_url]))
     db.execute(sql_state)
 

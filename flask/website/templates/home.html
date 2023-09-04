@@ -14,7 +14,11 @@
             {% for info in hot %}
             <div class="col-sm-2" id="{{info._id}}">
                 <div style=" cursor: pointer;" onclick="location.href='{{info.url}}';">
-                    <div style="text-align : center;">
+                    <div style="width:180px; height:10px;"></div>
+                    <div class="cont-name" style="text-align:left;">  
+                        <p><b>{{info['name']}}</b></p>
+                    </div>
+                    <div class="info-thumnail" style="text-align : center;">
                         <!-- 사용자 지정 이미지가 없을 경우 -->
                         {% if info['image']=='nan' %}
                         <img src="{{ url_for('static', filename='no_image.png')}}" alt="기본이미지"
@@ -25,11 +29,11 @@
                         {% endif %}
                     </div>
                     <div style="width:180px; height:10px;"></div>
-                    <div style="text-align:center; width:180px; height:40px;">
+                    <div class="info-name" style="text-align:center;">  
                         <p><b>{{info['title']}}</b></p>
                     </div>
-                    <div style="position:relative; width:180px; height:25px;"> 
-                        <p style="text-align:right; font-size:85%; color:#999">{{info['date']}}</p>
+                    <div class="info-date"> 
+                        <p style="text-align:center; font-size:85%; color:#999">{{info['date']}}</p>
                     </div>
                 </div>
                 <!-- 로그인을 한 경우, 좋아요 버튼이 보이도록 -->
@@ -94,7 +98,7 @@
             {% for info in open %}
             <div class="col-sm-2" id="{{info._id}}">
                 <div style="cursor: pointer;" onclick="location.href='{{info.url}}';">
-                    <div style="text-align : center;">
+                    <div class="open_thumnail" style="text-align : center;">
                         <!-- 사용자 지정 이미지가 없을 경우 -->
                         {% if info['image']=='nan' %}
                         <img src="{{ url_for('static', filename='no_image.png')}}" alt="기본이미지"
@@ -105,11 +109,11 @@
                         {% endif %}
                     </div>
                     <div style="width:180px; height:10px;"></div>
-                    <div style="width:180px; height:75px;">
+                    <div class="open-name" style="width:180px; height:75px; text-align:center;">
                         <p><b>{{info['title']}}</b></p>
                     </div>
-                    <div style="width:180px; height:25px;">
-                        <p style="text-align:right; font-size:85%; color:#999">{{info['date']}}</p>
+                    <div class="open-date" style="width:180px; height:25px;">
+                        <p style="text-align:center; font-size:85%; color:#999">{{info['date']}}</p>
                     </div>
                 </div>
                 <!-- 로그인을 한 경우, 좋아요 버튼이 보이도록 -->
