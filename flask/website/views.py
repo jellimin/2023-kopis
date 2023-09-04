@@ -258,11 +258,6 @@ def search_page6():
     keyword6= search_keyword6()
     keyword = uniq_keyword()[5]
     return render_template('keyword6.html', keyword6 = keyword6, keyword = keyword)
-@views.route('/keyword7')
-def search_page7():
-    keyword7 = search_keyword7()
-    keyword = uniq_keyword()[6]
-    return render_template('keyword7.html', keyword7 = keyword7, keyword = keyword)
 
 # 핫플 소개 페이지
 @views.route('/map', methods=['GET', 'POST'])
@@ -270,4 +265,4 @@ def map_page():
     if request.method == 'POST':
         dat = {'address':str(request.form['address']),
                'place':str(request.form['place'])}
-    return render_template('map.html', dat=dat)
+    return render_template('map.html', dat=dat) 
