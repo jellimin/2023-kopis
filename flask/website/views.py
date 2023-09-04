@@ -84,10 +84,10 @@ def home():
             keyword1 = main_key(main_key1_id, keyword1, user_info)
             keyword2 = main_key(main_key2_id, keyword2, user_info)
             keyword3 = main_key(main_key3_id, keyword3, user_info)
-            keyword4 = main_key(main_key4_id, keyword1, user_info)
-            keyword5 = main_key(main_key5_id, keyword2, user_info)
-            keyword6 = main_key(main_key6_id, keyword3, user_info)
-            keyword7 = main_key(main_key7_id, keyword3, user_info)
+            keyword4 = main_key(main_key4_id, keyword4, user_info)
+            keyword5 = main_key(main_key5_id, keyword5, user_info)
+            keyword6 = main_key(main_key6_id, keyword6, user_info)
+            keyword7 = main_key(main_key7_id, keyword7, user_info)
 
             return render_template('home.html', open = opens, hot = hots, keyword = keyword, user_info = user_info, keyword1=keyword1, keyword2=keyword2, keyword3=keyword3, keyword4=keyword4, keyword5=keyword5, keyword6=keyword6, keyword7=keyword7)
     except:
