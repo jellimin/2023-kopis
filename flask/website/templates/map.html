@@ -5,22 +5,26 @@
         <title>공연장 근처 핫플 지도</title>
         <style>
         .map_wrap, .map_wrap * {margin:0; padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
-        .map_wrap {position:relative;width:100%;height:350px;}
+        .map_wrap {position:relative;width:100%;height:500px;}
         #category {position:absolute;top:10px;left:10px;border-radius: 5px; border:1px solid #909090;box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);background: #fff;overflow: hidden;z-index: 2;}
         #category li {float:left;list-style: none;width:50px;px;border-right:1px solid #acacac;padding:6px 0;text-align: center; cursor: pointer;}
         #category li.on {background: #eee;}
         #category li:hover {background: #ffe6e6;border-left:1px solid #acacac;margin-left: -1px;}
         #category li:last-child{margin-right:0;border-right:0;}
         #category li span {display: block;margin:0 auto 3px;width:27px;height: 28px;}
-        #category li .category_bg {background:url("C:/Users/sumin/Downloads/Result/Result.png") no-repeat;}
-        #category li .restaurant {background-position: -10px 0;}
-        #category li .cafe {background-position: -10px -36px;}
-        #category li .attractions {background-position: -10px -72px;}
-        #category li.on .category_bg {background-position-x:-46px;}
-        .placeinfo_wrap {position:absolute;bottom:28px;left:-150px;width:300px;}
+        #category li .restaurant {
+            background-image: url('./static/free-icon-restaurant.png');
+            background-size: 27px 28px;}
+        #category li .cafe {
+            background-image: url('./static/free-icon-coffee.png');
+            background-size: 27px 28px;}
+        #category li .attractions {
+            background-image: url('./static/free-icon-museum.png');
+            background-size: 27px 28px;}
+        .placeinfo_wrap {position:absolute;bottom:28px;left:-150px;width:300px; }
         .placeinfo {position:relative;width:100%;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;padding-bottom: 10px;background: #fff;}
         .placeinfo:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}
-        .placeinfo_wrap .after {content:'';position:relative;margin-left:-12px;left:50%;width:22px;height:12px;background:url("C:/Users/sumin/Downloads/Result/Result.png")}
+        .placeinfo_wrap .after {content:'';position:relative;margin-left:-12px;left:50%;width:22px;height:12px;}
         .placeinfo a, .placeinfo a:hover, .placeinfo a:active{color:#fff;text-decoration: none;}
         .placeinfo a, .placeinfo span {display: block;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
         .placeinfo span {margin:5px 5px 0 5px;cursor: default;font-size:13px;}
@@ -60,7 +64,7 @@ var placeOverlay = new kakao.maps.CustomOverlay({zIndex:1}),
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = {
         center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
-        level: 5 // 지도의 확대 레벨
+        level: 2 // 지도의 확대 레벨
     };
 
 // 지도를 생성합니다    
@@ -170,8 +174,6 @@ function displayPlaces(places) {
     // 이 순서는 스프라이트 이미지에서의 위치를 계산하는데 사용됩니다
     var order = document.getElementById(currCategory).getAttribute('data-order');
 
-    
-
     for ( var i=0; i<places.length; i++ ) {
 
             // 마커를 생성하고 지도에 표시합니다
@@ -187,16 +189,24 @@ function displayPlaces(places) {
     }
 }
 
+
 // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
 function addMarker(position, order) {
-    var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_category.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
-        imageSize = new kakao.maps.Size(27, 28),  // 마커 이미지의 크기
-        imgOptions =  {
-            spriteSize : new kakao.maps.Size(72, 208), // 스프라이트 이미지의 크기
-            spriteOrigin : new kakao.maps.Point(46, (order*36)), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
-            offset: new kakao.maps.Point(11, 28) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
-        },
-        markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
+    
+    var imageSrc;
+
+    if (order === "0") {
+        imageSrc = "./static/free-icon-restaurant.png";
+    }
+    else if (order === "1") {
+        imageSrc = "./static/free-icon-coffee.png";
+    }
+    else if (order === "2") {
+        var imageSrc = "./static/free-icon-museum.png";
+    }
+     
+    var imageSize = new kakao.maps.Size(27, 28),  // 마커 이미지의 크기
+        markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize),
             marker = new kakao.maps.Marker({
             position: position, // 마커의 위치
             image: markerImage 
