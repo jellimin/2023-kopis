@@ -171,7 +171,7 @@ def search_keyword6():
     uni_keyword_list = list(uniq)
     uni_keyword_list.remove(' ')
     uniq_keyword = np.array(uni_keyword_list)
-    search_df = df[df['topic'] == uniq_keyword[6]]
+    search_df = df[df['topic'] == uniq_keyword[5]]
     search_df = search_df.reset_index(drop=True)
     keyword6 = []
     for i in range(len(search_df)):
