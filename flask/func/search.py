@@ -1,5 +1,6 @@
 import pandas as pd
 import pymysql
+import numpy as np
 
 conn = pymysql.connect(host='admin.ckaurvkcjohj.eu-north-1.rds.amazonaws.com', user='hashtag', password='hashtag123', db='KEYWIDB', charset='utf8')
 try:
@@ -18,7 +19,10 @@ finally:
 
 def uniq_keyword():
     global df
-    uni_keyword = df['topic'].unique()
+    uni = df['topic'].unique()
+    uni_keyword_list = list(uni)
+    uni_keyword_list.remove(' ')
+    uni_keyword = np.array(uni_keyword_list)
     keyword = []
     for i in range(len(uni_keyword)):
         keyw = {'keyword' : uni_keyword[i],
@@ -28,7 +32,10 @@ def uniq_keyword():
 
 def search_keyword1():
     global df
-    uniq_keyword = df['topic'].unique()
+    uniq = df['topic'].unique()
+    uni_keyword_list = list(uniq)
+    uni_keyword_list.remove(' ')
+    uniq_keyword = np.array(uni_keyword_list)
     search_df = df[df['topic'] == uniq_keyword[0]]
     search_df = search_df.reset_index(drop=True)
     keyword1 = []
@@ -52,7 +59,10 @@ def search_keyword1():
 
 def search_keyword2():
     global df
-    uniq_keyword = df['topic'].unique()
+    uniq = df['topic'].unique()
+    uni_keyword_list = list(uniq)
+    uni_keyword_list.remove(' ')
+    uniq_keyword = np.array(uni_keyword_list)
     search_df = df[df['topic'] == uniq_keyword[1]]
     search_df = search_df.reset_index(drop=True)
     keyword2 = []
@@ -76,7 +86,10 @@ def search_keyword2():
 
 def search_keyword3():
     global df
-    uniq_keyword = df['topic'].unique()
+    uniq = df['topic'].unique()
+    uni_keyword_list = list(uniq)
+    uni_keyword_list.remove(' ')
+    uniq_keyword = np.array(uni_keyword_list)
     search_df = df[df['topic'] == uniq_keyword[2]]
     search_df = search_df.reset_index(drop=True)
     keyword3 = []
@@ -100,7 +113,10 @@ def search_keyword3():
 
 def search_keyword4():
     global df
-    uniq_keyword = df['topic'].unique()
+    uniq = df['topic'].unique()
+    uni_keyword_list = list(uniq)
+    uni_keyword_list.remove(' ')
+    uniq_keyword = np.array(uni_keyword_list)
     search_df = df[df['topic'] == uniq_keyword[3]]
     search_df = search_df.reset_index(drop=True)
     keyword4 = []
@@ -124,7 +140,10 @@ def search_keyword4():
 
 def search_keyword5():
     global df
-    uniq_keyword = df['topic'].unique()
+    uniq = df['topic'].unique()
+    uni_keyword_list = list(uniq)
+    uni_keyword_list.remove(' ')
+    uniq_keyword = np.array(uni_keyword_list)
     search_df = df[df['topic'] == uniq_keyword[4]]
     search_df = search_df.reset_index(drop=True)
     keyword5 = []
@@ -148,8 +167,11 @@ def search_keyword5():
 
 def search_keyword6():
     global df
-    uniq_keyword = df['topic'].unique()
-    search_df = df[df['topic'] == uniq_keyword[5]]
+    uniq = df['topic'].unique()
+    uni_keyword_list = list(uniq)
+    uni_keyword_list.remove(' ')
+    uniq_keyword = np.array(uni_keyword_list)
+    search_df = df[df['topic'] == uniq_keyword[6]]
     search_df = search_df.reset_index(drop=True)
     keyword6 = []
     for i in range(len(search_df)):
@@ -169,27 +191,3 @@ def search_keyword6():
         }
         keyword6.append(search_info)
     return keyword6
-
-def search_keyword7():
-    global df
-    uniq_keyword = df['topic'].unique()
-    search_df = df[df['topic'] == uniq_keyword[6]]
-    search_df = search_df.reset_index(drop=True)
-    keyword7 = []
-    for i in range(len(search_df)):
-        title = search_df.loc[i, '제목']
-        date = search_df.loc[i, '기간']
-        image = search_df.loc[i, '이미지url']
-        url = search_df.loc[i, '상세url']
-        place = search_df.loc[i, '공연장명']
-        address = search_df.loc[i, '주소']
-        search_info = {
-            'title' : title,
-            'date' : date,
-            'image' : image,
-            'url' : url,
-            'place' : place,
-            'address' : address
-        }
-        keyword7.append(search_info)
-    return keyword7

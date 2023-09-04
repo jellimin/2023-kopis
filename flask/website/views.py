@@ -6,7 +6,7 @@ import pandas as pd
 from func.main_fun import open_info, open_info_all, hot_info, hot_info_all, week_no
 from func.like_fun import main_open, main_hot, open_open, hot_hot, update_like_in, update_like_in_hot
 from flask_paginate import Pagination, get_page_args
-from func.search import uniq_keyword, search_keyword1, search_keyword2, search_keyword3, search_keyword4, search_keyword5, search_keyword6, search_keyword7
+from func.search import uniq_keyword, search_keyword1, search_keyword2, search_keyword3, search_keyword4, search_keyword5, search_keyword6
 
 
 # 블루프린트를 이용하면 App의 모든 url을 한 곳에서 관리하지 않아도 됨
@@ -258,11 +258,6 @@ def search_page6():
     keyword6= search_keyword6()
     keyword = uniq_keyword()[5]
     return render_template('keyword6.html', keyword6 = keyword6, keyword = keyword)
-@views.route('/keyword7')
-def search_page6():
-    keyword7 = search_keyword7()
-    keyword = uniq_keyword()[6]
-    return render_template('keyword7.html', keyword7 = keyword7, keyword = keyword)
 
 # 핫플 소개 페이지
 @views.route('/map', methods=['GET', 'POST'])
