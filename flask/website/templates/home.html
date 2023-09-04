@@ -35,6 +35,12 @@
                     <div class="info-date"> 
                         <p style="text-align:center; font-size:85%; color:#999">{{info['date']}}</p>
                     </div>
+                    <div style=" text-align: center;">
+                        <form action="{{url_for('views.map_page')}}" method="post" class="btn btn-default">
+                            <input style = "background-color:#999" type="submit" name='place' value="{{info['place']}}" class="btn btn-default">
+                            <input type="hidden" name='address' value="{{info['address']}}">
+                        </form>
+                    </div>
                 </div>
                 <!-- 로그인을 한 경우, 좋아요 버튼이 보이도록 -->
                 {% if user_info %}
@@ -161,8 +167,8 @@
                             <img alt="" src="https://tickets.interpark.com/_next/static/media/line.2a9386f0.svg" width="13" height="12" decoding="async" data-nimg="1" loading="lazy" style="color: transparent;">
                         </button>
                     </div>
-                  </div>
-                  <div id="tab2" class="cont">
+                </div>
+                <div id="tab2" class="cont">
                     <div class="row">
                         {% for info in keyword2 %}
                         <div class="col-sm-2" id="{{info._id}}">
@@ -220,8 +226,8 @@
                             <img alt="" src="https://tickets.interpark.com/_next/static/media/line.2a9386f0.svg" width="13" height="12" decoding="async" data-nimg="1" loading="lazy" style="color: transparent;">
                         </button>
                     </div>
-                  </div>
-                  <div id="tab3" class="cont">
+                </div>
+                <div id="tab3" class="cont">
                     <div class="row">
                         {% for info in keyword3 %}
                         <div class="col-sm-2" id="{{info._id}}">
@@ -279,8 +285,8 @@
                             <img alt="" src="https://tickets.interpark.com/_next/static/media/line.2a9386f0.svg" width="13" height="12" decoding="async" data-nimg="1" loading="lazy" style="color: transparent;">
                         </button>
                     </div>
-                  </div>
-                  <div id="tab4" class="cont">
+                </div>
+                <div id="tab4" class="cont">
                     <div class="row">
                         {% for info in keyword4 %}
                         <div class="col-sm-2" id="{{info._id}}">
@@ -338,8 +344,8 @@
                             <img alt="" src="https://tickets.interpark.com/_next/static/media/line.2a9386f0.svg" width="13" height="12" decoding="async" data-nimg="1" loading="lazy" style="color: transparent;">
                         </button>
                     </div>
-                  </div>
-                  <div id="tab5" class="cont">
+                </div>
+                <div id="tab5" class="cont">
                     <div class="row">
                         {% for info in keyword5 %}
                         <div class="col-sm-2" id="{{info._id}}">
@@ -397,8 +403,8 @@
                             <img alt="" src="https://tickets.interpark.com/_next/static/media/line.2a9386f0.svg" width="13" height="12" decoding="async" data-nimg="1" loading="lazy" style="color: transparent;">
                         </button>
                     </div>
-                  </div>
-                  <div id="tab6" class="cont">
+                </div>
+                <div id="tab6" class="cont">
                     <div class="row">
                         {% for info in keyword6 %}
                         <div class="col-sm-2" id="{{info._id}}">
@@ -458,9 +464,9 @@
                     </div>
                   </div>
                 </div>
-              </div>
+            </div>
               
-              <script>
+                <script>
                 const tabList = document.querySelectorAll('.tab_menu .list li');
                 const contents = document.querySelectorAll('.tab_menu .cont_area .cont')
                 let activeCont = ''; // 현재 활성화 된 컨텐츠 (기본:#tab1 활성화)

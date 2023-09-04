@@ -5,7 +5,7 @@
         <title>공연장 근처 핫플 지도</title>
         <style>
         .map_wrap, .map_wrap * {margin:0; padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
-        .map_wrap {position:relative;width:100%;height:500px;}
+        .map_wrap {position:relative;width: 100vw;height: 100vh;}
         #category {position:absolute;top:10px;left:10px;border-radius: 5px; border:1px solid #909090;box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);background: #fff;overflow: hidden;z-index: 2;}
         #category li {float:left;list-style: none;width:50px;px;border-right:1px solid #acacac;padding:6px 0;text-align: center; cursor: pointer;}
         #category li.on {background: #eee;}
@@ -64,7 +64,7 @@ var placeOverlay = new kakao.maps.CustomOverlay({zIndex:1}),
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = {
         center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
-        level: 2 // 지도의 확대 레벨
+        level: 1 // 지도의 확대 레벨
     };
 
 // 지도를 생성합니다    
@@ -73,8 +73,8 @@ var map = new kakao.maps.Map(mapContainer, mapOption);
 // 지도 이동 막기
 map.setDraggable(false); 
 // 지도 최저, 최고 레벨 값
-map.setMinLevel(2); 
-map.setMaxLevel(5);
+map.setMinLevel(1); 
+map.setMaxLevel(3);
 
 // 장소 검색 객체를 생성합니다
 var ps = new kakao.maps.services.Places(map);
