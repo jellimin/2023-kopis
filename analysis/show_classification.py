@@ -13,7 +13,7 @@ try:
 
 finally:
     show_df = pd.DataFrame(show_result,columns=['id','제목','줄거리','작품설명','장소','주소','기간','장르','URL','이미지URL', '후기유무'] )
-    show_df.drop('id', axis=1, inplace=True)
+    #show_df.drop('id', axis=1, inplace=True)
     conn.close()
     show_df = show_df[show_df['후기유무']=='X'].reset_index(drop=True)
 
@@ -36,9 +36,9 @@ def classificate_show(show_df):
         elif (any(keyword in content for keyword in list_2)) or (any(keyword in detail for keyword in list_2)):
             topic.append('따뜻한 위로가 되는')
         elif (any(keyword in content for keyword in list_3)) or (any(keyword in detail for keyword in list_3)) or (genre == '클래식') or (genre == '오페라'):
-            topic.append('웅장한')
+            topic.append('음악과 함께하는')
         elif (any(keyword in content for keyword in list_4)) or (any(keyword in detail for keyword in list_4)) or (genre=='라이선스') or ("오픈런" in date):
-            topic.append('기다려지는')
+            topic.append('손꼽아 기다려지는')
         elif (any(keyword in content for keyword in list_5)) or (any(keyword in detail for keyword in list_5)) or (genre=='퍼포먼스'):
             topic.append('스토리가 탄탄한')
         elif (any(keyword in content for keyword in list_6)) or (any(keyword in detail for keyword in list_6)) or (genre == '어린이/가족'):
@@ -56,9 +56,10 @@ conn = pymysql.connect(host='admin.ckaurvkcjohj.eu-north-1.rds.amazonaws.com', u
 # 커서 생성
 db = conn.cursor()
 # 쿼리 실행
-for name,date,place,address,image_url,detail_url,topic in tqdm(zip(show_df['제목'],show_df['기간'],show_df['장소'],show_df['주소'],show_df['이미지URL'],show_df['URL'],show_df['topic'])):
-    sql_state = """INSERT INTO KEYWIDB.ShowInfo(name,date,place,address,image_url,detail_url,topic) 
-                VALUES ("%s","%s","%s", "%s", "%s", "%s", "%s")"""%(tuple([name,date,place,address,image_url,detail_url,topic]))
+for name,date,place,address,image_url,detail_url,topic,id in tqdm(zip(show_df['제목'],show_df['기간'],show_df['장소'],show_df['주소'],show_df['이미지URL'],
+                                                                      show_df['URL'],show_df['topic'],show_df['id'])):
+    sql_state = """INSERT INTO KEYWIDB.ShowInfo(name,date,place,address,image_url,detail_url,topic,id) 
+                VALUES ("%s","%s","%s", "%s", "%s", "%s", "%s", "%s")"""%(tuple([name,date,place,address,image_url,detail_url,topic,id]))
     db.execute(sql_state)
 
 conn.commit()
