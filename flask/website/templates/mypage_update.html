@@ -5,84 +5,96 @@
 
 {% block content %}
 
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-sm-6">
-            <form method="POST" enctype="multipart/form-data">
-                <h2 align="center">MyPage 수정</h2>
+<div style='padding: 10px 500px 0px 500px;'>
+    <form method="POST" enctype="multipart/form-data">
+        <h2 align="center">마이페이지 정보 수정</h2>
 
-                    <!-- 프로필 이미지 영역 -->
-                    {% if session['image_url'] %}
-                    <img src="{{ url_for('static', filename=session['image_url'])}}" alt="사용자프로필이미지"
-                        class="rounded mx-auto d-block" style="width:200px; height:200px;">
-                    {% else %}
-                    <img src="{{ url_for('static', filename='basic_profile.png')}}" alt="기본프로필이미지"
-                        class="rounded mx-auto d-block" style="width:200px; height:200px;">
-                    {% endif %}
+        <div style="height:20px;"></div>
 
-                    <label for="imageFile" class="form-label">프로필 이미지</label>
-                    <input type = 'file' name='imageFile', id = 'imageFile'>
+        <label for="imageFile" class="form-label">프로필 이미지</label>
 
-                    <!-- 기본 정보 영역 -->
+        <!-- 프로필 이미지 영역 -->
+        {% if session['image_url'] %}
+        <img src="{{ url_for('static', filename=session['image_url'])}}" alt="사용자프로필이미지"
+            class="rounded mx-auto d-block" style="width:200px; height:200px;">
+        {% else %}
+        <img src="{{ url_for('static', filename='basic_profile.png')}}" alt="기본프로필이미지"
+            class="rounded mx-auto d-block" style="width:200px; height:200px;">
+        {% endif %}
 
-                    <!-- 이메일 변경 못하게 fieldset:disabled 추가 -->
-                    <fieldset disabled="disabled">
-                        <div class="mb-3">
-                            <label for="InputEmail1" class="form-label">이메일</label>
-                            <input name="email" type="email" class="form-control" id="InputEmail1" aria-describedby="emailHelp">
-                        </div>
-                    </fieldset>
+        <input class = 'image_update' type = 'file' name='imageFile', id = 'imageFile'>
 
-                    <div class="mb-3">
-                        <label for="InputPassword1" class="form-label">비밀번호</label>
-                        <input name="password1" type="password" class="form-control" id="InputPassword1"">
-                    </div>
+        <div style="height:20px;"></div>
+        <!-- 기본 정보 영역 -->
 
-                    <fieldset disabled="disabled">
-                        <div class="mb-3">
-                            <label for="Name1" class="form-label">이름</label>
-                            <input name="name" type="text" class="form-control" id="Name1">
-                        </div>
-                    </fieldset>
-                    
-                    <div class="mb-3">
-                        <label for="Nickname1" class="form-label">닉네임</label>
-                        <input name="nickname" type="text" class="form-control" id="Nickname1">
-                    </div>
+        <!-- 이메일 변경 못하게 fieldset:disabled 추가 -->
+        <fieldset disabled="disabled">
+            <div class="mb-3">
+                <label for="InputEmail1" class="form-label">이메일</label>
+                <input name="email" type="email" class="form-control" id="InputEmail1" aria-describedby="emailHelp">
+            </div>
+        </fieldset>
 
-                    <div class="mb-3">
-                        <label for="Birth1" class="form-label">생년월일</label>
-                        <input name="birth" type="date" class="form-control" id="Birth1">
-                    </div>
-                    
-                    <fieldset disabled="disabled">
-                        <div class="mb-3">
-                            <label for="Sex1" class="form-label">성별</label>
-                            <input type="radio" name="gender" value="man">남
-                            <input type="radio" name="gender" value="woman">여
-                        </div>
-                    </fieldset>
-
-                    <!-- 주소 -->
-                    <!-- JQuery 이용 -->
-                    <!-- https://www.thewordcracker.com/intermediate/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%8B%9C%EB%8F%84-%EC%8B%9C%EA%B5%B0%EA%B5%AC-%EC%9D%8D%EB%A9%B4%EB%8F%99-%EC%A3%BC%EC%86%8C/ -->
-                    <div class="mb-3">
-                        <label for="Address1" class="form-label">주소</label>
-                        <select name="address1" id="sido">
-                            <option value="">시도 선택</option>
-                        </select>
-                        <select name="address2" id="sigugun">
-                            <option value="">시군구 선택</option>
-                        </select>
-                        <select name="address3" id="dong">
-                            <option value="">읍면동 선택</option>
-                        </select>
-                    </div>
-
-                <button type="submit" class="btn btn-primary">정보 수정 제출</button>
-            </form>
+        <div class="mb-3">
+            <label for="InputPassword1" class="form-label">비밀번호</label>
+            <input name="password1" type="password" class="form-control" id="InputPassword1"">
         </div>
-    </div>
+
+        <fieldset disabled="disabled">
+            <div class="mb-3">
+                <label for="Name1" class="form-label">이름</label>
+                <input name="name" type="text" class="form-control" id="Name1">
+            </div>
+        </fieldset>
+        
+        <div class="mb-3">
+            <label for="Nickname1" class="form-label">닉네임</label>
+            <input name="nickname" type="text" class="form-control" id="Nickname1">
+        </div>
+
+        <div class="mb-3">
+            <label for="Birth1" class="form-label">생년월일</label>
+            <input name="birth" type="date" class="form-control" id="Birth1" style='text-align: center;'>
+        </div>
+        
+        <fieldset disabled="disabled">
+            <div class="mb-3">
+                <label for="Sex1" class="form-label">성별</label>
+                <div style="height:5px;"></div>
+                <div class = 'sex-choose'>
+                  <input type="radio" name="gender" value="man" class = 'male'>남
+                  <input type="radio" name="gender" value="woman" class = 'female'>여
+                </div>
+              </div>
+        </fieldset>
+
+        <!-- 주소 -->
+        <!-- JQuery 이용 -->
+        <!-- https://www.thewordcracker.com/intermediate/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%8B%9C%EB%8F%84-%EC%8B%9C%EA%B5%B0%EA%B5%AC-%EC%9D%8D%EB%A9%B4%EB%8F%99-%EC%A3%BC%EC%86%8C/ -->
+        <div>
+            <label for="Address1" class="form-label">주소</label>
+            <div style="height:5px;"></div>
+            <div class ='juso-choose'>
+              <select name="address1" id="sido" style="width:180px;height:30px;">
+                <option value="" style='text-align: center;'>시도 선택</option>
+              </select>
+              <div style="height:5px;"></div>
+              <select name="address2" id="sigugun" style="width:180px;height:30px;">
+                <option value="" style='text-align: center;'>시군구 선택</option>
+              </select>
+              <div style="height:5px;"></div>
+              <select name="address3" id="dong" style="width:180px;height:30px;">
+                <option value="" style='text-align: center;'>읍면동 선택</option>
+              </select>
+            </div>
+        </div>
+
+        <div style="height:20px;"></div>
+        
+        <div style='text-align: center;'>
+            <button type="submit" class="btn btn-primary" style="background-color:rgb(137, 214, 20); border-color: rgb(137, 214, 20);">정보 수정 제출</button>
+        </div>
+    </form>
 </div>
 
 <div class="sideBanner" style=" cursor: pointer;" onclick="location.href='/test'">
