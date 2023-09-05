@@ -4,10 +4,10 @@ import tqdm
 
 crawler_content = ContentCrawler()
 crawler_perform = PerformCrawler()
-movie_df = crawler_content.get_movie_detail()
-drama_df = crawler_content.get_drama_detail()
-ent_df = crawler_content.get_entertain_info()
-review_df,simm_df = crawler_perform.get_perform_contents()
+# movie_df = crawler_content.get_movie_detail()
+# drama_df = crawler_content.get_drama_detail()
+# ent_df = crawler_content.get_entertain_info()
+review_df,simm_df = crawler_perform.get_perform_review()
 
 
 def update_DB():

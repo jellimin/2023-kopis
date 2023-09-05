@@ -27,10 +27,9 @@ def classificate_show(show_df):
         list_1 = ['코미디','코믹','웃음','웃기','개그','유쾌']
         list_2 = ['따뜻한','감동','위로','눈물','슬픈','기억','힐링','아름']
         list_3 = ['라이브','조명','화려','연주']
-        list_4 = ['내한','인기','작가','어워즈','돌아']
-        list_5 = ['유명감독','탄탄','예술','소설','원작','새롭'] # 스토리가 탄탄한
+        list_4 = ['내한','인기','유명','어워즈','돌아']
+        list_5 = ['유명감독','연출','예술','소설','원작']
         list_6 = ['엄마','아빠','가족','함께','부모님','추억','친구','선물','교훈']
-        list_7 = ['몰입','대사','깊다','인상','스토리','완벽','연출','감독','장면'] # 연출이 완벽한
         if (any(keyword in content for keyword in list_1)) or (any(keyword in detail for keyword in list_1)):
             topic.append('웃기고 유쾌한')
         elif (any(keyword in content for keyword in list_2)) or (any(keyword in detail for keyword in list_2)):
@@ -40,11 +39,9 @@ def classificate_show(show_df):
         elif (any(keyword in content for keyword in list_4)) or (any(keyword in detail for keyword in list_4)) or (genre=='라이선스') or ("오픈런" in date):
             topic.append('기다려지는')
         elif (any(keyword in content for keyword in list_5)) or (any(keyword in detail for keyword in list_5)) or (genre=='퍼포먼스'):
-            topic.append('스토리가 탄탄한')
+            topic.append('연출이 완벽한')
         elif (any(keyword in content for keyword in list_6)) or (any(keyword in detail for keyword in list_6)) or (genre == '어린이/가족'):
             topic.append('함께 보기 좋은')
-        elif (any(keyword in content for keyword in list_7)) or (any(keyword in detail for keyword in list_7)):
-            topic.append('연출이 완벽한')
         else:
             topic.append(' ')
     return topic
