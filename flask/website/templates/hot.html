@@ -32,6 +32,12 @@
                     <div style="width:180px; height:25px;">
                         <p style="text-align:right; font-size:85%; color:#999">{{info['date']}}</p>
                     </div>
+                    <div style=" text-align: center;">
+                        <form action="{{url_for('views.map_page')}}" method="post" class="btn btn-default">
+                            <input style = "background-color:#999" type="submit" name='place' value="{{info['place']}}" class="btn btn-default">
+                            <input type="hidden" name='address' value="{{info['address']}}">
+                        </form>
+                    </div>
                 </div>
                 <!-- 로그인을 한 경우, 좋아요 버튼이 보이도록 -->
                 {% if user_info %}

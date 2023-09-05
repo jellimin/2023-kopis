@@ -39,7 +39,7 @@ def hot_info():
     from website import mysql
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute("SELECT id, cont_num, concat('[', category, ' ', cont_name, ' ', '와/과 유사한', ']') as cont_name, show_name as title, show_url, show_date, img_url FROM KEYWIDB.HotInfo GROUP BY cont_num HAVING max(simm)  LIMIT 6")
+    cursor.execute("SELECT id, cont_num, concat('[', category, ' ', cont_name, ' ', '와/과 유사한', ']') as cont_name, show_name as title, show_url, show_date, img_url, show_address, show_venue FROM KEYWIDB.HotInfo GROUP BY cont_num HAVING max(simm)  LIMIT 6")
     data = cursor.fetchall()
     cursor.close()
     conn.close()
@@ -53,6 +53,8 @@ def hot_info():
         url = data[i][4]
         date = data[i][5]
         image = data[i][6]
+        address = data[i][7]
+        venue = data[i][8]
         hot_info = {
             '_id' : id,
             'num' : cont_num,
@@ -60,7 +62,9 @@ def hot_info():
             'title' : title,
             'url' : url,
             'date' : date,
-            'image' : image
+            'image' : image,
+            'address' : address,
+            'place' : venue
         }
         hot.append(hot_info)
     return hot
@@ -98,7 +102,7 @@ def hot_info_all():
     from website import mysql
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute("select id, concat('[', category, ' ', cont_name, ' ', '와/과 유사한', ']')as cont_name, show_name as title, show_url, show_date, img_url from KEYWIDB.HotInfo")
+    cursor.execute("select id, concat('[', category, ' ', cont_name, ' ', '와/과 유사한', ']')as cont_name, show_name as title, show_url, show_date, img_url, show_address, show_venue from KEYWIDB.HotInfo")
     data = cursor.fetchall()
     cursor.close()
     conn.close()
@@ -111,13 +115,17 @@ def hot_info_all():
         url = data[i][3]
         date = data[i][4]
         image = data[i][5]
+        address = data[i][6]
+        venue = data[i][7]
         hot_info = {
             '_id' : id,
             'name': cont_name,
             'title' : title,
             'url' : url,
             'date' : date,
-            'image' : image
+            'image' : image,
+            'address' : address,
+            'place' : venue
         }
         hot.append(hot_info)
     return hot
