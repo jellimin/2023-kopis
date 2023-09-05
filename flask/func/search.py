@@ -1,3 +1,4 @@
+# ShowInfo 테이블에서 키워드별 공연 정보 가져오기기
 import pandas as pd
 import pymysql
 import numpy as np
@@ -5,7 +6,7 @@ import numpy as np
 conn = pymysql.connect(host='admin.ckaurvkcjohj.eu-north-1.rds.amazonaws.com', user='hashtag', password='hashtag123', db='KEYWIDB', charset='utf8')
 try:
     cursor = conn.cursor()
-    sql = "SELECT show_id, name,date,place,address,image_url,detail_url,topic FROM KEYWIDB.ShowInfo"
+    sql = "SELECT id, name,date,place,address,image_url,detail_url,topic FROM KEYWIDB.ShowInfo"
     cursor.execute(sql)
     result = cursor.fetchall()
     search_data = []

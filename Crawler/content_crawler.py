@@ -7,6 +7,7 @@ crawler_perform = PerformCrawler()
 movie_df = crawler_content.get_movie_detail()
 drama_df = crawler_content.get_drama_detail()
 ent_df = crawler_content.get_entertain_info()
+
 review_df,simm_df = crawler_perform.get_perform_contents()
 
 
@@ -81,5 +82,8 @@ def update_DB():
     conn.commit()
     # 연결 종료
     conn.close()
-
-update_DB()
+    
+try:
+    update_DB()
+except:
+    pass

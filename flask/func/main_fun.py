@@ -39,14 +39,14 @@ def hot_info():
     from website import mysql
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute("SELECT id, cont_num, concat('[', category, ' ', cont_name, ' ', '와/과 유사한', ']') as cont_name, show_name as title, show_url, show_date, img_url, show_address, show_venue FROM KEYWIDB.HotInfo GROUP BY cont_num HAVING max(simm)  LIMIT 6")
+    cursor.execute("SELECT show_id, cont_num, concat('[', category, ' ', cont_name, ' ', '와/과 유사한', ']') as cont_name, show_name as title, show_url, show_date, img_url, show_address, show_venue FROM KEYWIDB.HotInfo GROUP BY cont_num HAVING max(simm)  LIMIT 6")
     data = cursor.fetchall()
     cursor.close()
     conn.close()
 
     hot = []
     for i in range(len(data)):
-        id = data[i][0]
+        show_id = data[i][0]
         cont_num = data[i][1]
         cont_name = data[i][2]
         title = data[i][3]
@@ -56,7 +56,7 @@ def hot_info():
         address = data[i][7]
         venue = data[i][8]
         hot_info = {
-            '_id' : id,
+            '_id' : show_id,
             'num' : cont_num,
             'name' : cont_name,
             'title' : title,
@@ -102,14 +102,14 @@ def hot_info_all():
     from website import mysql
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute("select id, concat('[', category, ' ', cont_name, ' ', '와/과 유사한', ']')as cont_name, show_name as title, show_url, show_date, img_url, show_address, show_venue from KEYWIDB.HotInfo")
+    cursor.execute("select show_id, concat('[', category, ' ', cont_name, ' ', '와/과 유사한', ']')as cont_name, show_name as title, show_url, show_date, img_url, show_address, show_venue from KEYWIDB.HotInfo")
     data = cursor.fetchall()
     cursor.close()
     conn.close()
 
     hot = []
     for i in range(len(data)):
-        id = data[i][0]
+        show_id = data[i][0]
         cont_name = data[i][1]
         title = data[i][2]
         url = data[i][3]
@@ -118,7 +118,7 @@ def hot_info_all():
         address = data[i][6]
         venue = data[i][7]
         hot_info = {
-            '_id' : id,
+            '_id' : show_id,
             'name': cont_name,
             'title' : title,
             'url' : url,
