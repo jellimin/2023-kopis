@@ -177,7 +177,7 @@
                                     {% endif %}
                                 </div>
                                 <div style="width:180px; height:10px;"></div>
-                                <div style="width:180px; height:75px; color:black">
+                                <div class="info-name" style="text-align:center;">  
                                     <p><b>{{info['title']}}</b></p>
                                 </div>
                                 <div style="width:180px; height:25px;">
@@ -236,7 +236,7 @@
                                     {% endif %}
                                 </div>
                                 <div style="width:180px; height:10px;"></div>
-                                <div style="width:180px; height:75px; color:black">
+                                <div class="info-name" style="text-align:center;">  
                                     <p><b>{{info['title']}}</b></p>
                                 </div>
                                 <div style="width:180px; height:25px;">
@@ -295,7 +295,7 @@
                                     {% endif %}
                                 </div>
                                 <div style="width:180px; height:10px;"></div>
-                                <div style="width:180px; height:75px; color:black">
+                                <div class="info-name" style="text-align:center;">  
                                     <p><b>{{info['title']}}</b></p>
                                 </div>
                                 <div style="width:180px; height:25px;">
@@ -354,7 +354,7 @@
                                     {% endif %}
                                 </div>
                                 <div style="width:180px; height:10px;"></div>
-                                <div style="width:180px; height:75px; color:black">
+                                <div class="info-name" style="text-align:center;">  
                                     <p><b>{{info['title']}}</b></p>
                                 </div>
                                 <div style="width:180px; height:25px;">
@@ -413,7 +413,7 @@
                                     {% endif %}
                                 </div>
                                 <div style="width:180px; height:10px;"></div>
-                                <div style="width:180px; height:75px; color:black">
+                                <div class="info-name" style="text-align:center;">  
                                     <p><b>{{info['title']}}</b></p>
                                 </div>
                                 <div style="width:180px; height:25px;">
@@ -472,7 +472,7 @@
                                     {% endif %}
                                 </div>
                                 <div style="width:180px; height:10px;"></div>
-                                <div style="width:180px; height:75px; color:black">
+                                <div class="info-name" style="text-align:center;">  
                                     <p><b>{{info['title']}}</b></p>
                                 </div>
                                 <div style="width:180px; height:25px;">
@@ -562,22 +562,22 @@
                     </ul>
                 </div>
                 <div id="con2" class="cont">
-                    <div class="row">
+                    <div class="row" >
                         {% for info in content1 %}
-                        <div class="col-sm-2" id="{{info.cate}}">
+                        <div class="col-sm-2" id="{{info.cate}}" style="float: none;margin:0 auto;">
                             <div style="cursor: pointer;" onclick="location.href='{{info.url}}';">
                                 <div style="text-align : center;">
                                     <!-- 사용자 지정 이미지가 없을 경우 -->
                                     {% if info['image']=='nan' %}
                                     <img src="{{ url_for('static', filename='no_image.png')}}" alt="기본이미지" 
-                                    class="radius_img" style="width:180px; height:270px;">
+                                    class="newsletter-thumbnail">
                                     <!-- 사용자 지정 이미지가 있을 경우 -->
                                     {% else %}
-                                    <img src="{{info['image']}}" class="radius_img" style="width:180px; height:270px;"/>
+                                    <img src="{{info['image']}}" class="newsletter-thumbnail"/>
                                     {% endif %}
                                 </div>
                                 <div style="width:180px; height:10px;"></div>
-                                <div style="text-align:center;">  
+                                <div class="info-name" style="text-align:center;">  
                                     <p><b>{{info['title']}}</b></p>
                                 </div>
                             </div>
@@ -589,16 +589,16 @@
                 <div id="con3" class="cont">
                     <div class="row">
                         {% for info in content2 %}
-                        <div class="col-sm-2" id="{{info.cate}}">
+                        <div class="col-sm-2" id="{{info.cate}}" style="float: none;margin:0 auto;">
                             <div style="cursor: pointer;" onclick="location.href='{{info.url}}';">
                                 <div style="text-align : center;">
                                     <!-- 사용자 지정 이미지가 없을 경우 -->
                                     {% if info['image']=='nan' %}
                                     <img src="{{ url_for('static', filename='no_image.png')}}" alt="기본이미지" 
-                                    class="radius_img" style="width:180px; height:270px;">
+                                    class="newsletter-thumbnail">
                                     <!-- 사용자 지정 이미지가 있을 경우 -->
                                     {% else %}
-                                    <img src="{{info['image']}}" class="radius_img" style="width:180px; height:270px;"/>
+                                    <img src="{{info['image']}}" class="newsletter-thumbnail"/>
                                     {% endif %}
                                 </div>
                                 <div style="width:180px; height:10px;"></div>
@@ -614,16 +614,16 @@
                 <div id="con4" class="cont">
                     <div class="row">
                         {% for info in content3 %}
-                        <div class="col-sm-2" id="{{info.cate}}">
+                        <div class="col-sm-2" id="{{info.cate}}" style="float: none;margin:0 auto;">
                             <div style="cursor: pointer;" onclick="location.href='{{info.url}}';">
                                 <div style="text-align : center;">
                                     <!-- 사용자 지정 이미지가 없을 경우 -->
                                     {% if info['image']=='nan' %}
                                     <img src="{{ url_for('static', filename='no_image.png')}}" alt="기본이미지" 
-                                    class="radius_img" style="width:180px; height:270px;">
+                                    class="newsletter-thumbnail">
                                     <!-- 사용자 지정 이미지가 있을 경우 -->
                                     {% else %}
-                                    <img src="{{info['image']}}" class="radius_img" style="width:180px; height:270px;"/>
+                                    <img src="{{info['image']}}" class="newsletter-thumbnail"/>
                                     {% endif %}
                                 </div>
                                 <div style="width:180px; height:10px;"></div>
