@@ -3,7 +3,7 @@
 from flask import Blueprint, render_template, request, session, redirect, url_for, jsonify
 # from flask_login import login_required, current_user
 import pandas as pd
-from func.main_fun import open_info, open_info_all, hot_info, hot_info_all, week_no
+from func.main_fun import open_info, open_info_all, hot_info, hot_info_all, week_no, curation_content1, curation_content2, curation_content3
 from func.like_fun import main_open, main_hot, main_key, open_open, hot_hot, key_key, update_like_in, update_like_in_hot, update_like_in_key
 from flask_paginate import Pagination, get_page_args
 from func.search import uniq_keyword, search_keyword1, search_keyword2, search_keyword3, search_keyword4, search_keyword5, search_keyword6, search_keyword7, search_keyword1_6, search_keyword2_6,search_keyword3_6,search_keyword4_6,search_keyword5_6,search_keyword6_6,search_keyword7_6
@@ -34,6 +34,11 @@ def home():
 
     ### OpenInfo 플로팅
     opens = open_info()
+    
+    ### CurtationContent 플로팅
+    content1 = curation_content1()
+    content2 = curation_content2()
+    content3 = curation_content3()
     
     # main에 띄워진 오픈공연 id 가져오기
     main_open_id = []
@@ -89,9 +94,9 @@ def home():
             keyword6 = main_key(main_key6_id, keyword6, user_info)
             keyword7 = main_key(main_key7_id, keyword7, user_info)
 
-            return render_template('home.html', open = opens, hot = hots, keyword = keyword, user_info = user_info, keyword1=keyword1, keyword2=keyword2, keyword3=keyword3, keyword4=keyword4, keyword5=keyword5, keyword6=keyword6, keyword7=keyword7)
+            return render_template('home.html', open = opens, hot = hots, content1=content1, content2=content2, content3=content3, keyword = keyword, user_info = user_info, keyword1=keyword1, keyword2=keyword2, keyword3=keyword3, keyword4=keyword4, keyword5=keyword5, keyword6=keyword6, keyword7=keyword7)
     except:
-        return render_template('home.html', open = opens, hot = hots, keyword = keyword, keyword1=keyword1, keyword2=keyword2, keyword3=keyword3, keyword4=keyword4, keyword5=keyword5, keyword6=keyword6, keyword7=keyword7)
+        return render_template('home.html', open = opens, hot = hots, content1=content1, content2=content2, content3=content3, keyword = keyword, keyword1=keyword1, keyword2=keyword2, keyword3=keyword3, keyword4=keyword4, keyword5=keyword5, keyword6=keyword6, keyword7=keyword7)
 
 # 2. 오픈 정보 페이지
 @views.route('/open')
@@ -310,6 +315,18 @@ def key7_update_like():
 @views.route('/curation')
 def curation():
     return render_template('curation.html')
+# 8-1. 뉴스레터 페이지
+@views.route('/newsletter1')
+def newsletter1():
+    return render_template('newsletter1.html')
+# 8-2. 뉴스레터 페이지
+@views.route('/newsletter2')
+def newsletter2():
+    return render_template('newsletter2.html')
+# 8-3. 뉴스레터 페이지
+@views.route('/newsletter3')
+def newsletter3():
+    return render_template('newsletter3.html')
 
 # 9. 유형 테스트 페이지
 @views.route('/test')

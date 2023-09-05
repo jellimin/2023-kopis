@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}Title - Home{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='curation.css') }}">
+<div class="curation-container">
+    <div class="curation-one">
+        <div class="container" style="max-width: 800px; margin: 0 auto; padding: 20px; background-color: #ffffff;">
+            <h1 data-ke-size="size16" ><span style="border-radius: 4em; padding: 0.5em; background: #dcf1fb; font-weight: bold;">스탠딩 콘서트 100% 즐기는 꿀팁</span></h1>
+            <p data-ke-size="size16">&nbsp;</p>
+            <p style="margin-bottom: 1.5em">
+                “콘서트의 진정한 묘미는 스탠딩이다”라는 말이 있을 정도로 스탠딩 콘서트를 많은 사람들이 선호하고 있습니다. 스탠딩석은 지정석과 달리 ‘의자를 깔지 않고 서서 관람하는 자리‘를 의미합니다. 함께 신나게 호흡하며 공연을 즐길 수 있다는 장점이 있지만 장시간 서서 관람해야 하기 때문에 체력적으로 지치기 쉽다는 단점이 있습니다. ‘ 자칫하면 힘든 기억으로 남을 수 있는 스탠딩 공연, 어떻게 해야 100% 즐길 수 있을까?’ 고민하는 분들을 위해 스탠딩 콘서트 꿀팁🍯을 알려드립니다. 🎭
+            </p>
+            <ul style='list-style-type: none;'>
+                <li><p data-ke-size="size16" style="margin-top: 1.5em; margin-bottom: 1.5em;"><span style="border-bottom: 10px solid #dcf1fb; padding: 0 0 0 0.2em; font-weight: bold;">스탠딩석 예매는 무조건 ‘좌측상단’부터</span></p></li>
+                <ul class="intended">
+                    <li>
+                        스탠딩석은 지정석과 달리 입장번호가 존재하며, 그 입장번호는 좌측 상단부터입니다. 지정석과 착각하여 돌출무대 쪽으로 좌석을 골라 입장순서가 밀리지 않도록 무조건 앞줄 ⬆️ ! 좌측 ⬅️ ! 꼭 기억해주세요. 
+                    </li>
+                </ul>
+                <li><p data-ke-size="size16" style="margin-top: 1.5em; margin-bottom: 1.5em;"><span style="border-bottom: 10px solid #dcf1fb; padding: 0 0 0 0.2em; font-weight: bold;">스탠딩 펜스를 잡자</span></p></li>
+                <ul class="intended">
+                    <li>
+                        공연 중 몸을 기대거나 손으로 잡을 수 있는 ‘펜스’ 자리를 노려보는 것이 좋습니다. 장시간 관람 시 펜스에 기대 공연의 피로를 줄여줄 수 있고, 가져온 짐을 놓기도 편합니다.
+                    </li>
+                </ul>
+                <li><p data-ke-size="size16" style="margin-top: 1.5em; margin-bottom: 1.5em;"><span style="border-bottom: 10px solid #dcf1fb; padding: 0 0 0 0.2em; font-weight: bold;">어떤 준비물이 필요할까 ?</span></p></li>
+                <ul class="intended">
+                    <li>
+                        콘서트장은 원칙적으로 음식물 반입금지지만, 간단하게 먹을 수 있는 물, 초콜릿 바는 괜찮으니 추천드립니다. 오랜 시간 서 있어야 하는 스탠딩 석에서 수분보충을 위한 물 💦과 떨어진 당을 채울 수 있는 초콜릿 🍫은 잃었던 에너지를 다시 채울 수 있게 해줍니다.
+                    </li>
+                    <li>
+                        또한, 장시간 콘서트를 즐길 편한 복장 👕👖 + 편하게 묶을 수 있는 머리끈🧵  + 간단한 소지품을 넣을 수 있는 작은 크로스백과 같은 가방 👝도 스탠딩 콘서트를 편하게 즐길 수 있도록 도와줍니다.
+                    </li>
+                </ul>
+                <li><p data-ke-size="size16" style="margin-top: 1.5em; margin-bottom: 1.5em;"><span style="border-bottom: 10px solid #dcf1fb; padding: 0 0 0 0.2em; font-weight: bold;">이 외의 꿀팁</span></p></li>
+                <ul class="intended">
+                    <li>
+                        <b>쓸모 없는 짐을 맡기자</b>
+                    </li>
+                    <ul class="intended" >
+                        <li>
+                            많은 사람들이 밀집해있는 스탠딩이기 때문에 최대한 짐을 줄여주시는 것이 좋습니다. 공연장에 있는 짐 보관소에 반드시 짐을 맡기시는 것을 추천합니다.
+                        </li>
+                    </ul>
+                    <li>
+                        <b>입장 전 화장실은 필수 !</b>
+                    </li>
+                    <ul class="intended">
+                        <li>
+                            스탠딩 콘서트 특성상 한 번 나갔다 들어오면 원래 있던 자리로 돌아오지 못하고 맨 뒤로 서야합니다. 따라서, 입장하기 전 화장실 🚻은 필수입니다.
+                        </li>
+                    </ul>
+                    <li>
+                        <b>발목 나갈까 걱정 .. 그렇다면 스포츠 테이핑</b>
+                    </li>
+                    <ul class="intended">
+                        <li>
+                            장시간 공연에 혹시나 발목 나갈까 걱정이 된다면 스포츠 테이핑을 추천드립니다. 체육 전공자들이 운동할 때 하는 테이핑이지만, 스탠딩 콘서트를 즐기는 많은 사람들이 이미 하고 있다고 !
+                        </li>
+                    </ul>
+                </ul>
+                <div style="text-align:center">
+                    <img src="./static/tip.png" alt="테이핑 이미지">
+                </div>
+            </ul>
+            <p>
+                스탠딩 콘서트는 지정석에 비해 체력이 필요하지만 동선따라 움직이며 함께 즐길 수 있기 때문에 콘서트를 200%, 300% 즐길 수 있습니다. 스탠딩이 처음이여서 걱정되는 분들, 위 꿀팁들을 참고하여 다들 즐거운 콘서트 🎟️🎙︎ 되시길 바랍니다. 
+            </p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
