@@ -78,8 +78,8 @@ new_df = df[df.columns.difference(['rating', 'text'])].drop_duplicates().dropna(
 result = pd.merge(out_df[['제목', 'topic']], new_df, on = '제목', how = 'left')
 # result.to_csv('./테스트5.csv', index = False)
 
-## L-LDA 결과 -> DB # 
-# df_topic = pd.read_csv("C:/Users/alsru/Desktop/Project/Flask_git/2023-kopis/analysis/data/테스트5.csv", encoding='cp949')
+## L-LDA 결과 -> DB
+# df_topic = pd.read_csv("테스트5.csv")
 
 # 제목, 기간, 공연장, 주소, 이미지url, 상세url, topic => (DB ShowInfo 테이블)
 conn = pymysql.connect(host='admin.ckaurvkcjohj.eu-north-1.rds.amazonaws.com', user='hashtag', password='hashtag123', db='KEYWIDB', charset='utf8')
@@ -90,10 +90,9 @@ db = conn.cursor()
 sql_state = """DELETE FROM KEYWIDB.ShowInfo"""
 db.execute(sql_state)
 
-for name,date,place,address,image_url,detail_url,topic,id in zip(df_topic['제목'],df_topic['기간'],df_topic['장소'],df_topic['주소'],df_topic['이미지url'],
-                                                                 df_topic['상세url'],df_topic['topic'],df_topic['id']):
-    sql_state = """INSERT INTO KEYWIDB.ShowInfo(name,date,place,address,image_url,detail_url,topic,id)
-                VALUES ("%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s")"""%(tuple([name,date,place,address,image_url,detail_url,topic,id]))
+for name,date,place,address,image_url,detail_url,topic in zip(df_topic['제목'],df_topic['기간'],df_topic['장소'],df_topic['주소'],df_topic['이미지url'],df_topic['상세url'],df_topic['topic']):
+    sql_state = """INSERT INTO KEYWIDB.ShowInfo(name,date,place,address,image_url,detail_url,topic)
+                VALUES ("%s", "%s", "%s", "%s", "%s", "%s", "%s")"""%(tuple([name,date,place,address,image_url,detail_url,topic]))
     db.execute(sql_state)
 
 conn.commit()

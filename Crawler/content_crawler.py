@@ -9,12 +9,6 @@ drama_df = crawler_content.get_drama_detail()
 ent_df = crawler_content.get_entertain_info()
 
 review_df,simm_df = crawler_perform.get_perform_contents()
-review_df['text'] = review_df['text'].apply(lambda x: x.replace("'",""))
-review_df['text'] = review_df['text'].apply(lambda x: x.replace('"'),"")
-review_df['text'] = review_df['text'].apply(lambda x: x.replace('\n'),"")
-
-review_df.to_csv('C:/Users/alsru/Desktop/Project/Flask_git/2023-kopis/analysis/data/Review.csv', index=False)
-simm_df.to_csv('C:/Users/alsru/Desktop/Project/Flask_git/2023-kopis/analysis/data/Simm.csv', index=False)
 
 
 def update_DB():
@@ -67,7 +61,6 @@ def update_DB():
     db.execute(sql_state)
     sql_state = """ALTER TABLE KEYWIDB.ShowReview AUTO_INCREMENT = 1"""
     db.execute(sql_state)
-    review_df['text'] 
     for show_name, rating, review, show_url, is_review in tqdm(zip(review_df['제목'],review_df['rating'],review_df['text'],review_df['상세URL'],review_df['후기유무'])):
         sql_state = """INSERT INTO KEYWIDB.ShowReview(show_name, rating, review, show_url, is_review) 
                     VALUES ("%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s")"""%(tuple([show_name, rating, review, show_url, is_review ]))
@@ -89,5 +82,8 @@ def update_DB():
     conn.commit()
     # 연결 종료
     conn.close()
-
-update_DB()
+    
+try:
+    update_DB()
+except:
+    pass

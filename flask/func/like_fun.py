@@ -55,7 +55,7 @@ def main_hot(main_hot_id, hots, user_info):
     from website import mysql
 
     # 좋아요 DB 정보 가져오기
-    sql = "SELECT * FROM NewLiked WHERE show_id IN ('%s', '%s', '%s', '%s', '%s', '%s')" %(main_hot_id[0],main_hot_id[1],main_hot_id[2],
+    sql = "SELECT * FROM HotLiked WHERE show_id IN ('%s', '%s', '%s', '%s', '%s', '%s')" %(main_hot_id[0],main_hot_id[1],main_hot_id[2],
                                                                                            main_hot_id[3],main_hot_id[4],main_hot_id[5])
     conn = mysql.connect()
     cursor = conn.cursor()
@@ -99,7 +99,7 @@ def main_key(main_key_id, keys, user_info):
     from website import mysql
 
     # 좋아요 DB 정보 가져오기
-    sql = "SELECT * FROM NewLiked WHERE show_id IN ('%s', '%s', '%s', '%s', '%s', '%s')" %(main_key_id[0],main_key_id[1],main_key_id[2],
+    sql = "SELECT * FROM KeywordLiked WHERE show_id IN ('%s', '%s', '%s', '%s', '%s', '%s')" %(main_key_id[0],main_key_id[1],main_key_id[2],
                                                                                                main_key_id[3],main_key_id[4],main_key_id[5])
     conn = mysql.connect()
     cursor = conn.cursor()
@@ -186,7 +186,7 @@ def hot_hot(hots, user_info):
     from website import mysql
 
     # 좋아요 DB 정보 가져오기
-    sql = "SELECT * FROM NewLiked"
+    sql = "SELECT * FROM HotLiked"
     conn = mysql.connect()
     cursor = conn.cursor()
     cursor.execute(sql)
@@ -224,12 +224,12 @@ def hot_hot(hots, user_info):
 
     return hots
 
-# 더보기 키워드 각 오픈공연별 좋아요 정보 가져오는 함수
+# 더보기 핫페이지 각 오픈공연별 좋아요 정보 가져오는 함수
 def key_key(keys, user_info):
     from website import mysql
 
     # 좋아요 DB 정보 가져오기
-    sql = "SELECT * FROM NewLiked"
+    sql = "SELECT * FROM KeywordLiked"
     conn = mysql.connect()
     cursor = conn.cursor()
     cursor.execute(sql)
@@ -317,7 +317,7 @@ def update_like_in_hot():
     action_receive = request.form["action_give"]
     # 좋아요가 눌려져 있는 상태라면
     if action_receive == "like":
-        sql = "INSERT INTO NewLiked (u_id, show_id) VALUES ('%s', '%s')" % (user_info, show_id_receive)
+        sql = "INSERT INTO HotLiked (u_id, show_id) VALUES ('%s', '%s')" % (user_info, show_id_receive)
         from website import mysql
         conn = mysql.connect()
         cursor = conn.cursor()
@@ -327,7 +327,7 @@ def update_like_in_hot():
         conn.close()
     # 좋아요가 눌러져 있지 않은 상태라면
     else:
-        sql = "DELETE FROM NewLiked WHERE u_id = '%s' AND show_id = '%s'" % (user_info, show_id_receive)
+        sql = "DELETE FROM HotLiked WHERE u_id = '%s' AND show_id = '%s'" % (user_info, show_id_receive)
         from website import mysql
         conn = mysql.connect()
         cursor = conn.cursor()
@@ -335,7 +335,7 @@ def update_like_in_hot():
         conn.commit()
         cursor.close()
         conn.close()
-    sql = "SELECT COUNT(IF(show_id = '%s', show_id, NULL)) FROM NewLiked" % (show_id_receive)
+    sql = "SELECT COUNT(IF(show_id = '%s', show_id, NULL)) FROM HotLiked" % (show_id_receive)
     from website import mysql
     conn = mysql.connect()
     cursor = conn.cursor()
@@ -357,7 +357,7 @@ def update_like_in_key():
     action_receive = request.form["action_give"]
     # 좋아요가 눌려져 있는 상태라면
     if action_receive == "like":
-        sql = "INSERT INTO NewLiked (u_id, show_id) VALUES ('%s', '%s')" % (user_info, show_id_receive)
+        sql = "INSERT INTO KeywordLiked (u_id, show_id) VALUES ('%s', '%s')" % (user_info, show_id_receive)
         from website import mysql
         conn = mysql.connect()
         cursor = conn.cursor()
@@ -367,7 +367,7 @@ def update_like_in_key():
         conn.close()
     # 좋아요가 눌러져 있지 않은 상태라면
     else:
-        sql = "DELETE FROM NewLiked WHERE u_id = '%s' AND show_id = '%s'" % (user_info, show_id_receive)
+        sql = "DELETE FROM KeywordLiked WHERE u_id = '%s' AND show_id = '%s'" % (user_info, show_id_receive)
         from website import mysql
         conn = mysql.connect()
         cursor = conn.cursor()
@@ -375,7 +375,7 @@ def update_like_in_key():
         conn.commit()
         cursor.close()
         conn.close()
-    sql = "SELECT COUNT(IF(show_id = '%s', show_id, NULL)) FROM NewLiked" % (show_id_receive)
+    sql = "SELECT COUNT(IF(show_id = '%s', show_id, NULL)) FROM KeywordLiked" % (show_id_receive)
     from website import mysql
     conn = mysql.connect()
     cursor = conn.cursor()
