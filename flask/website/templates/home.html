@@ -89,7 +89,7 @@
                     <a href="#tab3" class="btn">웃기고 유쾌한</a>
                 </li>
                 <li>
-                    <a href="#tab4" class="btn">기다려지는</a>
+                    <a href="#tab4" class="btn">손꼽아 기다려지는</a>
                 </li>
                 <li>
                     <a href="#tab5" class="btn">따뜻한 위로가 되는</a>
@@ -98,7 +98,7 @@
                     <a href="#tab6" class="btn">스토리가 탄탄한</a>
                 </li>
                 <li>
-                    <a href="#tab7" class="btn">웅장한</a>
+                    <a href="#tab7" class="btn">음악과 함께하는</a>
                 </li>
             </ul>
             <div class="cont_area">
@@ -756,8 +756,10 @@
     </div>
 </div>
 
-<div class="sideBanner" style=" cursor: pointer;" onclick="location.href='/test'">
-    <img src="{{ url_for('static', filename='banner.png') }}" width="100px" height="150px">
+<div class="sideBanner">
+    <a href="https://waveon.io/apps/30298" target="_blank">
+        <img src="{{ url_for('static', filename='banner.png') }}" width="100px" height="150px">
+    </a>
 </div>
 
 {% endblock %}

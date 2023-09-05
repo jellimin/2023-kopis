@@ -11,7 +11,8 @@ body{
 
 main {
   margin: auto;
-  background: #ffffff;
+  /* background: #ffffff; */
+  background-color: aqua;
   width: 1200px;
   min-height: 700px;
   font-family: 'Spoqa Han Sans Neo', 'sans-serif';
@@ -23,6 +24,7 @@ main {
   margin: 0 125px 0 25px;  
   width: 1200px;
   /* margin: auto; */
+  background-color:aquamarine;
   display: grid;
   grid-template-columns: 1200px; /* 각 행(세로줄)의 길이 */
   grid-template-rows: repeat(4, 550px);/* 각 열(가로줄)의 길이, 400px로 3등분 */
@@ -33,6 +35,7 @@ main {
   width: 1200px;
   /* margin: auto; */
   /* display: grid; */
+  background-color:lightgray;
   grid-template-columns: 1200px;
   grid-template-rows: 550px;
   gap: 10px; 
