@@ -77,16 +77,7 @@
         <div style="text-align:center">
             <p style="font-size:30px"><b>키워드 공연</b></p>
         </div>
-        <style>
-            .tab_menu{position:relative; text-align: center; display:table; margin-left:auto; margin-right:auto;}
-            .tab_menu .list{display: inline-block; list-style: none; padding: 0;}
-            .tab_menu .list li{float:left; margin-right:14px;}
-            .tab_menu .list li.is_on .btn{font-weight:bold; color:green;}
-            .tab_menu .list .btn{font-size:17px;}
-            .tab_menu .cont_area{margin-top:5px;}
-            .tab_menu .cont_area .cont{display:none; background:#fff; color:#fff; text-align:center;}
-        </style>
-        <div class="tab_menu">
+        <div class="tab_menu1">
             <ul class="list">
                 <li class="is_on">
                     <a href="#tab1" class="btn">함께 보기 좋은</a>
@@ -527,40 +518,185 @@
             </div>
         </div>
     </div>
-    <script>
-    const tabList = document.querySelectorAll('.tab_menu .list li');
-    const contents = document.querySelectorAll('.tab_menu .cont_area .cont')
-    let activeCont = ''; // 현재 활성화 된 컨텐츠 (기본:#tab1 활성화)
-                
-    // 초기화: 첫 번째 탭 활성화
-    tabList[0].classList.add('is_on');
-    activeCont = tabList[0].querySelector('.btn').getAttribute('href');
-    document.querySelector(activeCont).style.display = 'block';
-
-    for(var i = 0; i < tabList.length; i++){
-        tabList[i].querySelector('.btn').addEventListener('click', function(e){
-        e.preventDefault();
-        for(var j = 0; j < tabList.length; j++){
-        // 나머지 버튼 클래스 제거
-        tabList[j].classList.remove('is_on');
-              
-        // 나머지 컨텐츠 display:none 처리
-        contents[j].style.display = 'none';}
-        // 버튼 관련 이벤트
-        this.parentNode.classList.add('is_on');
-              
-        // 버튼 클릭시 컨텐츠 전환
-        activeCont = this.getAttribute('href');
-        document.querySelector(activeCont).style.display = 'block';});
-    }
-    </script>
-    
     <!-- 3. Curation -->
     <div class="temp-box box-three">
         <div style="text-align:center">
             <p style="font-size:30px"><b>큐레이션</b></p>
         </div>
+        <div class="tab_menu2">
+            <ul class="list">
+                <li class="is_on">
+                    <a href="#con1" class="btn">뉴스레터</a>
+                </li>
+                <li>
+                    <a href="#con2" class="btn">공연정보</a>
+                </li>
+                <li>
+                    <a href="#con3" class="btn">플레이리스트</a>
+                </li>
+                <li>
+                    <a href="#con4" class="btn">공연소개</a>
+                </li>
+            </ul>
+            <div class="cont_area">
+                <div id="con1" class="cont">
+                    <ul class="newsletter-list">
+                        <li>
+                            <a href="newsletter1">
+                                <img src="./static/thumbnail1.png" alt="뉴스레터 1" class="newsletter-thumbnail">
+                                <p>음악 취향을 찾고 싶은 당신에게 추천하는 가을 페스티벌</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="newsletter2">
+                                <img src="./static/thumbnail2.jpg" alt="뉴스레터 2" class="newsletter-thumbnail">
+                                <p>스탠딩 콘서트 100% 즐기는 꿀팁</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="newsletter3">
+                                <img src="./static/thumbnail3.jpg" alt="뉴스레터 3" class="newsletter-thumbnail">
+                                <p>[9월 PLAYLIST] 감성 충만한 가을에 듣기 좋은 뮤지컬 넘버 🎶</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div id="con2" class="cont">
+                    <div class="row">
+                        {% for info in content1 %}
+                        <div class="col-sm-2" id="{{info.cate}}">
+                            <div style="cursor: pointer;" onclick="location.href='{{info.url}}';">
+                                <div style="text-align : center;">
+                                    <!-- 사용자 지정 이미지가 없을 경우 -->
+                                    {% if info['image']=='nan' %}
+                                    <img src="{{ url_for('static', filename='no_image.png')}}" alt="기본이미지" 
+                                    class="radius_img" style="width:180px; height:270px;">
+                                    <!-- 사용자 지정 이미지가 있을 경우 -->
+                                    {% else %}
+                                    <img src="{{info['image']}}" class="radius_img" style="width:180px; height:270px;"/>
+                                    {% endif %}
+                                </div>
+                                <div style="width:180px; height:10px;"></div>
+                                <div style="text-align:center;">  
+                                    <p><b>{{info['title']}}</b></p>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div style="width:180px; height:5px;"></div>
+                </div>
+                <div id="con3" class="cont">
+                    <div class="row">
+                        {% for info in content2 %}
+                        <div class="col-sm-2" id="{{info.cate}}">
+                            <div style="cursor: pointer;" onclick="location.href='{{info.url}}';">
+                                <div style="text-align : center;">
+                                    <!-- 사용자 지정 이미지가 없을 경우 -->
+                                    {% if info['image']=='nan' %}
+                                    <img src="{{ url_for('static', filename='no_image.png')}}" alt="기본이미지" 
+                                    class="radius_img" style="width:180px; height:270px;">
+                                    <!-- 사용자 지정 이미지가 있을 경우 -->
+                                    {% else %}
+                                    <img src="{{info['image']}}" class="radius_img" style="width:180px; height:270px;"/>
+                                    {% endif %}
+                                </div>
+                                <div style="width:180px; height:10px;"></div>
+                                <div class="info-name" style="text-align:center;">  
+                                    <p><b>{{info['title']}}</b></p>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div style="width:180px; height:5px;"></div>
+                </div>
+                <div id="con4" class="cont">
+                    <div class="row">
+                        {% for info in content3 %}
+                        <div class="col-sm-2" id="{{info.cate}}">
+                            <div style="cursor: pointer;" onclick="location.href='{{info.url}}';">
+                                <div style="text-align : center;">
+                                    <!-- 사용자 지정 이미지가 없을 경우 -->
+                                    {% if info['image']=='nan' %}
+                                    <img src="{{ url_for('static', filename='no_image.png')}}" alt="기본이미지" 
+                                    class="radius_img" style="width:180px; height:270px;">
+                                    <!-- 사용자 지정 이미지가 있을 경우 -->
+                                    {% else %}
+                                    <img src="{{info['image']}}" class="radius_img" style="width:180px; height:270px;"/>
+                                    {% endif %}
+                                </div>
+                                <div style="width:180px; height:10px;"></div>
+                                <div class="info-name" style="text-align:center;">  
+                                    <p><b>{{info['title']}}</b></p>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div style="width:180px; height:5px;"></div>
+                </div>
+            </div>
+        </div>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // 첫 번째 탭 메뉴 초기화
+            const tabList1 = document.querySelectorAll('.tab_menu1 .list li');
+            const contents1 = document.querySelectorAll('.tab_menu1 .cont_area .cont');
+            let activeCont1 = '';
+
+            tabList1[0].classList.add('is_on');
+            activeCont1 = tabList1[0].querySelector('.btn').getAttribute('href');
+            document.querySelector(activeCont1).style.display = 'block';
+        
+            for(var i = 0; i < tabList1.length; i++){
+                tabList1[i].querySelector('.btn').addEventListener('click', function(e){
+                e.preventDefault();
+                for(var j = 0; j < tabList1.length; j++){
+                // 나머지 버튼 클래스 제거
+                tabList1[j].classList.remove('is_on');
+                    
+                // 나머지 컨텐츠 display:none 처리
+                contents1[j].style.display = 'none';}
+                // 버튼 관련 이벤트
+                this.parentNode.classList.add('is_on');
+                    
+                // 버튼 클릭시 컨텐츠 전환
+                activeCont1 = this.getAttribute('href');
+                document.querySelector(activeCont1).style.display = 'block';});
+            }
+            // ... (첫 번째 탭 메뉴의 JavaScript 코드)
+
+            // 두 번째 탭 메뉴 초기화
+            const tabList2 = document.querySelectorAll('.tab_menu2 .list li');
+            const contents2 = document.querySelectorAll('.tab_menu2 .cont_area .cont');
+            let activeCont2 = '';
+
+            tabList2[0].classList.add('is_on');
+            activeCont2 = tabList2[0].querySelector('.btn').getAttribute('href');
+            document.querySelector(activeCont2).style.display = 'block';
+        
+            for(var i = 0; i < tabList2.length; i++){
+                tabList2[i].querySelector('.btn').addEventListener('click', function(e){
+                e.preventDefault();
+                for(var j = 0; j < tabList2.length; j++){
+                // 나머지 버튼 클래스 제거
+                tabList2[j].classList.remove('is_on');
+                    
+                // 나머지 컨텐츠 display:none 처리
+                contents2[j].style.display = 'none';}
+                // 버튼 관련 이벤트
+                this.parentNode.classList.add('is_on');
+                    
+                // 버튼 클릭시 컨텐츠 전환
+                activeCont2 = this.getAttribute('href');
+                document.querySelector(activeCont2).style.display = 'block';});
+            }
+            // ... (두 번째 탭 메뉴의 JavaScript 코드)
+        });
+    </script>
+
     <!-- 4. OpenInfo -->
     <div class="temp-box box-four">
         <div style="text-align:center">

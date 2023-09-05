@@ -144,3 +144,75 @@ def week_no():
       return f'{month}월 0주차'
 
     return f'{month}월 {(target_day - firstday).days // 7 + 1}주차' 
+
+
+# 큐레이션 페이지 함수
+def curation_content1():
+    from website import mysql
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute("select * from KEYWIDB.CurationContent where 구분 = '공연정보' LIMIT 5")
+    data = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    curation1 = []
+    for i in range(len(data)):
+        cate = data[i][0]
+        cura_url = data[i][1]
+        cura_title = data[i][2]
+        cura_image = data[i][3]
+        curation_info1 = {
+            'cate' : cate,
+            'url': cura_url,
+            'title' : cura_title,
+            'image' : cura_image,
+        }
+        curation1.append(curation_info1)
+    return curation1
+def curation_content2():
+    from website import mysql
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute("select * from KEYWIDB.CurationContent where 구분 = '플레이리스트' LIMIT 5")
+    data = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    curation2 = []
+    for i in range(len(data)):
+        cate = data[i][0]
+        cura_url = data[i][1]
+        cura_title = data[i][2]
+        cura_image = data[i][3]
+        curation_info2 = {
+            'cate' : cate,
+            'url': cura_url,
+            'title' : cura_title,
+            'image' : cura_image,
+        }
+        curation2.append(curation_info2)
+    return curation2
+def curation_content3():
+    from website import mysql
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute("select * from KEYWIDB.CurationContent where 구분 = '공연소개' LIMIT 5")
+    data = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    curation3 = []
+    for i in range(len(data)):
+        cate = data[i][0]
+        cura_url = data[i][1]
+        cura_title = data[i][2]
+        cura_image = data[i][3]
+        curation_info3 = {
+            'cate' : cate,
+            'url': cura_url,
+            'title' : cura_title,
+            'image' : cura_image,
+        }
+        curation3.append(curation_info3)
+    return curation3
