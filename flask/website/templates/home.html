@@ -83,7 +83,7 @@
             .tab_menu .list li{float:left; margin-right:14px;}
             .tab_menu .list li.is_on .btn{font-weight:bold; color:green;}
             .tab_menu .list .btn{font-size:17px;}
-            .tab_menu .cont_area{margin-top:10px;}
+            .tab_menu .cont_area{margin-top:5px;}
             .tab_menu .cont_area .cont{display:none; background:#fff; color:#fff; text-align:center;}
         </style>
         <div class="tab_menu">
@@ -127,11 +127,11 @@
                                     {% endif %}
                                 </div>
                                 <div style="width:180px; height:10px;"></div>
-                                <div style="width:180px; height:75px; color:black">
+                                <div class="info-name" style="text-align:center;">  
                                     <p><b>{{info['title']}}</b></p>
                                 </div>
-                                <div style="width:180px; height:25px;">
-                                    <p style="text-align:right; font-size:85%; color:#999">{{info['date']}}</p>
+                                <div class="info-date"> 
+                                    <p style="text-align:center; font-size:85%; color:#999">{{info['date']}}</p>
                                 </div>
                                 <div style=" text-align: center;">
                                     <form action="{{url_for('views.map_page')}}" method="post" class="btn btn-default">
