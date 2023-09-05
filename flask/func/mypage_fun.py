@@ -37,13 +37,13 @@ def open_like_all(user_info):
         open_like.append(open_info)
     return open_like
 
-# 마이페이지 선호 핫 공연 관련 함수
-def hot_like_all(user_info):
+# 마이페이지 선호 상영 중 공연 관련 함수
+def new_like_all(user_info):
     from website import mysql
     # 좋아하는 오픈 공연 정보 가져오기 
-    sql = """SELECT ho.id, concat('[', ho.cont_name, '와 유사한', ']', ' ', ho.show_name) as name, ho.show_url, ho.img_url, ho.show_date 
-             FROM HotInfo AS ho 
-             JOIN HotLiked AS hl 
+    sql = """SELECT ho.id, ho.show_name as title, ho.show_url, ho.img_url, ho.show_date 
+             FROM ShowInfo AS ho 
+             JOIN NewLiked AS hl 
              ON ho.id = hl.show_id 
              WHERE hl.u_id = '%s'""" %(user_info)
     conn = mysql.connect()
@@ -53,7 +53,7 @@ def hot_like_all(user_info):
     cursor.close()
     conn.close()
 
-    hot_like = []
+    new_like = []
     for i in range(len(data)):
         id = data[i][0]
         title = data[i][1]
@@ -67,6 +67,6 @@ def hot_like_all(user_info):
             'date' : date,
             'image' : image
         }
-        hot_like.append(hot_info)
-    return hot_like
+        new_like.append(hot_info)
+    return new_like
 

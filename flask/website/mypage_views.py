@@ -5,7 +5,7 @@ from flask_login import login_required, current_user
 import os
 from werkzeug.utils import secure_filename
 import re
-from func.mypage_fun import open_like_all, hot_like_all
+from func.mypage_fun import open_like_all, new_like_all
 import random
 
 mypage_views = Blueprint('mypage_views', __name__)
@@ -15,7 +15,7 @@ mypage_views = Blueprint('mypage_views', __name__)
 def mypage():
     user_info = session['u_id']
     op_like = open_like_all(user_info)
-    ho_like = hot_like_all(user_info)
+    ho_like = new_like_all(user_info)
     tmp = op_like + ho_like
     show_all_like = random.sample(tmp, 4)
     return render_template('mypage.html', show_all_like = show_all_like)
@@ -169,7 +169,7 @@ def mypage_update():
 def pre_shows():
     user_info = session['u_id']
     op_like = open_like_all(user_info)
-    ho_like = hot_like_all(user_info)
+    ho_like = new_like_all(user_info)
 
     return render_template('pre_shows.html', op_like = op_like, ho_like = ho_like)
 
@@ -191,7 +191,7 @@ def open_delete(show_id):
 @mypage_views.route('/mypage/pre_shows/hot_delete/<int:show_id>')
 def hot_delete(show_id):
     user_info = session['u_id']
-    sql = "DELETE FROM HotLiked WHERE u_id = '%s' AND show_id = '%s'" % (user_info, show_id)
+    sql = "DELETE FROM new_like_all WHERE u_id = '%s' AND show_id = '%s'" % (user_info, show_id)
     from . import mysql
     conn = mysql.connect()
     cursor = conn.cursor()
