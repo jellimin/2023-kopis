@@ -4,10 +4,91 @@
 
 {% block content %}
 
-서비스 소개
-
-<div class="sideBanner" style=" cursor: pointer;" onclick="location.href='/test'">
-    <img src="{{ url_for('static', filename='banner.png') }}">
+<div style="text-align: center;">
+    <p style="color: rgb(144, 108, 61); font-weight: bold; font-size: 35px;">KEYWI 소개</p>
+    <p style = "font-weight: bold;">누구나, 언제, 어디서나 즐길 수 있는 공연예술</p>
+    <p>KEYWI는 Keyword와 Wikipedia의 합성어로<br>KOPIS의 데이터를 기반으로 키워드를 도출하고<br>키워드별 공연예술 콘텐츠를 제공하는 서비스입니다.</p>
 </div>
+<br>
+<div>
+    <p style="text-align: center; color: rgb(144, 108, 61); font-weight: bold; font-size: 35px;">다양한 기능</p>
+    <div class='service-box'>
+        <p style="color: rgb(1, 93, 22); font-weight: bold; font-size: 17px;">키워드 검색 서비스</p>
+        <p><b>현재 상영 중인 공연</b>의 리뷰, 줄거리, 작품 설명, 장르를 기반으로 키워드를 도출하고 키워드 별 공연을 제공합니다. 클릭 한번으로 쉽게 키워드에 맞는 공연 정보를 확인할 수 있어요.</p>
+    </div>
+    <div class='service-box'>
+        <p style="color: rgb(1, 93, 22); font-weight: bold; font-size: 17px;">핫플레이스 정보 제공</p>
+        <p><b>공연장 근처 맛집, 카페, 관광 명소</b>까지 미리 확인하고 예매하세요. 공연 정보 뿐만 아니라 핫플레이스 정보를 함께 제공합니다.</p>
+    </div>
+    <div class='service-box'>
+        <p style="color: rgb(1, 93, 22); font-weight: bold; font-size: 17px;">최신 미디어 트렌드 반영</p>
+        <p><b>어떤 공연을 볼 지 고민이신가요? </b>최근에 재밌게 봤던 영화/드라마와 유사한 공연을 매주 새롭게 제공합니다. 영상으로 즐기던 이야기를 실감 나는 연기와 함께 공연장에서 직접 경험해보세요 😉 </p>
+    </div>
+    <div class='service-box'>
+        <p style="color: rgb(1, 93, 22); font-weight: bold; font-size: 17px;">큐레이션 콘텐츠</p>
+        <p>공연 정보 외에 <b>다양한 콘텐츠</b>를 즐겨보세요. HASHTAG 팀원들이 직접 작성한 뉴스레터부터 공연 관련 소식, 플레이리스트까지 공연장에 가지 않고도 어디서나 공연예술콘텐츠를 간편하게 접할 수 있어요.</p>
+    </div>
+    <div class='service-box'>
+        <p style="color: rgb(1, 93, 22); font-weight: bold; font-size: 17px;">공연 유형 테스트</p>
+        <p><b>나의 공연 유형은 뭘까? </b>간단한 유형 테스트를 통해 자신의 공연 유형을 확인할 수 있습니다. 유형 별 추천 키워드를 검색해 나에게 맞는 공연을 확인해보세요. 제공되는 이미지는 프로필로 활용할 수 있다는 사실!</p>
+    </div>
+</div>
+<br>
+<p style="text-align: center; color: rgb(144, 108, 61); font-weight: bold; font-size: 35px;">팀 구성원</p>
+
+<div class="service-main">
+    <div class="service-temp service-one">
+        <img src="{{ url_for('static', filename='hashtag.png')}}" alt="해시태그이미지"
+                                            class="radius_img" style="width:80px; height:80px;">
+        <p style="text-align: center; font-weight: bold; font-size: 35px; color:green;">HASHTAG</p>
+    </div>
+    <!-- <div class='v-line'></div> -->
+    <div class="service-temp service-two">
+        <div>
+            <img src="{{ url_for('static', filename='따옴표.png')}}" alt="해시태그이미지"
+                                            class="radius_img" style="width:70px; height:70px;">
+            <img src="{{ url_for('static', filename='민경프로필.png')}}" alt="해시태그이미지"
+                                            class="radius_img" style="width:160px; height:160px;">
+            <p>-마민경(팀장)<br>
+            -인하대학교 통계학과<br>
+            -기획, DB, 유사도분석, 서비스 개발</p>
+        </div>
+    </div>
+    <div class="service-temp service-three">
+        <div>
+            <img src="{{ url_for('static', filename='따옴표.png')}}" alt="해시태그이미지"
+                                            class="radius_img" style="width:70px; height:70px;">
+            <img src="{{ url_for('static', filename='민영프로필.png')}}" alt="해시태그이미지"
+                                            class="radius_img" style="width:160px; height:160px;">
+            <p>-박민영(팀원)<br>
+            -부산대학교 통계학과<br>
+            -기획, DB, 토픽모델링 및 L-LDA, 서비스 개발</p>
+        </div>
+    </div>
+    <div class="service-temp service-four">
+        <div>
+            <img src="{{ url_for('static', filename='따옴표.png')}}" alt="해시태그이미지"
+                                            class="radius_img" style="width:70px; height:70px;">
+            <img src="{{ url_for('static', filename='수민프로필.png')}}" alt="해시태그이미지"
+                                            class="radius_img" style="width:160px; height:160px;">
+            <p>-강수민(팀원)<br>
+            -고려대학교 일반대학원<br> 통계학과<br>
+            -기획, DB, 토픽모델링 및 L-LDA, 서비스 개발</p>
+        </div>
+    </div>
+    <div class="service-temp service-five">
+        <div>
+            <p><b>HASHTAG</b>는 2022년 데이터 분석 스터디를 계기로 구성된 팀입니다.<br>
+                22년도 하반기 참가했던 KOPIS 빅데이터 분석 공모전 2회에서 장려상을 수상하고<br> 
+                23년도에 후속 연구 부문에 선발되어 함께 프로젝트를 진행하고 있습니다.<br>
+                놀랍게도 팀원 전부 통계학과로 웹 개발은 아무것도 몰랐다는 사실..<br>
+                바쁜 일정 속에서도 함께 으쌰으쌰 해낸 멋진 사람들 🎶<br>
+                좋은 기회를 제공해주신 KOPIS 고맙습니다 !
+            </p>
+        </div>
+    </div>
+</div>
+
+
 
 {% endblock %}
