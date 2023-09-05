@@ -5,7 +5,6 @@ import pandas as pd
 import sys, os
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
-### 좋아요 정보 가져오기
 # 메인페이지 각 오픈공연별 좋아요 정보 가져오는 함수
 def main_open(main_open_id, opens, user_info):
     from website import mysql

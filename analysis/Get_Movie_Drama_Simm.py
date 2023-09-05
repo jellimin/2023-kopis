@@ -23,14 +23,14 @@ try:
     drama_result = cursor.fetchall()
     # show_name, rating, review, show_venue, show_address, show_date, img_url, show_url, show_genre, is_review
     # ['제목','장르','줄거리','작품설명','기간','장소','url','이미지url']
-    sql = "SELECT id,show_name, show_summary, show_detail, show_venue, show_address, show_date, img_url, show_url, is_review FROM KEYWIDB.NewShow"
+    sql = "SELECT show_name, show_summary, show_detail, show_venue, show_address, show_date, img_url, show_url, is_review FROM KEYWIDB.NewShow"
     cursor.execute(sql)
     show_result = cursor.fetchall()
 
 finally:
     movie_df = pd.DataFrame(movie_result,columns = ['제목','content'])
     drama_df = pd.DataFrame(drama_result,columns = ['제목','content'])
-    show_df = pd.DataFrame(show_result,columns=['id','제목','줄거리','작품설명','장소','주소','기간','이미지url','url','후기유무'] )
+    show_df = pd.DataFrame(show_result,columns=['제목','줄거리','작품설명','장소','주소','기간','이미지url','url','후기유무'] )
     conn.close()
 
 # 전처리 함수 정의
@@ -201,8 +201,7 @@ def get_matcher(cat,answer_df,show_df):
             if similar >= 30:
                 #print(show_df['제목'][j],similar)
                 data.append({'카테고리':cat, "콘텐츠제목":answer_df['제목'][i],'제목':show_df['제목'][j],'유사도':round(similar,2),
-                             '공연날짜':show_df['기간'][j],'장소':show_df['장소'][j],'주소':show_df['주소'][j],'이미지URL':show_df['이미지url'][j],'상세URL':show_df['url'][j],
-                             'id':show_df['id'][j]})
+                             '공연날짜':show_df['기간'][j],'장소':show_df['장소'][j],'주소':show_df['주소'][j],'이미지URL':show_df['이미지url'][j],'상세URL':show_df['url'][j]})
     df = pd.DataFrame(data)
     df.sort_values(by=['콘텐츠제목','유사도'], inplace=True, ignore_index=True, ascending=False)
     #df.drop('유사도',axis=1,inplace=True)
@@ -229,18 +228,17 @@ conn = pymysql.connect(host='admin.ckaurvkcjohj.eu-north-1.rds.amazonaws.com', u
 # 커서 생성
 db = conn.cursor()
 # 쿼리 실행
-# sql_state = """alter table KEYWIDB.HotLiked drop foreign key HotLiked_ibfk_2""" # 참조하는 경우 테이블 삭제 안되므로 외래키 제거
-# db.execute(sql_state)
-
+sql_state = """alter table KEYWIDB.HotLiked drop foreign key HotLiked_ibfk_2""" # 참조하는 경우 테이블 삭제 안되므로 외래키 제거
+db.execute(sql_state)
 sql_state = """TRUNCATE KEYWIDB.HotInfo"""
 db.execute(sql_state)
 sql_state = """ALTER TABLE KEYWIDB.HotInfo AUTO_INCREMENT = 1"""
 db.execute(sql_state)
 # DB 올릴때 더 빠른 방법 없을까 ?? 165개 업로드하는데 1분 걸림
-for cat, cont_num, cont_name, simm, show_name, show_venue, show_address, show_date, img_url, show_url, id in tqdm(zip(final_df['카테고리'], final_df['콘텐츠번호'], final_df['콘텐츠제목'], final_df['유사도'], final_df['제목'], 
-                                                                                                                  final_df['장소'], final_df['주소'], final_df['공연날짜'], final_df['이미지URL'], final_df['상세URL'], final_df['id'])):
-    sql_state = """INSERT INTO KEYWIDB.HotInfo(category,cont_num,cont_name,simm,show_name,show_venue,show_address,show_date,img_url,show_url, show_id) 
-                VALUES ("%s","%s","%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s")"""%(tuple([cat,cont_num,cont_name,simm,show_name,show_venue,show_address,show_date,img_url,show_url, id]))
+for cat, cont_num, cont_name, simm, show_name, show_venue, show_address, show_date, img_url, show_url in tqdm(zip(final_df['카테고리'], final_df['콘텐츠번호'], final_df['콘텐츠제목'], final_df['유사도'], final_df['제목'], 
+                                                                                                                  final_df['장소'], final_df['주소'], final_df['공연날짜'], final_df['이미지URL'], final_df['상세URL'])):
+    sql_state = """INSERT INTO KEYWIDB.HotInfo(category,cont_num,cont_name,simm,show_name,show_venue,show_address,show_date,img_url,show_url) 
+                VALUES ("%s","%s","%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s")"""%(tuple([cat,cont_num,cont_name,simm,show_name,show_venue,show_address,show_date,img_url,show_url]))
     db.execute(sql_state)
 
 # 외래키 다시 추가하기

@@ -453,10 +453,10 @@ class PerformCrawler:
             return False
         return True
 
-    def get_perform_review(self,data):
+    def get_perform_review(self):
         
         # 통합 URL + 인덱스 파일 이용해서 추출할 부분만 가져오기
-        # data = self.get_perform_address()
+        data = self.get_perform_address()
         empty_df = pd.DataFrame()
         review_ox = []
         # for문을 이용해 data의 링크에 하나씩 접근
@@ -661,7 +661,7 @@ class PerformCrawler:
         df_ad.drop_duplicates(inplace=True)
         df_ad.reset_index(drop=True, inplace=True)
 
-        df = self.get_perform_review(df_ad)
+        df = self.get_perform_review()
         df2 = df.copy()
         df2.drop(['text', 'rating'], axis=1, inplace=True)
         df2.drop_duplicates(inplace=True)
