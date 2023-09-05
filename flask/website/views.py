@@ -300,6 +300,12 @@ def key6_update_like():
         count = update_like_in_key()
         return jsonify({"result": "success", 'msg': 'updated', "count": count})
 
+# 7. 더보기 키워드7 정보 좋아요
+@views.route('/keyword7/update_like', methods=['POST'])
+def key7_update_like():
+        count = update_like_in_key()
+        return jsonify({"result": "success", 'msg': 'updated', "count": count})
+
 # 8. 큐레이션 페이지
 @views.route('/curation')
 def curation():
@@ -568,7 +574,7 @@ def search_page7():
     try:
         if session['u_id']: # 로그인한 이력이 있는 경우
             user_info = session['u_id']
-            
+            keyword7 = key_key(keyword7, user_info)
             return render_template('keyword7.html', keyword7 = keyword7, keyword = keyword, user_info=user_info,
                                    pagination=Pagination(page=page,  # 지금 우리가 보여줄 페이지는 1 또는 2, 3, 4, ... 페이지인데,
                                                          total=total,  # 총 몇 개의 포스트인지를 미리 알려주고,
