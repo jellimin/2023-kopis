@@ -328,12 +328,12 @@ def newsletter2():
 def newsletter3():
     return render_template('newsletter3.html')
 
-# 9. 유형 테스트 페이지
-@views.route('/test')
-def test():
-    return render_template('test.html')
+# # 9. 유형 테스트 페이지
+# @views.route('/test')
+# def test():
+#     return render_template('test.html')
 
-# 10. 유형 테스트 페이지
+# 10. 서비스 소개 테스트 페이지
 @views.route('/service')
 def service():
     return render_template('service.html')
