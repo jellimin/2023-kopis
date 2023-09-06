@@ -72,25 +72,22 @@ main {
   background-color: bisque;
   grid-column: 1 / 3;
   grid-row:1 / 2;
-
-  font-size: small
-
-
+  font-size: small;   
 }
 .box-two {
   grid-column: 1 / 3;
   grid-row:2 / 3;
-  font-size: small
+  font-size: small;
 }
 .box-three {
   grid-column: 1 / 3;
   grid-row:3 / 4;
-  font-size: small
+  font-size: small;
 }
 .box-four {
   grid-column: 1 / 3;
   grid-row:4 / 5;
-  font-size: small
+  font-size: small;
 }
 
 
