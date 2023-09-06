@@ -41,9 +41,9 @@
                           </div>
                     </div>
                     
-                    <!-- 2. 선호 공연 영역 -->
+                    <!-- 2. 선호 공연 영역(OpenShow) -->
                     <div class="my-box my-box-two">
-                        <p style="font-size:30px">1. Pre_shows</p>
+                        <p style="font-size:30px">오픈 예정</p>
                         <div style="text-align:right">
                             <button type="button" class="extra-button" onclick="location.href='/mypage/pre_shows'">더보기</button>
                         </div>
@@ -71,9 +71,34 @@
                         </div>
                     </div>
 
-                    <!-- 3. 선호 콘텐츠 영역 -->
+                    <!-- 3. 선호 공연 영역(NewShow) -->
                     <div class="my-box my-box-four">
-                        <p style="font-size:30px">2. Pre_contents</p>
+                        <p style="font-size:30px">현재공연중</p>
+                        <div style="text-align:right">
+                            <button type="button" class="extra-button" onclick="location.href='/mypage/pre_shows'">더보기</button>
+                        </div>
+                        <div class="row">
+                            {% for info in new_all_like %}
+                            <div class="col-md-3" id="{{info._id}}">
+                                <div style=" cursor: pointer;" onclick="location.href='{{info.url}}';">
+                                    <div style="text-align:center; width:250px; height:30px; font-size:13px">
+                                        <p><b>{{info['title']}}</b></p>
+                                    </div>
+                                    <div style="width:250px; height:30px; font-size:10px">
+                                        <p style="text-align:center">{{info['date']}}</p>
+                                    </div>
+                                    <div style="text-align : center;">
+                                        {% if info['image']=='nan' %}
+                                        <img src="{{ url_for('static', filename='no_image.png')}}" alt="기본이미지"
+                                                            class="rounded mx-auto d-block" style="width:125px; height:150px;">
+                                        {% else %}
+                                        <img src="{{info['image']}}" class="rounded mx-auto d-block" style="width:180px; height:225px;"/>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
 

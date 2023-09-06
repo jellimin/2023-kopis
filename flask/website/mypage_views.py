@@ -15,10 +15,10 @@ mypage_views = Blueprint('mypage_views', __name__)
 def mypage():
     user_info = session['u_id']
     op_like = open_like_all(user_info)
-    ho_like = new_like_all(user_info)
-    tmp = op_like + ho_like
-    show_all_like = random.sample(tmp, 4)
-    return render_template('mypage.html', show_all_like = show_all_like)
+    ns_like = new_like_all(user_info)
+    show_all_like = op_like[:4]
+    new_all_like = ns_like[:4]
+    return render_template('mypage.html', show_all_like = show_all_like, new_all_like = new_all_like)
 
 # 2. 마이페이지 정보 수정
 
@@ -169,9 +169,9 @@ def mypage_update():
 def pre_shows():
     user_info = session['u_id']
     op_like = open_like_all(user_info)
-    ho_like = new_like_all(user_info)
+    ns_like = new_like_all(user_info)
 
-    return render_template('pre_shows.html', op_like = op_like, ho_like = ho_like)
+    return render_template('pre_shows.html', op_like = op_like, ns_like = ns_like)
 
 # 4. 마이페이지 좋아하는 오픈 공연 정보 삭제하기
 @mypage_views.route('/mypage/pre_shows/open_delete/<int:show_id>')
@@ -187,9 +187,9 @@ def open_delete(show_id):
     conn.close()
     return redirect(url_for('mypage_views.pre_shows'))
 
-# 5. 마이페이지 좋아하는 핫 공연 정보 삭제하기
-@mypage_views.route('/mypage/pre_shows/hot_delete/<int:show_id>')
-def hot_delete(show_id):
+# 5. 마이페이지 좋아하는 공연중 공연 정보 삭제하기
+@mypage_views.route('/mypage/pre_shows/new_delete/<int:show_id>')
+def new_delete(show_id):
     user_info = session['u_id']
     sql = "DELETE FROM new_like_all WHERE u_id = '%s' AND show_id = '%s'" % (user_info, show_id)
     from . import mysql
