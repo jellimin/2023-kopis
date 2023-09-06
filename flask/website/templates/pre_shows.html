@@ -7,7 +7,7 @@
 {% block content %}
 
 <!-- 1. 선호 오픈 공연 -->
-<p style="font-size:30px">1. 선호 오픈 공연</p>
+<p style="font-size:30px">1. 오픈 예정</p>
     <div class="row">
         {% for info in op_like %}
         <div class="col-md-12" id="{{info._id}}" style="margin-bottom: 20px;">
@@ -35,7 +35,7 @@
                     </div>
                     <div style="text-align : right; margin-top: 10px;">
                         <a href="javascript:void(0)" class="delete btn btn-sm btn-outline-secondary"
-                           data-uri="{{ url_for('mypage_views.hot_delete', show_id = info._id) }}">삭제하기</a>
+                           data-uri="{{ url_for('mypage_views.open_delete', show_id = info._id) }}">삭제하기</a>
                     </div>
                 </div>
             </div>
@@ -43,9 +43,9 @@
         {% endfor %}
     </div>
 <!-- 2. 선호 핫 공연 -->
-<p style="font-size:30px">2. 선호 핫 공연</p>
+<p style="font-size:30px">2. 현재 공연중</p>
 <div class="row">
-    {% for info in ho_like %}
+    {% for info in ns_like %}
     <div class="col-md-12" id="{{info._id}}" style="margin-bottom: 20px;">
         <div class="row">
             <div class="col-md-3">
@@ -71,7 +71,7 @@
                 </div>
                 <div style="text-align : right; margin-top: 10px;">
                     <a href="javascript:void(0)" class="delete btn btn-sm btn-outline-secondary"
-                       data-uri="{{ url_for('mypage_views.hot_delete', show_id = info._id) }}">삭제하기</a>
+                       data-uri="{{ url_for('mypage_views.new_delete', show_id = info._id) }}">삭제하기</a>
                 </div>
             </div>
         </div>

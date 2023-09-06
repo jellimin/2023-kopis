@@ -41,11 +41,11 @@ def open_like_all(user_info):
 def new_like_all(user_info):
     from website import mysql
     # 좋아하는 오픈 공연 정보 가져오기 
-    sql = """SELECT ho.id, ho.show_name as title, ho.show_url, ho.img_url, ho.show_date 
-             FROM ShowInfo AS ho 
-             JOIN NewLiked AS hl 
-             ON ho.id = hl.show_id 
-             WHERE hl.u_id = '%s'""" %(user_info)
+    sql = """SELECT ns.id, ns.show_name as title, ns.show_url, ns.img_url, ns.show_date 
+             FROM NewShow AS ns 
+             JOIN NewLiked AS nl 
+             ON ns.id = nl.show_id 
+             WHERE nl.u_id = '%s'""" %(user_info)
     conn = mysql.connect()
     cursor = conn.cursor()
     cursor.execute(sql)
@@ -60,13 +60,13 @@ def new_like_all(user_info):
         url = data[i][2]
         date = data[i][4]
         image = data[i][3]
-        hot_info = {
+        new_info = {
             '_id' : id,
             'title' : title,
             'url' : url,
             'date' : date,
             'image' : image
         }
-        new_like.append(hot_info)
+        new_like.append(new_info)
     return new_like
 
