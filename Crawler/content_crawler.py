@@ -1,6 +1,7 @@
 from content_code import ContentCrawler, PerformCrawler
 import pymysql
 import tqdm
+import pandas as pd
 
 crawler_content = ContentCrawler()
 crawler_perform = PerformCrawler()
@@ -8,13 +9,18 @@ movie_df = crawler_content.get_movie_detail()
 drama_df = crawler_content.get_drama_detail()
 ent_df = crawler_content.get_entertain_info()
 
-review_df,simm_df = crawler_perform.get_perform_contents()
-review_df['text'] = review_df['text'].apply(lambda x: x.replace("'",""))
-review_df['text'] = review_df['text'].apply(lambda x: x.replace('"',""))
-review_df['text'] = review_df['text'].apply(lambda x: x.replace('\n',""))
+# review_df,simm_df = crawler_perform.get_perform_contents()
+def prepro_df(df):    
+    df = df.apply(lambda x: x.replace("'",""))
+    df = df.apply(lambda x: x.replace('"',""))
+    df = df.apply(lambda x: x.replace('\\',""))
 
-review_df.to_csv('C:/Users/alsru/Desktop/Project/Flask_git/2023-kopis/analysis/data/Review.csv', index=False)
-simm_df.to_csv('C:/Users/alsru/Desktop/Project/Flask_git/2023-kopis/analysis/data/Simm.csv', index=False)
+prepro_df(movie_df['줄거리'])
+prepro_df(drama_df['줄거리'])
+# review_df.to_csv('C:/Users/alsru/Desktop/Project/Flask_git/2023-kopis/analysis/data/Review.csv', index=False)
+# simm_df.to_csv('C:/Users/alsru/Desktop/Project/Flask_git/2023-kopis/analysis/data/Simm.csv', index=False)
+review_df = pd.read_csv('C:/Users/alsru/Desktop/Project/Flask_git/2023-kopis/analysis/data/Review.csv')
+simm_df = pd.read_csv('C:/Users/alsru/Desktop/Project/Flask_git/2023-kopis/analysis/data/Simm.csv')
 
 
 def update_DB():
@@ -89,4 +95,4 @@ def update_DB():
     # 연결 종료
     conn.close()
 
-# update_DB()
+update_DB()

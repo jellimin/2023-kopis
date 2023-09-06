@@ -53,6 +53,7 @@ main {
   grid-row:1 / 1;
 }
 
+
 .temp-box {
   /* background: rgb(255, 255, 255); */
   width: 100%;
@@ -71,30 +72,25 @@ main {
   background-color: bisque;
   grid-column: 1 / 3;
   grid-row:1 / 2;
-  font-size: small  
-  font-size: small  
+  font-size: small;   
 }
 .box-two {
   grid-column: 1 / 3;
   grid-row:2 / 3;
-  font-size: small
+  font-size: small;
 }
 .box-three {
   grid-column: 1 / 3;
   grid-row:3 / 4;
-  font-size: small
+  font-size: small;
 }
 .box-four {
   grid-column: 1 / 3;
   grid-row:4 / 5;
-  font-size: small
+  font-size: small;
 }
 
-/* body div{
-/* body div{
-  display: block;
-} */
-} */
+
 
 /* 유사공연 */
 .cont_area{ margin-top:5px;}
@@ -110,7 +106,7 @@ main {
   overflow : hidden;
   text-overflow : ellipsis;
   height : 25px; 
-  /* 대신 height를 설정해준다. 텍스트 크기에 맞춰 height가 1줄인 경우를 생각하자.*/
+  /* 대신 height를 설정해준다. 텍스트 맞춰 height가 1줄인 경우를 생각하자.*/
   word-wrap : break-word; 
   display : -webkit-box;
   -webkit-line-clamp : 1; 

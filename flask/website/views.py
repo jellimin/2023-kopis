@@ -1,4 +1,5 @@
 # 메인페이지 + 메인페이지에 연결된 페이지들
+# 아래 확인하기
 
 from flask import Blueprint, render_template, request, session, redirect, url_for, jsonify
 # from flask_login import login_required, current_user
@@ -18,7 +19,7 @@ views = Blueprint('views', __name__)
 # 1. 홈 페이지
 @views.route('/')
 def home():
-
+    week = week_no()
     ### HotInfo 플로팅
     hots = hot_info()
 
@@ -82,8 +83,8 @@ def home():
     # 좋아요 관련
     try:
         if session['u_id']: # 로그인한 이력이 있는 경우
-
             user_info = session['u_id']
+
             opens = main_open(main_open_id, opens, user_info)
             hots = main_hot(main_hot_id, hots, user_info)
             keyword1 = main_key(main_key1_id, keyword1, user_info)
@@ -94,9 +95,9 @@ def home():
             keyword6 = main_key(main_key6_id, keyword6, user_info)
             keyword7 = main_key(main_key7_id, keyword7, user_info)
 
-            return render_template('home.html', open = opens, hot = hots, content1=content1, content2=content2, content3=content3, keyword = keyword, user_info = user_info, keyword1=keyword1, keyword2=keyword2, keyword3=keyword3, keyword4=keyword4, keyword5=keyword5, keyword6=keyword6, keyword7=keyword7)
+            return render_template('home.html', open = opens, hot = hots, week=week, content1=content1, content2=content2, content3=content3, keyword = keyword, user_info = user_info, keyword1=keyword1, keyword2=keyword2, keyword3=keyword3, keyword4=keyword4, keyword5=keyword5, keyword6=keyword6, keyword7=keyword7)
     except:
-        return render_template('home.html', open = opens, hot = hots, content1=content1, content2=content2, content3=content3, keyword = keyword, keyword1=keyword1, keyword2=keyword2, keyword3=keyword3, keyword4=keyword4, keyword5=keyword5, keyword6=keyword6, keyword7=keyword7)
+        return render_template('home.html', open = opens, hot = hots, week=week, content1=content1, content2=content2, content3=content3, keyword = keyword, keyword1=keyword1, keyword2=keyword2, keyword3=keyword3, keyword4=keyword4, keyword5=keyword5, keyword6=keyword6, keyword7=keyword7)
 
 # 2. 오픈 정보 페이지
 @views.route('/open')
