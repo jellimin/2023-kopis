@@ -39,7 +39,7 @@ def hot_info():
     from website import mysql
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute("SELECT show_id, cont_num, concat('[', category, ' ', cont_name, ' ', '와/과 유사한', ']') as cont_name, show_name as title, show_url, show_date, img_url, show_address, show_venue FROM KEYWIDB.HotInfo GROUP BY cont_num HAVING max(simm) ORDER BY simm LIMIT 6")
+    cursor.execute("SELECT show_id, cont_num, concat('[', category, ' ', cont_name, ' ', '와/과 유사한', ']') as cont_name, show_name as title, show_url, show_date, img_url, show_address, show_venue FROM KEYWIDB.HotInfo GROUP BY cont_num HAVING max(simm) LIMIT 6")
     data = cursor.fetchall()
     cursor.close()
     conn.close()

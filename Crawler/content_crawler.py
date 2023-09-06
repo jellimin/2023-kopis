@@ -23,7 +23,6 @@ def update_DB():
     db = conn.cursor()
     # 쿼리 실행
     sql_state = """DELETE FROM KEYWIDB.MovieGenre"""
-    db.execute(sql_state)
     sql_state = """ALTER TABLE KEYWIDB.MovieGenre AUTO_INCREMENT = 1"""
     db.execute(sql_state)
     sql_state = "DELETE FROM KEYWIDB.Movie"
@@ -90,4 +89,4 @@ def update_DB():
     # 연결 종료
     conn.close()
 
-update_DB()
+# update_DB()
