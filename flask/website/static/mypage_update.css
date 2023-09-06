@@ -1,10 +1,35 @@
 @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
 
-body {
-    font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+html, body {margin: 0 auto; padding: 0px;}
+
+/* 레이아웃 */
+body{
+  max-width: 100%;
+  width: 1200px;
+  position: relative;
+  right: 180px;
+  font-family: 'Spoqa Han Sans Neo', 'sans-serif';
 }
     
 .image_update {
     position: relative;
     left: 50px;
 }
+
+.w-btn {
+    position: relative;
+    border: none;
+    display: inline-block;
+    padding: 15px 30px;
+    border-radius: 15px;
+    font-family: "paybooc-Light", sans-serif;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.25s;
+  }
+  
+  .w-btn-green {
+    background-color: #77af9c;
+    color: #d7fff1;
+  }
