@@ -76,6 +76,6 @@ grid-row:2 / 3;
 }
 
 .w-btn-green {
-  background-color: #77af9c;
-  color: #d7fff1;
+  background-color: rgb(177,203,69);
+  color: rgb(255, 255, 255);
 }
