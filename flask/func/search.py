@@ -6,7 +6,7 @@ import numpy as np
 conn = pymysql.connect(host='admin.ckaurvkcjohj.eu-north-1.rds.amazonaws.com', user='hashtag', password='hashtag123', db='KEYWIDB', charset='utf8')
 try:
     cursor = conn.cursor()
-    sql = "SELECT id, name,date,place,address,image_url,detail_url,topic FROM KEYWIDB.ShowInfo"
+    sql = "SELECT id,name,date,place,address,image_url,detail_url,topic FROM KEYWIDB.ShowInfo"
     cursor.execute(sql)
     result = cursor.fetchall()
     search_data = []

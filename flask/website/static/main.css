@@ -14,8 +14,7 @@ main {
   /* background: #ffffff; */
   background-color: aqua;
   width: 1200px;
-  min-height: 700px;
-  font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+   font-family: 'Spoqa Han Sans Neo', 'sans-serif';
   overflow-x: hidden ;
 }
 
