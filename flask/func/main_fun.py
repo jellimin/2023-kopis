@@ -151,7 +151,7 @@ def curation_content1():
     from website import mysql
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute("select * from KEYWIDB.CurationContent where 구분 = '공연정보' LIMIT 4")
+    cursor.execute("select * from KEYWIDB.CurationContents where 구분 = '공연정보' LIMIT 4")
     data = cursor.fetchall()
     cursor.close()
     conn.close()
@@ -174,7 +174,7 @@ def curation_content2():
     from website import mysql
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute("select * from KEYWIDB.CurationContent where 구분 = '플레이리스트' LIMIT 4")
+    cursor.execute("select * from KEYWIDB.CurationContents where 구분 = '플레이리스트' LIMIT 4")
     data = cursor.fetchall()
     cursor.close()
     conn.close()
@@ -197,7 +197,7 @@ def curation_content3():
     from website import mysql
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute("select * from KEYWIDB.CurationContent where 구분 = '공연소개' LIMIT 4")
+    cursor.execute("select * from KEYWIDB.CurationContents where 구분 = '공연소개' LIMIT 4")
     data = cursor.fetchall()
     cursor.close()
     conn.close()
