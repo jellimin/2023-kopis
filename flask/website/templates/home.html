@@ -8,13 +8,13 @@
     <!-- 1. HotInfo -->
     <div class="temp-box box-one">
         <div style="text-align:center">
-            <p style="font-size:30px"><b>{{week}} 영화, 드라마와 유사한 공연</b></p>
+            <p class="my-underline" style="font-size:30px "><b>{{week}} 영화, 드라마와 유사한 공연</b></p>
         </div>
         <div class="cont-area">
             <div class="row">
                 {% for info in hot %}
                 <div class="col-sm-2" id="{{info._id}}">
-                     <div class="cont_name" style="font-size:95%; text-align: center; height: 20px; white-space: nowrap;">
+                     <div class="cont_name" style="font-size:105%; text-align: center; height: 20px; white-space: nowrap;">
                         <dt>{{info['name']}}</dt>
                     </div>   
                     <div class="info-thumnail">
@@ -71,11 +71,11 @@
             </button>
         </div> -->
     </div>
-    <div style="width:180px; height:20px;"></div>
+    <div style="width:180px; height:30px;"></div>
     <!-- 2. Keyword -->
     <div class="temp-box box-two">
         <div style="text-align:center">
-            <p style="font-size:30px"><b>키워드 공연</b></p>
+            <p class="my-underline" style="font-size:30px"><b>키워드 공연</b></p>
         </div>
         <div class="tab_menu1">
             <ul class="list">
@@ -518,11 +518,11 @@
             </div>
         </div>
     </div>
-    <div style="width:180px; height:5px;"></div>
+    <div style="width:180px; height:30px;"></div>
     <!-- 3. Curation -->
     <div class="temp-box box-three">
         <div style="text-align:center">
-            <p style="font-size:30px"><b>큐레이션</b></p>
+            <p class="my-underline" style="font-size:30px"><b>큐레이션</b></p>
         </div>
         <div class="tab_menu2">
             <ul class="list">
@@ -646,6 +646,7 @@
             </div>
         </div>
     </div>
+    <div style="width:180px; height:30px;"></div>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             // 첫 번째 탭 메뉴 초기화
@@ -707,7 +708,7 @@
     <!-- 4. OpenInfo -->
     <div class="temp-box box-four">
         <div style="text-align:center">
-            <p style="font-size:30px"><b>오픈 공연</b></p>
+            <p class="my-underline" style="font-size:30px"><b>오픈 공연</b></p>
         </div>
         <div class="row">
             {% for info in open %}
