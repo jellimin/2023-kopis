@@ -10,8 +10,8 @@ ent_df = crawler_content.get_entertain_info()
 
 review_df,simm_df = crawler_perform.get_perform_contents()
 review_df['text'] = review_df['text'].apply(lambda x: x.replace("'",""))
-review_df['text'] = review_df['text'].apply(lambda x: x.replace('"'),"")
-review_df['text'] = review_df['text'].apply(lambda x: x.replace('\n'),"")
+review_df['text'] = review_df['text'].apply(lambda x: x.replace('"',""))
+review_df['text'] = review_df['text'].apply(lambda x: x.replace('\n',""))
 
 review_df.to_csv('C:/Users/alsru/Desktop/Project/Flask_git/2023-kopis/analysis/data/Review.csv', index=False)
 simm_df.to_csv('C:/Users/alsru/Desktop/Project/Flask_git/2023-kopis/analysis/data/Simm.csv', index=False)
