@@ -10,14 +10,13 @@
         <div style="text-align:center">
             <p style="font-size:30px"><b>영화, 드라마와 유사한 공연</b></p>
         </div>
-        <div class="row">
-            {% for info in hot %}
-            <div class="col-sm-2" id="{{info._id}}">
-                <div style=" cursor: pointer;" onclick="location.href='{{info.url}}';">
-                    <div style="width:180px; height:10px;"></div>
-                    <div class="cont-name" style="text-align:left;">  
-                        <p><b>{{info['name']}}</b></p>
-                    </div>
+        <div class="cont-area">
+            <div class="row">
+                {% for info in hot %}
+                <div class="col-sm-2" id="{{info._id}}">
+                     <div class="cont_name">
+                        <dt>{{info['name']}}</dt>
+                    </div>   
                     <div class="info-thumnail" style="text-align : center;">
                         <!-- 사용자 지정 이미지가 없을 경우 -->
                         {% if info['image']=='nan' %}
@@ -28,41 +27,41 @@
                         <img src="{{info['image']}}" class="radius_img" style="width:180px; height:270px;"/>
                         {% endif %}
                     </div>
-                    <div style="width:180px; height:10px;"></div>
-                    <div class="info-name" style="text-align:center;">  
-                        <p><b>{{info['title']}}</b></p>
+                    <dl class="show-info">
+                        <div style=" cursor: pointer;" onclick="location.href='{{info.url}}';">
+                            <dt>{{info['title']}}</dt>
+                            <dt>{{info['date']}}</dt>
+                        </div>
+                        <div style=" text-align: center;">
+                            <form action="{{url_for('views.map_page')}}" method="post" class="btn btn-default">
+                                <input style = "background-color:#999" type="submit" name='place' value="{{info['place']}}" class="btn btn-default">
+                                <input type="hidden" name='address' value="{{info['address']}}">
+                            </form>
+                        </div>
+                    </dl>
                     </div>
-                    <div class="info-date"> 
-                        <p style="text-align:center; font-size:85%; color:#999">{{info['date']}}</p>
+                    <!-- 로그인을 한 경우, 좋아요 버튼이 보이도록 -->
+                    {% if user_info %}
+                    <div class="level-left" style="text-align:right;">
+                        <!-- 좋아요를 누르면 toggle_like 함수가 실행된다. -->
+                        <!-- toggle like 함수는 게시글의 id와, 어떤 이모티콘을 눌렀는지 type에 대한 정보를 인자로 제공한다. -->
+                        <a class="level-item is-sparta" aria-label="heart" style="cursor: pointer;" onclick="toggle_like_main_hot('{{info._id}}', 'heart')">
+                            <span class="icon is-small">
+                                <!-- 사용자가 좋아요를 누른 경우 -->
+                                {% if info.heart_by_me == True %}
+                                <i class="fa fa-heart" style="color:red" aria-hidden="true"></i>
+                                <!-- 사용자가 좋아요를 누르지 않은 경우 -->
+                                {% else %}
+                                <i class="fa fa-heart-o" style="color:red" aria-hidden="true"></i>
+                                {% endif %}
+                            </span>
+                            <span class="like-num" style="color:black">{{info.count_heart}}</span>
+                        </a>
                     </div>
-                    <div style=" text-align: center;">
-                        <form action="{{url_for('views.map_page')}}" method="post" class="btn btn-default">
-                            <input style = "background-color:#999" type="submit" name='place' value="{{info['place']}}" class="btn btn-default">
-                            <input type="hidden" name='address' value="{{info['address']}}">
-                        </form>
-                    </div>
+                    {% endif %}
                 </div>
-                <!-- 로그인을 한 경우, 좋아요 버튼이 보이도록 -->
-                {% if user_info %}
-                <div class="level-left" style="text-align:right;">
-                    <!-- 좋아요를 누르면 toggle_like 함수가 실행된다. -->
-                    <!-- toggle like 함수는 게시글의 id와, 어떤 이모티콘을 눌렀는지 type에 대한 정보를 인자로 제공한다. -->
-                    <a class="level-item is-sparta" aria-label="heart" style="cursor: pointer;" onclick="toggle_like_main_hot('{{info._id}}', 'heart')">
-                        <span class="icon is-small">
-                            <!-- 사용자가 좋아요를 누른 경우 -->
-                            {% if info.heart_by_me == True %}
-                            <i class="fa fa-heart" style="color:red" aria-hidden="true"></i>
-                            <!-- 사용자가 좋아요를 누르지 않은 경우 -->
-                            {% else %}
-                            <i class="fa fa-heart-o" style="color:red" aria-hidden="true"></i>
-                            {% endif %}
-                        </span>
-                        <span class="like-num" style="color:black">{{info.count_heart}}</span>
-                    </a>
-                </div>
-                {% endif %}
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
         <div style="width:180px; height:5px;"></div>
         <div class="custom-panel_btn__MCCL4">
