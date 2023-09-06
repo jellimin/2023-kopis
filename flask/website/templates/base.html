@@ -1,157 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        * {
-          box-sizing: border-box; /* 길이 계산을 편하게 하기위함. box-sizing에 관한 설명은 아래 링크를 참고해주세요 */
-        }
-        a {
-          text-decoration: none; /* 기본 밑줄을 제거합니다 */
-          color: #888;
-        }
-        a:hover {
-          text-decoration: underline; /* 마우스 커서가 올라갔을 때 밑줄을 생성합니다*/
-        }
-        .header{
+        <style>
+            * {
+            box-sizing: border-box; /* 길이 계산을 편하게 하기위함. box-sizing에 관한 설명은 아래 링크를 참고해주세요 */
+            }
+            a {
+            text-decoration: none; /* 기본 밑줄을 제거합니다 */
+            color: #888;
+            }
+            a:hover {
+            text-decoration: underline; /* 마우스 커서가 올라갔을 때 밑줄을 생성합니다*/
+            }
+            .header{
+                width: 100%;
+                height: 100%;
+                background-color:blue;
+            }
+            .block1-1 {
+            margin: auto; /* header의 양쪽 여백(margin)을 동등하게 맞춤 -> 수평가운데정렬 */
             width: 100%;
-            background-color: lightcoral;
-        }
-        .block1-1 {
-          margin: auto; /* header의 양쪽 여백(margin)을 동등하게 맞춤 -> 수평가운데정렬 */
-          width: 100%;
-          height: 130px;
-          display: flex;
-          align-items: center; /* 하위 요소들 수직 가운데정렬 */
-          justify-content: center;
-          background-color: lightyellow;
-        }
-        .block1-2{
-            height: 44px;
-            background-color: lightsalmon;
-        }
-        .img-logo {
-            position: relative;
-            top: 15px;
-            bottom: 40px;
-            left: 110px;
-        }
-        .nav {
-            position: relative;
-            margin: 0 auto;
-            top: 15px;
-            left: 380px;
-        }
-        .flashing {
-            position: relative;
-            top: 110px;
-            right: 260px;
-        }
-        main {
-          margin: auto;
-          background: #ffff00;
-          /* width: 1350px; */
-          min-height: 700px;
-        }
-        footer {
-          margin: auto;
-          background: rgb(255, 255, 255);
-          width: 1350px;
-          height: 50px;
-        }
-    </style>
+            height: 130px;
+            display: flex;
+            align-items: center; /* 하위 요소들 수직 가운데정렬 */
+            justify-content: center;
+            background-color: lightyellow;
+            }
+            .block1-2{
+                height: 44px;
+                background-color: lightsalmon;
+            }
+            .img-logo {
+                position: relative;
+                top: 15px;
+                bottom: 40px;
+                left: 110px;
+            }
+            .nav {
+                position: relative;
+                margin: 0 auto;
+                top: 15px;
+                left: 380px;
+            }
+            .flashing {
+                position: relative;
+                top: 110px;
+                right: 260px;
+            }
+            main {
+            margin: auto;
+            width: 1200px;
+            min-height: 700px;
+            }
+            footer {
+            margin: auto;
+            background: rgb(255, 255, 255);
+            width: 1350px;
+            height: 50px;
+            }
+        </style>
 
 
-    <!-- 부트스트랩 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <!-- 플로팅 배너 -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='banner.css') }}">
-    <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.js"></script> </div>
-    <!-- css로 수정 -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='mypage.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='signup.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='mypage_update.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='service.css') }}">
-    <!-- 좋아요 하트 이모티콘 -->
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <style>
-        a {text-decoration-line: none;}
-    </style>
+        <!-- 부트스트랩 -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+        <!-- 플로팅 배너 -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='banner.css') }}">
+        <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.js"></script> </div>
+        <!-- css로 수정 -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='mypage.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='signup.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='mypage_update.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='service.css') }}">
+        <!-- 좋아요 하트 이모티콘 -->
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        <style>
+            a {text-decoration-line: none;}
+        </style>
 
-    <title>{% block title %}Home{% endblock %}</title>
-</head>
+        <title>{% block title %}Home{% endblock %}</title>
+    </head>
 
-<body>
-    <div class="header">
-        <div class="block1-1">
-            <!-- 로고 -->
-            <div class = 'img-logo'>
-                <a  href="http://127.0.0.1:5000/" >
-                    <img src="{{ url_for('static', filename='logo.png') }}" style="width:190px; height:52px;"/>
-                </a>
+    <body>
+        <header>
+            <div class="block1-1">
+                <!-- 로고 -->
+                <div class = 'img-logo'>
+                    <a  href="http://127.0.0.1:5000/" >
+                        <img src="{{ url_for('static', filename='logo.png') }}" style="width:190px; height:52px;"/>
+                    </a>
+                </div>
+                <!-- 네비게이션바, 카테고리 -->
+                <div class = 'nav'>
+                    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                            <div class="collapse navbar-collapse" id="navbarNav">
+                                <ul class="navbar-nav">
+                                    <!-- 로그인 되었을 때 -->
+                                    {% if session['u_id'] %}
+                                    <li class="nav-item">
+                                        <a href="/service" class="nav-link">서비스소개</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/logout" class="nav-link">로그아웃</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/mypage" class="nav-link">My Page</a>
+                                    </li>
+                                    <!-- 로그인 안되었을 때 -->
+                                    {% else %}
+                                    <li class="nav-item">
+                                        <a href="/service" class="nav-link">서비스소개</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/sign-in" class="nav-link">로그인</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/sign-up" class="nav-link">회원가입</a>
+                                    </li>
+                                    {% endif %}
+                                </ul>
+                        </div>
+                    </nav>
+                </div>
             </div>
-            <!-- 네비게이션바, 카테고리 -->
-            <div class = 'nav'>
-                <nav class="navbar navbar-expand-lg navbar-light bg-white">
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                        <div class="collapse navbar-collapse" id="navbarNav">
-                            <ul class="navbar-nav">
-                                <!-- 로그인 되었을 때 -->
-                                {% if session['u_id'] %}
-                                <li class="nav-item">
-                                    <a href="/service" class="nav-link">서비스소개</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="/logout" class="nav-link">로그아웃</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="/mypage" class="nav-link">My Page</a>
-                                </li>
-                                <!-- 로그인 안되었을 때 -->
-                                {% else %}
-                                <li class="nav-item">
-                                    <a href="/service" class="nav-link">서비스소개</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="/sign-in" class="nav-link">로그인</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="/sign-up" class="nav-link">회원가입</a>
-                                </li>
+            <!-- <div class="block1-2">Header block2</div>
+                <div class="flashing", style="width:300px; height:30px;">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                {% if category == "error" %}         
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                                {% elif category == "success" %}
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
                                 {% endif %}
-                            </ul>
-                    </div>
-                </nav>
-            </div>
-        </div>
-        <div class="block1-2">Header block2</div>
-            <div class="flashing", style="width:300px; height:30px;">
-                <!-- 메시지 플래싱, 오류 혹은 성공 메시지 -->
-                {% with messages = get_flashed_messages(with_categories=true) %}
-                    {% if messages %}
-                        {% for category, message in messages %}
-                            {% if category == "error" %}         
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                {{ message }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                            {% elif category == "success" %}
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                {{ message }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
-                {% endwith %}
-            </div>
-
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                </div>
+            </div> -->
         </header>
 
         <!-- 메인 -->
@@ -179,6 +178,5 @@
         });
         </script>
         {% endblock %}
-    </div>
-</body>
+    </body>
 </html>
