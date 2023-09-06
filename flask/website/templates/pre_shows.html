@@ -7,7 +7,7 @@
 {% block content %}
 
 <!-- 1. 선호 오픈 공연 -->
-<p style="font-size:30px">1. 오픈 예정</p>
+<p style="font-size:30px; text-align:center;">오픈 예정</p>
     <div class="row">
         {% for info in op_like %}
         <div class="col-md-12" id="{{info._id}}" style="margin-bottom: 20px;">
@@ -43,7 +43,7 @@
         {% endfor %}
     </div>
 <!-- 2. 선호 핫 공연 -->
-<p style="font-size:30px">2. 현재 공연중</p>
+<p style="font-size:30px;  text-align:center;">현재 공연중</p>
 <div class="row">
     {% for info in ns_like %}
     <div class="col-md-12" id="{{info._id}}" style="margin-bottom: 20px;">
@@ -78,10 +78,4 @@
     </div>
     {% endfor %}
 </div>
-
-
-<div class="sideBanner" style=" cursor: pointer;" onclick="location.href='/test'">
-    <img src="{{ url_for('static', filename='banner.png') }}">
-</div>
-
 {% endblock %}

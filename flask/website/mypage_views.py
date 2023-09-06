@@ -14,11 +14,19 @@ mypage_views = Blueprint('mypage_views', __name__)
 @mypage_views.route('/mypage', methods=['GET','POST'])
 def mypage():
     user_info = session['u_id']
+    from . import mysql
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute("select name from KEYWIDB.UserInfo where u_id='{}'".format(user_info))
+    data = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    user_name = data[0][0]
     op_like = open_like_all(user_info)
     ns_like = new_like_all(user_info)
     show_all_like = op_like[-4:][::-1] # 뒤에서부터 4개뽑고, 거꾸로 배열
     new_all_like = ns_like[-4:][::-1]
-    return render_template('mypage.html', show_all_like = show_all_like, new_all_like = new_all_like)
+    return render_template('mypage.html', user_name = user_name, show_all_like = show_all_like, new_all_like = new_all_like)
 
 # 2. 마이페이지 정보 수정
 

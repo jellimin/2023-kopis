@@ -5,8 +5,8 @@
 
 {% block content %}
 
-<div style='padding: 10px 500px 0px 500px;'>
-    <form method="POST" enctype="multipart/form-data">
+<div style='width:100%; height:100%;'>
+    <form method="POST" enctype="multipart/form-data" style="width: 500px; margin:0 auto;">
         <h2 align="center">마이페이지 정보 수정</h2>
 
         <div style="height:20px;"></div>
@@ -92,13 +92,8 @@
         <div style="height:20px;"></div>
         
         <div style='text-align: center;'>
-            <button type="submit" class="btn btn-primary" style="background-color:rgb(137, 214, 20); border-color: rgb(137, 214, 20);">정보 수정 제출</button>
+            <button type="submit" class="w-btn w-btn-green">정보 수정 제출</button>
         </div>
     </form>
 </div>
-
-<div class="sideBanner" style=" cursor: pointer;" onclick="location.href='/test'">
-    <img src="{{ url_for('static', filename='banner.png') }}">
-</div>
-
 {% endblock %}

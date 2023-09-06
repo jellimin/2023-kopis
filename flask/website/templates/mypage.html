@@ -24,37 +24,28 @@
                                 class="rounded mx-auto d-block" style="width:200px; height:200px;">
                             {% endif %}
                             <!-- 기본 정보 영역 -->
-                            <div class="mb-3">
-                                <label for="InputEmail1" class="form-label">이메일</label>
-                                <input name="email" type="email" class="form-control" id="InputEmail1"
-                                    aria-describedby="emailHelp">
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="Nickname1" class="form-label">이름</label>
-                                <input name="nickname" type="text" class="form-control" id="Nickname1">
+                            <div style='text-align: center;' class="mb-3">
+                                <p>{{user_name}}님, 반갑습니다.</p>
                             </div>
 
                         </fieldset>
                         <div style='text-align: center;'>
-                            <button type="submit" class="btn btn-primary" style="background-color:rgb(137, 214, 20); border-color: rgb(137, 214, 20);">정보 수정</button>
+                            <button type="submit" class="w-btn w-btn-green">정보 수정</button>
                           </div>
                     </div>
                     
                     <!-- 2. 선호 공연 영역(OpenShow) -->
                     <div class="my-box my-box-two">
-                        <p style="font-size:30px">오픈 예정</p>
-                        <div style="text-align:right">
-                            <button type="button" class="extra-button" onclick="location.href='/mypage/pre_shows'">더보기</button>
-                        </div>
+                        <h2 align="center">오픈 예정</h2>
+                        <!-- <p style="font-size:30px;  text-align:center;"></p> -->
                         <div class="row">
                             {% for info in show_all_like %}
                             <div class="col-md-3" id="{{info._id}}">
                                 <div style=" cursor: pointer;" onclick="location.href='{{info.url}}';">
-                                    <div style="text-align:center; width:250px; height:30px; font-size:13px">
+                                    <div class="info-name" style="text-align:center; height:30px; font-size:13px">
                                         <p><b>{{info['title']}}</b></p>
                                     </div>
-                                    <div style="width:250px; height:30px; font-size:10px">
+                                    <div style="height:30px; font-size:10px">
                                         <p style="text-align:center">{{info['date']}}</p>
                                     </div>
                                     <div style="text-align : center;">
@@ -72,19 +63,16 @@
                     </div>
 
                     <!-- 3. 선호 공연 영역(NewShow) -->
-                    <div class="my-box my-box-four">
-                        <p style="font-size:30px">현재공연중</p>
-                        <div style="text-align:right">
-                            <button type="button" class="extra-button" onclick="location.href='/mypage/pre_shows'">더보기</button>
-                        </div>
+                    <div class="my-box my-box-three">
+                        <h2 align="center">현재공연중</h2>
                         <div class="row">
                             {% for info in new_all_like %}
                             <div class="col-md-3" id="{{info._id}}">
                                 <div style=" cursor: pointer;" onclick="location.href='{{info.url}}';">
-                                    <div style="text-align:center; width:250px; height:30px; font-size:13px">
+                                    <div class="info-name" style="text-align:center; height:30px; font-size:13px">
                                         <p><b>{{info['title']}}</b></p>
                                     </div>
-                                    <div style="width:250px; height:30px; font-size:10px">
+                                    <div style="height:30px; font-size:10px">
                                         <p style="text-align:center">{{info['date']}}</p>
                                     </div>
                                     <div style="text-align : center;">
@@ -100,15 +88,14 @@
                             {% endfor %}
                         </div>
                     </div>
+                    <div class="my-box my-box-four">
+                        <div style="text-align:center">
+                            <button type="button" class="w-btn w-btn-green" onclick="location.href='/mypage/pre_shows'">더보기</button>
+                        </div>
+                    </div>
                 </div>
-
             </form>
         </div>
     </div>
 </div>
-
-<div class="sideBanner" style=" cursor: pointer;" onclick="location.href='/test'">
-    <img src="{{ url_for('static', filename='banner.png') }}">
-</div>
-
 {% endblock %}
