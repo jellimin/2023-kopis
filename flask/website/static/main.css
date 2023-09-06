@@ -98,7 +98,8 @@ main {
 
 .my-underline{
   /* text-decoration: rgb(177, 203, 69) underline; */
-  background-color: rgba(177, 203, 69, 0.5);
+  background-color: rgba(177, 203, 69, 0.3);
+  font-family: 'Spoqa Han Sans Neo', 'sans-serif';
 }
 
 /* 공연이름 텍스트 두줄 이상일 시, 생략기호로 표시 */
@@ -140,6 +141,14 @@ main {
   display: block;
   background: crimson;
 }
+
+.info-name-1{
+  display:block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 
 .open-name{
   width: 50px;
