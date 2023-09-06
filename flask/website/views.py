@@ -812,6 +812,6 @@ def search_page7():
 @views.route('/map', methods=['GET', 'POST'])
 def map_page():
     if request.method == 'POST':
-        dat = {'address':str(request.form.get('address')),
-               'place':str(request.form.get('place'))}
+        dat = {'place':str(request.form.get('place')),
+               'address':str(request.form.get('address'))}
     return render_template('map.html', dat=dat) 
