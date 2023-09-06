@@ -18,6 +18,12 @@ main {
   overflow-x: hidden ;
 }
 
+* { 
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 
 .main-container {
   margin: 0 125px 0 25px;  
@@ -84,7 +90,7 @@ body div{
 
 /* 유사공연 */
 .cont_area{ margin-top:5px;}
-.col-sm-2{margin-right: 12px;}
+/* .col-sm-2{margin-right: 12px;} */
 .show-info{margin: 0;}
 
 
