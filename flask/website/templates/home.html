@@ -8,13 +8,13 @@
     <!-- 1. HotInfo -->
     <div class="temp-box box-one">
         <div style="text-align:center">
-            <p style="font-size:30px"><b>영화, 드라마와 유사한 공연</b></p>
+            <p style="font-size:30px"><b>{{week}} 영화, 드라마와 유사한 공연</b></p>
         </div>
         <div class="cont-area">
             <div class="row">
                 {% for info in hot %}
                 <div class="col-sm-2" id="{{info._id}}">
-                     <div class="cont_name" style="height: 50px;">
+                     <div class="cont_name" style="font-size:95%; text-align: center; height: 20px; white-space: nowrap;">
                         <dt>{{info['name']}}</dt>
                     </div>   
                     <div class="info-thumnail">
@@ -32,7 +32,7 @@
                             <div class="info-name">
                                 <dt>{{info['title']}}</dt>
                             </div>
-                            <dt>{{info['date']}}</dt>
+                            <p style="font-size:85%; color:#999">{{info['date']}}</p>
                         </div>
                         <div style=" text-align: center;">
                             <form action="{{url_for('views.map_page')}}" method="post" class="btn btn-default">
@@ -155,7 +155,7 @@
                     <div style="width:180px; height:5px;"></div>
                     <div class="custom-panel_btn__MCCL4">
                         <button class="custom-button_btn__vsWav" onclick="location.href='/keyword1'">
-                            공연 더보기
+                            공연 전체보기
                             <img alt="" src="https://tickets.interpark.com/_next/static/media/line.2a9386f0.svg" width="13" height="12" decoding="async" data-nimg="1" loading="lazy" style="color: transparent;">
                         </button>
                     </div>
@@ -704,45 +704,44 @@
         <div class="row">
             {% for info in open %}
             <div class="col-sm-2" id="{{info._id}}">
-                <div style="cursor: pointer;" onclick="location.href='{{info.url}}';">
-                    <div class="open_thumnail" style="text-align : center;">
-                        <!-- 사용자 지정 이미지가 없을 경우 -->
-                        {% if info['image']=='nan' %}
-                        <img src="{{ url_for('static', filename='no_image.png')}}" alt="기본이미지"
-                                            class="radius_img" style="width:180px; height:270px;">
-                        <!-- 사용자 지정 이미지가 있을 경우 -->
-                        {% else %}
-                        <img src="{{info['image']}}" class="radius_img" style="width:180px; height:270px;"/>
-                        {% endif %}
-                    </div>
-                    <div style="width:180px; height:10px;"></div>
-                    <div class="open-name" style="width:180px; height:75px; text-align:center;">
-                        <p><b>{{info['title']}}</b></p>
-                    </div>
-                    <div class="open-date" style="width:180px; height:25px;">
-                        <p style="text-align:center; font-size:85%; color:#999">{{info['date']}}</p>
-                    </div>
-                </div>
-                <!-- 로그인을 한 경우, 좋아요 버튼이 보이도록 -->
-                {% if user_info %}
-                <div class="level-left" style="text-align:right;">
-                    <!-- 좋아요를 누르면 toggle_like 함수가 실행된다. -->
-                    <!-- toggle like 함수는 게시글의 id와, 어떤 이모티콘을 눌렀는지 type에 대한 정보를 인자로 제공한다. -->
-                    <a class="level-item is-sparta" aria-label="heart" style="cursor: pointer;" onclick="toggle_like_main_open('{{info._id}}', 'heart')">
-                        <span class="icon is-small">
-                            <!-- 사용자가 좋아요를 누른 경우 -->
-                            {% if info.heart_by_me == True %}
-                            <i class="fa fa-heart" style="color:red" aria-hidden="true"></i>
-                            <!-- 사용자가 좋아요를 누르지 않은 경우 -->
-                            {% else %}
-                            <i class="fa fa-heart-o" style="color:red" aria-hidden="true"></i>
-                            {% endif %}
-                        </span>
-                        <span class="like-num" style="color:black">{{info.count_heart}}</span>
-                    </a>
-                </div>
-                {% endif %}
-            </div>
+               <div class="info-thumnail">
+                   <!-- 사용자 지정 이미지가 없을 경우 -->
+                   {% if info['image']=='nan' %}
+                   <img src="{{ url_for('static', filename='no_image.png')}}" alt="기본이미지"
+                                       class="radius_img" style="width:180px; height:270px;">
+                   <!-- 사용자 지정 이미지가 있을 경우 -->
+                   {% else %}
+                   <img src="{{info['image']}}" class="radius_img" style="width:180px; height:270px;"/>
+                   {% endif %}
+               </div>
+               <dl class="open-info">
+                   <div style=" cursor: pointer;" onclick="location.href='{{info.url}}';">
+                       <div class="info-name">
+                           <dt>{{info['title']}}</dt>
+                       </div>
+                       <p style="font-size:85%; color:#999">{{info['date']}}</p>
+                   </div>
+               </dl>
+               <!-- 로그인을 한 경우, 좋아요 버튼이 보이도록 -->
+               {% if user_info %}
+               <div class="level-left" style="text-align:right;">
+                   <!-- 좋아요를 누르면 toggle_like 함수가 실행된다. -->
+                   <!-- toggle like 함수는 게시글의 id와, 어떤 이모티콘을 눌렀는지 type에 대한 정보를 인자로 제공한다. -->
+                   <a class="level-item is-sparta" aria-label="heart" style="cursor: pointer;" onclick="toggle_like_main_hot('{{info._id}}', 'heart')">
+                       <span class="icon is-small">
+                           <!-- 사용자가 좋아요를 누른 경우 -->
+                           {% if info.heart_by_me == True %}
+                           <i class="fa fa-heart" style="color:red" aria-hidden="true"></i>
+                           <!-- 사용자가 좋아요를 누르지 않은 경우 -->
+                           {% else %}
+                           <i class="fa fa-heart-o" style="color:red" aria-hidden="true"></i>
+                           {% endif %}
+                       </span>
+                       <span class="like-num" style="color:black">{{info.count_heart}}</span>
+                   </a>
+               </div>
+               {% endif %}
+       </div>
             {% endfor %}
         </div>
         <div style="width:180px; height:5px;"></div>
