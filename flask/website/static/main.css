@@ -53,6 +53,7 @@ main {
   grid-row:1 / 1;
 }
 
+
 .temp-box {
   /* background: rgb(255, 255, 255); */
   width: 100%;
@@ -108,7 +109,7 @@ main {
   overflow : hidden;
   text-overflow : ellipsis;
   height : 25px; 
-  /* 대신 height를 설정해준다. 텍스트 크기에 맞춰 height가 1줄인 경우를 생각하자.*/
+  /* 대신 height를 설정해준다. 텍스트 맞춰 height가 1줄인 경우를 생각하자.*/
   word-wrap : break-word; 
   display : -webkit-box;
   -webkit-line-clamp : 1; 
@@ -212,8 +213,8 @@ main {
   margin-right: 50px; /* 썸네일 이미지 사이 간격 조절 */
 }
 .newsletter-thumbnail {
-  width: 300px; /* 썸네일 이미지 너비 조절 */
-  height: 200px; /* 이미지 높이 자동 조절 */
+  width: 280px; /* 썸네일 이미지 너비 조절 */
+  height: 190px; /* 이미지 높이 자동 조절 */
   cursor: pointer; /* 클릭 가능한 커서 설정 */
   border-radius: 10%;
 }
