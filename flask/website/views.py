@@ -550,9 +550,9 @@ def search_page4():
     from . import mysql
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute("select count(*) from KEYWIDB.ShowInfo WHERE topic='기다려지는'")
+    cursor.execute("select count(*) from KEYWIDB.ShowInfo WHERE topic='손꼽아 기다려지는'")
     total = cursor.fetchone()[0]
-    cursor.execute("SELECT id, name,date,place,address,image_url,detail_url,topic FROM KEYWIDB.ShowInfo WHERE topic='기다려지는' LIMIT %s OFFSET %s;", (per_page, offset))
+    cursor.execute("SELECT id, name,date,place,address,image_url,detail_url,topic FROM KEYWIDB.ShowInfo WHERE topic='손꼽아 기다려지는' LIMIT %s OFFSET %s;", (per_page, offset))
     data = cursor.fetchall()
     cursor.close()
     conn.close()
@@ -751,9 +751,9 @@ def search_page7():
     from . import mysql
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute("select count(*) from KEYWIDB.ShowInfo WHERE topic='웅장한'")
+    cursor.execute("select count(*) from KEYWIDB.ShowInfo WHERE topic='음악과 함께하는'")
     total = cursor.fetchone()[0]
-    cursor.execute("SELECT id, name,date,place,address,image_url,detail_url,topic FROM KEYWIDB.ShowInfo WHERE topic='웅장한' LIMIT %s OFFSET %s;", (per_page, offset))
+    cursor.execute("SELECT id, name,date,place,address,image_url,detail_url,topic FROM KEYWIDB.ShowInfo WHERE topic='음악과 함께하는' LIMIT %s OFFSET %s;", (per_page, offset))
     data = cursor.fetchall()
     cursor.close()
     conn.close()
