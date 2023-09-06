@@ -1,4 +1,5 @@
 # 메인페이지 + 메인페이지에 연결된 페이지들
+# 아래 확인하기
 
 from flask import Blueprint, render_template, request, session, redirect, url_for, jsonify
 # from flask_login import login_required, current_user
