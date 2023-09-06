@@ -80,7 +80,6 @@ main {
 .box-three {
   grid-column: 1 / 3;
   grid-row:3 / 4;
-  font-size: small;
 }
 .box-four {
   grid-column: 1 / 3;
@@ -116,6 +115,30 @@ main {
   -webkit-box-orient: vertical; 
   padding-top: 8px;
   padding-bottom: 10px;
+}
+.info-name{
+  position: relative;
+  overflow : hidden;
+  text-overflow : ellipsis;
+  height : 25px; 
+  /* 대신 height를 설정해준다. 텍스트 맞춰 height가 1줄인 경우를 생각하자.*/
+  word-wrap : break-word; 
+  display : -webkit-box;
+  -webkit-line-clamp : 1; 
+  /* 줄 개수를 설정한다. 만약 2줄이상이라면 height와 해당 값을 수정한다. */
+  -webkit-box-orient: vertical; 
+  padding-top: 8px;
+  padding-bottom: 10px;
+}
+.info-name-1{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break:break-all;
+  width: 280px;
+  height: 25px;
+  display: block;
+  background: crimson;
 }
 
 .open-name{
@@ -210,7 +233,7 @@ main {
   /* justify-content: space-between; */
 }
 .newsletter-list li {
-  justify-content: space-around;
+  margin: 0px 20px 0px 20px;
 }
 .newsletter-thumbnail {
   width: 280px; /* 썸네일 이미지 너비 조절 */
@@ -218,6 +241,7 @@ main {
   cursor: pointer; /* 클릭 가능한 커서 설정 */
   border-radius: 10%;
 }
+
 
 /* 페이지네이션 */
 .pagination {
