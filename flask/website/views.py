@@ -19,7 +19,7 @@ views = Blueprint('views', __name__)
 # 1. 홈 페이지
 @views.route('/')
 def home():
-
+    week = week_no()
     ### HotInfo 플로팅
     hots = hot_info()
 
@@ -95,9 +95,9 @@ def home():
             keyword6 = main_key(main_key6_id, keyword6, user_info)
             keyword7 = main_key(main_key7_id, keyword7, user_info)
 
-            return render_template('home.html', open = opens, hot = hots, content1=content1, content2=content2, content3=content3, keyword = keyword, user_info = user_info, keyword1=keyword1, keyword2=keyword2, keyword3=keyword3, keyword4=keyword4, keyword5=keyword5, keyword6=keyword6, keyword7=keyword7)
+            return render_template('home.html', open = opens, hot = hots, week=week, content1=content1, content2=content2, content3=content3, keyword = keyword, user_info = user_info, keyword1=keyword1, keyword2=keyword2, keyword3=keyword3, keyword4=keyword4, keyword5=keyword5, keyword6=keyword6, keyword7=keyword7)
     except:
-        return render_template('home.html', open = opens, hot = hots, content1=content1, content2=content2, content3=content3, keyword = keyword, keyword1=keyword1, keyword2=keyword2, keyword3=keyword3, keyword4=keyword4, keyword5=keyword5, keyword6=keyword6, keyword7=keyword7)
+        return render_template('home.html', open = opens, hot = hots, week=week, content1=content1, content2=content2, content3=content3, keyword = keyword, keyword1=keyword1, keyword2=keyword2, keyword3=keyword3, keyword4=keyword4, keyword5=keyword5, keyword6=keyword6, keyword7=keyword7)
 
 # 2. 오픈 정보 페이지
 @views.route('/open')
