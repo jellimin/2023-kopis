@@ -39,7 +39,14 @@ def hot_info():
     from website import mysql
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute("SELECT show_id, cont_num, concat('[', category, ' ', cont_name,']') as cont_name, show_name as title, show_url, show_date, img_url, show_address, show_venue FROM KEYWIDB.HotInfo GROUP BY cont_num HAVING max(simm) ORDER BY simm LIMIT 6")
+    cursor.execute(""" 
+                    SELECT * FROM
+                    (SELECT show_id, cont_num, concat('[', category, ' ', cont_name,']') as cont_name, show_name as title, show_url, show_date, img_url, show_address, show_venue, simm
+                    FROM KEYWIDB.HotInfo GROUP BY cont_num 
+                    HAVING MAX(simm) ORDER BY simm DESC)
+                    as c GROUP BY c.show_id LIMIT 6
+                    """)
+    
     data = cursor.fetchall()
     cursor.close()
     conn.close()
@@ -151,7 +158,7 @@ def curation_content1():
     from website import mysql
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute("select * from KEYWIDB.CurationContent where 구분 = '공연정보' LIMIT 4")
+    cursor.execute("select * from KEYWIDB.CurationContents where 구분 = '공연정보' LIMIT 4")
     data = cursor.fetchall()
     cursor.close()
     conn.close()
@@ -174,7 +181,7 @@ def curation_content2():
     from website import mysql
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute("select * from KEYWIDB.CurationContent where 구분 = '플레이리스트' LIMIT 4")
+    cursor.execute("select * from KEYWIDB.CurationContents where 구분 = '플레이리스트' LIMIT 4")
     data = cursor.fetchall()
     cursor.close()
     conn.close()
@@ -197,7 +204,7 @@ def curation_content3():
     from website import mysql
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute("select * from KEYWIDB.CurationContent where 구분 = '공연소개' LIMIT 4")
+    cursor.execute("select * from KEYWIDB.CurationContents where 구분 = '공연소개' LIMIT 4")
     data = cursor.fetchall()
     cursor.close()
     conn.close()
