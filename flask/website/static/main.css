@@ -218,7 +218,7 @@ main {
   border-radius: 10%;
 }
 .newsletter-thumbnail-except {
-  width: 330px; /* 썸네일 이미지 너비 조절 */
+  width: 280; /* 썸네일 이미지 너비 조절 */
   height: 190px; /* 이미지 높이 자동 조절 */
   cursor: pointer; /* 클릭 가능한 커서 설정 */
   border-radius: 10%;

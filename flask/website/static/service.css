@@ -7,7 +7,7 @@ body {
 .service-box {
     width: 750px;
     height: 130px;
-    background-color: rgb(177,203,69);
+    background-color: rgba(177,203,69,0.5);
     padding: 20px 20px 20px 20px;
     margin: 10px;
     position: relative; left: 50%; transform: translate(-50%, 0%);
