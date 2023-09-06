@@ -10,16 +10,6 @@ body{
   width: 1200px;
   position: relative;
   right: 180px;
-  /* overflow-x: hidden; */
-}
-
-header {
-  margin: auto; /* header의 양쪽 여백(margin)을 동등하게 맞춤 -> 수평가운데정렬 */
-  width: 1200px;
-  /* height: 215px; */
-  display: flex;
-  align-items: center; /* 하위 요소들 수직 가운데정렬 */
-  position: relative;
 }
 
 main {
@@ -30,8 +20,6 @@ main {
   font-family: 'Spoqa Han Sans Neo', 'sans-serif';
   /* overflow-x: hidden ; */
 }
-
-
 .main-container {
   margin: 0 125px 0 25px;  
   width: 1200px;
@@ -94,8 +82,8 @@ main {
 
 /* 유사공연 */
 .cont_area{ margin-top:5px;}
-/* .col-sm-2{margin-right: 12px;} */
-.show-info{margin: 0;}
+/* .col-sm-2{display: flex;height: 240px; margin-right: 20px;} */
+.show-info{margin: auto;}
 
 
 /* 공연이름 텍스트 두줄 이상일 시, 생략기호로 표시 */
