@@ -243,10 +243,16 @@ main {
   /* justify-content: space-between; */
 }
 .newsletter-list li {
-  margin: 0px 20px 0px 20px;
+  margin: 0px 20px 0px 0px;
 }
 .newsletter-thumbnail {
   width: 280px; /* 썸네일 이미지 너비 조절 */
+  height: 190px; /* 이미지 높이 자동 조절 */
+  cursor: pointer; /* 클릭 가능한 커서 설정 */
+  border-radius: 10%;
+}
+.newsletter-thumbnail-except {
+  width: 330px; /* 썸네일 이미지 너비 조절 */
   height: 190px; /* 이미지 높이 자동 조절 */
   cursor: pointer; /* 클릭 가능한 커서 설정 */
   border-radius: 10%;
