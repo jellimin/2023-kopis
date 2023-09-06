@@ -83,8 +83,8 @@ def home():
     # 좋아요 관련
     try:
         if session['u_id']: # 로그인한 이력이 있는 경우
-
             user_info = session['u_id']
+
             opens = main_open(main_open_id, opens, user_info)
             hots = main_hot(main_hot_id, hots, user_info)
             keyword1 = main_key(main_key1_id, keyword1, user_info)
