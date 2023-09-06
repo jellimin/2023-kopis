@@ -541,21 +541,27 @@
                 <div id="con1" class="cont">
                     <ul class="newsletter-list">
                         <li>
-                            <a href="newsletter1">
+                            <a href="newsletter1" style="text-decoration: none; color:black;">
                                 <img src="./static/thumbnail1.png" alt="뉴스레터 1" class="newsletter-thumbnail">
-                                <p>음악 취향을 찾고 싶은 당신에게 추천하는 가을 페스티벌</p>
+                                <div class="info-name" style="text-align:center;">  
+                                    <p><b>음악 취향을 찾고 싶은 당신에게 추천하는 가을 페스티벌</b></p>
+                                </div>
                             </a>
                         </li>
                         <li>
-                            <a href="newsletter2">
+                            <a href="newsletter2" style="text-decoration: none; color:black;">
                                 <img src="./static/thumbnail2.jpg" alt="뉴스레터 2" class="newsletter-thumbnail">
-                                <p>스탠딩 콘서트 100% 즐기는 꿀팁</p>
+                                <div class="info-name" style="text-align:center;">  
+                                    <p><b>스탠딩 콘서트 100% 즐기는 꿀팁</b></p>
+                                </div>
                             </a>
                         </li>
                         <li>
-                            <a href="newsletter3">
+                            <a href="newsletter3" style="text-decoration: none; color:black;">
                                 <img src="./static/thumbnail3.jpg" alt="뉴스레터 3" class="newsletter-thumbnail">
-                                <p>[9월 PLAYLIST] 감성 충만한 가을에 듣기 좋은 뮤지컬 넘버 🎶</p>
+                                <div class="info-name" style="text-align:center;">  
+                                    <p><b>[9월 PLAYLIST] 감성 충만한 가을에 듣기 좋은 뮤지컬 넘버 🎶</b></p>
+                                </div>
                             </a>
                         </li>
                     </ul>
@@ -563,7 +569,7 @@
                 <div id="con2" class="cont">
                     <div class="row" >
                         {% for info in content1 %}
-                        <div class="col-sm-2" id="{{info.cate}}" style="float: none;margin:0 auto;">
+                        <div class="col-sm-3" id="{{info.cate}}" style="float: none;margin:0 auto;">
                             <div style="cursor: pointer;" onclick="location.href='{{info.url}}';">
                                 <div style="text-align : center;">
                                     <!-- 사용자 지정 이미지가 없을 경우 -->
@@ -588,7 +594,7 @@
                 <div id="con3" class="cont">
                     <div class="row">
                         {% for info in content2 %}
-                        <div class="col-sm-2" id="{{info.cate}}" style="float: none;margin:0 auto;">
+                        <div class="col-sm-3" id="{{info.cate}}" style="float: none;margin:0 auto;">
                             <div style="cursor: pointer;" onclick="location.href='{{info.url}}';">
                                 <div style="text-align : center;">
                                     <!-- 사용자 지정 이미지가 없을 경우 -->
@@ -613,7 +619,7 @@
                 <div id="con4" class="cont">
                     <div class="row">
                         {% for info in content3 %}
-                        <div class="col-sm-2" id="{{info.cate}}" style="float: none;margin:0 auto;">
+                        <div class="col-sm-3" id="{{info.cate}}" style="float: none;margin:0 auto;">
                             <div style="cursor: pointer;" onclick="location.href='{{info.url}}';">
                                 <div style="text-align : center;">
                                     <!-- 사용자 지정 이미지가 없을 경우 -->
