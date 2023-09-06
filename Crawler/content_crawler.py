@@ -82,8 +82,8 @@ def update_DB():
     # db.execute(sql_state)
     # sql_state = """alter table KEYWIDB.HotInfo drop foreign key show_id""" # 참조하는 경우 테이블 삭제 안되므로 외래키 제거
     # # db.execute(sql_state)
-    sql_state = """alter table KEYWIDB.NewLiked drop foreign key NewLiked_ibfk_2""" # 참조하는 경우 테이블 삭제 안되므로 외래키 제거
-    db.execute(sql_state)
+    # sql_state = """alter table KEYWIDB.NewLiked drop foreign key NewLiked_ibfk_2""" # 참조하는 경우 테이블 삭제 안되므로 외래키 제거
+    # db.execute(sql_state)
     sql_state = """DELETE FROM KEYWIDB.NewShow"""
     db.execute(sql_state)
     sql_state = """ALTER TABLE KEYWIDB.NewShow AUTO_INCREMENT = 1"""
@@ -94,15 +94,15 @@ def update_DB():
                 VALUES ("%s", "%s", "%s","%s", "%s", "%s", "%s", "%s", "%s", "%s")"""%(tuple([show_name, show_summary, show_detail, show_venue, show_address, show_date, show_genre, show_url, img_url, is_review ]))
         db.execute(sql_state)
     # # 외래키 다시 추가하기
-    sql_state = """alter table KEYWIDB.ShowInfo add constraint id foreign key(id) references KEYWIDB.NewShow(id) ON DELETE CASCADE"""
-    db.execute(sql_state)
+    # sql_state = """alter table KEYWIDB.ShowInfo add constraint id foreign key(id) references KEYWIDB.NewShow(id) ON DELETE CASCADE"""
+    # db.execute(sql_state)
     sql_state = """alter table KEYWIDB.HotInfo add constraint show_id foreign key(show_id) references KEYWIDB.NewShow(id) ON DELETE CASCADE"""
     db.execute(sql_state)
     sql_state = """alter table KEYWIDB.NewLiked add constraint NewLiked_ibfk_2 foreign key(show_id) references KEYWIDB.NewShow(id) ON DELETE CASCADE"""
     db.execute(sql_state)       
 
-    message = {'content':'DB업데이트를 완료했습니다.'} 
-    ContentCrawler.send_message(message)
+    # message = {'content':'DB업데이트를 완료했습니다.'} 
+    # ContentCrawler.send_message(message)
 
     conn.commit()
     # 연결 종료
