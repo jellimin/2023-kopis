@@ -16,8 +16,8 @@ def mypage():
     user_info = session['u_id']
     op_like = open_like_all(user_info)
     ns_like = new_like_all(user_info)
-    show_all_like = op_like[:4]
-    new_all_like = ns_like[:4]
+    show_all_like = op_like[-4:][::-1] # 뒤에서부터 4개뽑고, 거꾸로 배열
+    new_all_like = ns_like[-4:][::-1]
     return render_template('mypage.html', show_all_like = show_all_like, new_all_like = new_all_like)
 
 # 2. 마이페이지 정보 수정
@@ -168,8 +168,8 @@ def mypage_update():
 @mypage_views.route('/mypage/pre_shows')
 def pre_shows():
     user_info = session['u_id']
-    op_like = open_like_all(user_info)
-    ns_like = new_like_all(user_info)
+    op_like = open_like_all(user_info)[::-1]
+    ns_like = new_like_all(user_info)[::-1]
 
     return render_template('pre_shows.html', op_like = op_like, ns_like = ns_like)
 
@@ -191,7 +191,7 @@ def open_delete(show_id):
 @mypage_views.route('/mypage/pre_shows/new_delete/<int:show_id>')
 def new_delete(show_id):
     user_info = session['u_id']
-    sql = "DELETE FROM new_like_all WHERE u_id = '%s' AND show_id = '%s'" % (user_info, show_id)
+    sql = "DELETE FROM NewLiked WHERE u_id = '%s' AND show_id = '%s'" % (user_info, show_id)
     from . import mysql
     conn = mysql.connect()
     cursor = conn.cursor()
