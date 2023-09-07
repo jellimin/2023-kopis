@@ -20,9 +20,7 @@ finally:
 
 def uniq_keyword():
     global df
-    uni = df['topic'].unique()
-    uni_keyword_list = list(uni)
-    uni_keyword_list.remove(' ')
+    uni_keyword_list = ['함께 보기 좋은', '연출이 완벽한',  '웃기고 유쾌한', '손꼽아 기다려지는', '따뜻한 위로가 되는', '스토리가 탄탄한', '음악과 함께하는']
     uni_keyword = np.array(uni_keyword_list)
     keyword = []
     for i in range(len(uni_keyword)):
@@ -33,11 +31,7 @@ def uniq_keyword():
 
 def search_keyword1_6():
     global df
-    uniq = df['topic'].unique()
-    uni_keyword_list = list(uniq)
-    uni_keyword_list.remove(' ')
-    uniq_keyword = np.array(uni_keyword_list)
-    search_df = df[df['topic'] == uniq_keyword[0]][:6]
+    search_df = df[df['topic'] == '함께 보기 좋은'][:6]
     search_df = search_df.reset_index(drop=True)
     keyword1_6 = []
     for i in range(len(search_df)):
@@ -62,11 +56,7 @@ def search_keyword1_6():
 
 def search_keyword2_6():
     global df
-    uniq = df['topic'].unique()
-    uni_keyword_list = list(uniq)
-    uni_keyword_list.remove(' ')
-    uniq_keyword = np.array(uni_keyword_list)
-    search_df = df[df['topic'] == uniq_keyword[1]][:6]
+    search_df = df[df['topic'] == '연출이 완벽한'][:6]
     search_df = search_df.reset_index(drop=True)
     keyword2_6 = []
     for i in range(len(search_df)):
@@ -91,11 +81,7 @@ def search_keyword2_6():
 
 def search_keyword3_6():
     global df
-    uniq = df['topic'].unique()
-    uni_keyword_list = list(uniq)
-    uni_keyword_list.remove(' ')
-    uniq_keyword = np.array(uni_keyword_list)
-    search_df = df[df['topic'] == uniq_keyword[2]][:6]
+    search_df = df[df['topic'] == '웃기고 유쾌한'][:6]
     search_df = search_df.reset_index(drop=True)
     keyword3_6 = []
     for i in range(len(search_df)):
@@ -120,11 +106,7 @@ def search_keyword3_6():
 
 def search_keyword4_6():
     global df
-    uniq = df['topic'].unique()
-    uni_keyword_list = list(uniq)
-    uni_keyword_list.remove(' ')
-    uniq_keyword = np.array(uni_keyword_list)
-    search_df = df[df['topic'] == uniq_keyword[3]][:6]
+    search_df = df[df['topic'] == '손꼽아 기다려지는'][:6]
     search_df = search_df.reset_index(drop=True)
     keyword4_6 = []
     for i in range(len(search_df)):
@@ -149,11 +131,7 @@ def search_keyword4_6():
 
 def search_keyword5_6():
     global df
-    uniq = df['topic'].unique()
-    uni_keyword_list = list(uniq)
-    uni_keyword_list.remove(' ')
-    uniq_keyword = np.array(uni_keyword_list)
-    search_df = df[df['topic'] == uniq_keyword[4]][:6]
+    search_df = df[df['topic'] == '따뜻한 위로가 되는'][:6]
     search_df = search_df.reset_index(drop=True)
     keyword5_6 = []
     for i in range(len(search_df)):
@@ -178,11 +156,7 @@ def search_keyword5_6():
 
 def search_keyword6_6():
     global df
-    uniq = df['topic'].unique()
-    uni_keyword_list = list(uniq)
-    uni_keyword_list.remove(' ')
-    uniq_keyword = np.array(uni_keyword_list)
-    search_df = df[df['topic'] == uniq_keyword[5]][:6]
+    search_df = df[df['topic'] == '스토리가 탄탄한'][:6]
     search_df = search_df.reset_index(drop=True)
     keyword6_6 = []
     for i in range(len(search_df)):
@@ -207,11 +181,7 @@ def search_keyword6_6():
 
 def search_keyword7_6():
     global df
-    uniq = df['topic'].unique()
-    uni_keyword_list = list(uniq)
-    uni_keyword_list.remove(' ')
-    uniq_keyword = np.array(uni_keyword_list)
-    search_df = df[df['topic'] == uniq_keyword[6]][:6]
+    search_df = df[df['topic'] == '음악과 함께하는'][:6]
     search_df = search_df.reset_index(drop=True)
     keyword7_6 = []
     for i in range(len(search_df)):
