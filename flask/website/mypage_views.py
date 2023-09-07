@@ -1,17 +1,34 @@
-from flask import Blueprint, redirect, render_template, request, flash, url_for, jsonify
+### 마이페이지
+
+from flask import Blueprint, redirect, render_template, request, flash, url_for, jsonify, session
 from flask_login import login_required, current_user
-from .models import Note, User
-from . import db
 import os
 from werkzeug.utils import secure_filename
+import re
+from func.mypage_fun import open_like_all, new_like_all
+import random
 
 mypage_views = Blueprint('mypage_views', __name__)
 
-# 나의 정보 페이지
+# 1. 마이페이지
 @mypage_views.route('/mypage', methods=['GET','POST'])
-@login_required
 def mypage():
-    return render_template('mypage.html')
+    user_info = session['u_id']
+    from . import mysql
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute("select name from KEYWIDB.UserInfo where u_id='{}'".format(user_info))
+    data = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    user_name = data[0][0]
+    op_like = open_like_all(user_info)
+    ns_like = new_like_all(user_info)
+    show_all_like = op_like[-4:][::-1] # 뒤에서부터 4개뽑고, 거꾸로 배열
+    new_all_like = ns_like[-4:][::-1]
+    return render_template('mypage.html', user_name = user_name, show_all_like = show_all_like, new_all_like = new_all_like)
+
+# 2. 마이페이지 정보 수정
 
 # 프로필 이미지 확장자 목록
 ALLOWED_EXTENSIONS = ['png','jpg','jpeg','gif']
@@ -21,10 +38,7 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-
-# 나의 정보 수정 페이지
 @mypage_views.route('/mypage/update', methods=['GET','POST'])
-@login_required
 def mypage_update():
 
     # 나의 정보 수정 요청 확인
@@ -43,13 +57,23 @@ def mypage_update():
                     filetype = filename.rsplit('.', 1)[1].lower()
                     image_path = f'{os.path.dirname(__file__)}/static/'  # ../website/static/
 
+
                     # user id로 프로필 명 저장
-                    image_file.save(f'{image_path}{current_user.id}.{filetype}')
+                    image_file.save('{}{}.{}'.format(image_path, session['u_id'], filetype))
 
                     # DB user.image_path에 반영
-                    user = User.query.get(current_user.id)
-                    user.image_path = f'{current_user.id}.{filetype}'
-                    db.session.commit()
+                    id = session['u_id']
+                    sql = "UPDATE UserInfo SET image_url = '%s' WHERE u_id = '%s'" % (str(id)+'.'+filetype, id)
+
+                    from . import mysql
+                    conn = mysql.connect()
+                    cursor = conn.cursor()
+                    cursor.execute(sql)
+                    conn.commit()
+                    cursor.close()
+                    conn.close()
+
+                    session['image_url'] = '{}.{}'.format(session['u_id'], filetype)
 
                     return redirect(url_for('mypage_views.mypage'))
                 else:
@@ -57,35 +81,86 @@ def mypage_update():
                     flash('이미지 파일은 png jpg jepg gif 만 지원합니다.', category = "error")
                     return redirect(request.url)
                 
-        # 닉네임, 비밀번호 변경여부 확인
-        nickname = request.form.get('nickname')
+        # 변경여부 확인
         password1 = request.form.get('password1')
-
-        # 닉네임 입력 여부 및 유효성 검사
-        if nickname:
-            db_user = User.query.filter_by(nickname=nickname).first()
-            if db_user :
-                flash("이미 있는 닉네임입니다.")
-                return redirect(request.url)
-            elif len(nickname) < 2:
-                flash("닉네임은 2자 이상입니다.", category="error")
-                return redirect(request.url)
-            else:
-                user = User.query.get(current_user.id)
-                user.nickname = nickname
-                db.session.commit()
-                changed = True
+        nickname = request.form.get('nickname')
+        birth = request.form.get('birth')
+        address1 = request.form.get('address1')
+        address2 = request.form.get('address2')
+        address3 = request.form.get('address3')
 
         # 패스워드 입력 여부 및 유효성 검사
         if password1:
-            if len(password1) < 7:
-                flash("비밀번호가 너무 짧습니다.", category = "error")
+            if re.match('^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$', password1) == None:
+                flash("비밀번호 입력 형식이 잘못 되었습니다.", category="error")
                 return redirect(request.url)
             else:
-                user = User.query.get(current_user.id)
-                user.password = password1
-                db.session.commit()
+                id = session['u_id']
+                sql = "UPDATE UserInfo SET user_password = '%s' WHERE u_id = '%s'" % (password1, id)
+                from . import mysql
+                conn = mysql.connect()
+                cursor = conn.cursor()
+                cursor.execute(sql)
+                conn.commit()
+                cursor.close()
+                conn.close()
                 changed = True
+
+        # 닉네임 입력 여부
+        if nickname:
+            if len(nickname) < 2:
+                flash("닉네임은 2자 이상입니다.", category="error")
+                return redirect(request.url)
+            else:
+                id = session['u_id']
+                sql = "UPDATE UserInfo SET nickname = '%s' WHERE u_id = '%s'" % (nickname, id)
+                from . import mysql
+                conn = mysql.connect()
+                cursor = conn.cursor()
+                cursor.execute(sql)
+                conn.commit()
+                cursor.close()
+                conn.close()
+                changed = True
+
+        # 생년월일 입력 여부
+        if birth:
+            id = session['u_id']
+            sql = "UPDATE UserInfo SET birthday = '%s' WHERE u_id = '%s'" % (birth, id)
+            from . import mysql
+            conn = mysql.connect()
+            cursor = conn.cursor()
+            cursor.execute(sql)
+            conn.commit()
+            cursor.close()
+            conn.close()
+            changed = True
+
+        # 주소1, 주소2, 주소3 모두 입력된 경우
+        if address1 and address2 and address3:
+            id = session['u_id']
+            sql = "UPDATE UserInfo SET address1 = '%s', address2 = '%s', address3 = '%s' WHERE u_id = '%s'" % (address1, address2, address3, id)
+            from . import mysql
+            conn = mysql.connect()
+            cursor = conn.cursor()
+            cursor.execute(sql)
+            conn.commit()
+            cursor.close()
+            conn.close()
+            changed = True
+
+        # 주소1, 주소2 모두 입력된 경우 -> 세종특별자치시 경우, 주소3 없음
+        if address1 and address2:
+            id = session['u_id']
+            sql = "UPDATE UserInfo SET address1 = '%s', address2 = '%s', address3 = NULL WHERE u_id = '%s'" % (address1, address2, id)
+            from . import mysql
+            conn = mysql.connect()
+            cursor = conn.cursor()
+            cursor.execute(sql)
+            conn.commit()
+            cursor.close()
+            conn.close()
+            changed = True
 
         # 변경사항이 있다면 redirect
         if changed:
@@ -96,3 +171,40 @@ def mypage_update():
             return redirect(request.url)
 
     return render_template('mypage_update.html')
+
+# 3. 마이페이지 좋아하는 공연
+@mypage_views.route('/mypage/pre_shows')
+def pre_shows():
+    user_info = session['u_id']
+    op_like = open_like_all(user_info)[::-1]
+    ns_like = new_like_all(user_info)[::-1]
+
+    return render_template('pre_shows.html', op_like = op_like, ns_like = ns_like)
+
+# 4. 마이페이지 좋아하는 오픈 공연 정보 삭제하기
+@mypage_views.route('/mypage/pre_shows/open_delete/<int:show_id>')
+def open_delete(show_id):
+    user_info = session['u_id']
+    sql = "DELETE FROM OpenLiked WHERE u_id = '%s' AND show_id = '%s'" % (user_info, show_id)
+    from . import mysql
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return redirect(url_for('mypage_views.pre_shows'))
+
+# 5. 마이페이지 좋아하는 공연중 공연 정보 삭제하기
+@mypage_views.route('/mypage/pre_shows/new_delete/<int:show_id>')
+def new_delete(show_id):
+    user_info = session['u_id']
+    sql = "DELETE FROM NewLiked WHERE u_id = '%s' AND show_id = '%s'" % (user_info, show_id)
+    from . import mysql
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return redirect(url_for('mypage_views.pre_shows'))

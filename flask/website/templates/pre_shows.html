@@ -1,0 +1,81 @@
+<!-- 마이페이지 좋아하는 오픈공연 -->
+
+{% extends "base.html" %}
+
+{% block title %}MyPage Preshow{% endblock %}
+
+{% block content %}
+
+<!-- 1. 선호 오픈 공연 -->
+<p style="font-size:30px; text-align:center;">오픈 예정</p>
+    <div class="row">
+        {% for info in op_like %}
+        <div class="col-md-12" id="{{info._id}}" style="margin-bottom: 20px;">
+            <div class="row">
+                <div class="col-md-3">
+                    <div style=" cursor: pointer;" onclick="location.href='{{info.url}}';">
+                        <div style="text-align : center;">
+                            {% if info['image']=='nan' %}
+                            <img src="{{ url_for('static', filename='no_image.png')}}" alt="기본이미지"
+                                class="rounded mx-auto d-block" style="width:150px; height:150px;">
+                            {% else %}
+                            <img src="{{info['image']}}" class="rounded mx-auto d-block" style="width:150px; height:200px;"/>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9" style="margin-left: -50px;">
+                    <div style=" cursor: pointer;" onclick="location.href='{{info.url}}';">
+                        <div style="width:500px; height:30px; font-size:14pt;">
+                            <p><b>{{info['title']}}</b></p>
+                        </div>
+                    </div>
+                    <div style="width:300px; height:20px;">
+                        <p style="text-align:right; color:#999"></p>일시: {{info['date']}}</p>
+                    </div>
+                    <div style="text-align : right; margin-top: 10px;">
+                        <a href="javascript:void(0)" class="delete btn btn-sm btn-outline-secondary"
+                           data-uri="{{ url_for('mypage_views.open_delete', show_id = info._id) }}">삭제하기</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+<!-- 2. 선호 핫 공연 -->
+<p style="font-size:30px;  text-align:center;">현재 공연중</p>
+<div class="row">
+    {% for info in ns_like %}
+    <div class="col-md-12" id="{{info._id}}" style="margin-bottom: 20px;">
+        <div class="row">
+            <div class="col-md-3">
+                <div style=" cursor: pointer;" onclick="location.href='{{info.url}}';">
+                    <div style="text-align : center;">
+                        {% if info['image']=='nan' %}
+                        <img src="{{ url_for('static', filename='no_image.png')}}" alt="기본이미지"
+                            class="rounded mx-auto d-block" style="width:150px; height:150px;">
+                        {% else %}
+                        <img src="{{info['image']}}" class="rounded mx-auto d-block" style="width:150px; height:200px;"/>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9" style="margin-left: -50px;">
+                <div style=" cursor: pointer;" onclick="location.href='{{info.url}}';">
+                    <div style="width:500px; height:30px; font-size:14pt;">
+                        <p><b>{{info['title']}}</b></p>
+                    </div>
+                </div>
+                <div style="width:300px; height:20px;">
+                    <p style="text-align:right; color:#999"></p>일시: {{info['date']}}</p>
+                </div>
+                <div style="text-align : right; margin-top: 10px;">
+                    <a href="javascript:void(0)" class="delete btn btn-sm btn-outline-secondary"
+                       data-uri="{{ url_for('mypage_views.new_delete', show_id = info._id) }}">삭제하기</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

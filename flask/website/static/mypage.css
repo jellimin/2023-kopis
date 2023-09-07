@@ -1,0 +1,81 @@
+@import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
+
+html, body {margin: 0 auto; padding: 0px;}
+
+/* 레이아웃 */
+body{
+  max-width: 100%;
+  width: 1200px;
+  position: relative;
+  right: 180px;
+}
+
+.container {
+    font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+}
+
+.my-container {
+    width: 1200px;
+    /* margin: auto; */
+    display: grid;
+    grid-template-columns: 350px 830px; /* 각 행(세로줄)의 길이 */
+    grid-template-rows: repeat(2, 400px);/* 각 열(가로줄)의 길이, 400px로 2등분 */
+    gap: 10px; /* 자식요소간의 간격 */
+}
+.my-box {
+background: white;
+/* width: 100%;
+height: 100%; */
+/* font-size: 15px; */
+border: 1px white;
+/* text-align: center; */
+}
+.my-box-one {
+grid-column: 1 / 2;
+grid-row:1 / 2;
+}
+.my-box-two {
+grid-column: 2 / 3;
+grid-row:1 / 2;
+}
+.my-box-three {
+grid-column: 2 / 3;
+grid-row:2 / 3;
+}
+.my-box-four {
+  grid-column: 2 / 3;
+  grid-row:3 / 4;
+  }
+
+/* 공연이름 텍스트 두줄 이상일 시, 생략기호로 표시 */
+.info-name {
+    position: relative;
+    overflow : hidden;
+    text-overflow : ellipsis;
+    /* 대신 height를 설정해준다. 텍스트 맞춰 height가 1줄인 경우를 생각하자.*/
+    word-wrap : break-word; 
+    display : -webkit-box;
+    -webkit-line-clamp : 1; 
+    /* 줄 개수를 설정한다. 만약 2줄이상이라면 height와 해당 값을 수정한다. */
+    -webkit-box-orient: vertical; 
+    padding-top: 8px;
+    padding-bottom: 10px;
+}
+
+.w-btn {
+  position: relative;
+  border: none;
+  display: inline-block;
+  padding: 15px 30px;
+  border-radius: 15px;
+  font-family: "paybooc-Light", sans-serif;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.25s;
+}
+
+.w-btn-green {
+  background-color: rgb(177,203,69);
+  color: rgb(255, 255, 255);
+}

@@ -1,0 +1,19 @@
+/* 유형 테스트 배너 css */
+
+body { 
+  height: 2000px;
+  min-height:100%; 
+  margin: 0;
+  float:right;
+  overflow: auto;
+}
+
+.sideBanner {
+  position: absolute;
+  /* width: 300px;
+  height: 150px; */
+  top: 70px;
+  left: 1220px;
+  background-color: #ffffff;
+  color: #ffffff;
+}
