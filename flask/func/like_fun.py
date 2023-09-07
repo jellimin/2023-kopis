@@ -10,7 +10,7 @@ sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 def main_open(main_open_id, opens, user_info):
     from website import mysql
 
-    # 좋아요 DB 정보 가져오기
+    # 좋아요 DB 정보 가져오기   
     sql = "SELECT * FROM OpenLiked WHERE show_id IN ('%s', '%s', '%s', '%s', '%s', '%s')" %(main_open_id[0],main_open_id[1],main_open_id[2],
                                                                                 main_open_id[3],main_open_id[4],main_open_id[5])
     conn = mysql.connect()
@@ -277,21 +277,29 @@ def update_like_in():
     action_receive = request.form["action_give"]
     # 좋아요가 눌려져 있는 상태라면
     if action_receive == "like":
-        sql = "INSERT INTO OpenLiked (u_id, show_id) VALUES ('%s', '%s')" % (user_info, show_id_receive)
+        sql1 = "SET foreign_key_checks = 0; "
+        sql2 = "INSERT INTO OpenLiked (u_id, show_id) VALUES ('%s', '%s')" % (user_info, show_id_receive)
+        sql3 = "SET foreign_key_checks = 1; "
         from website import mysql
         conn = mysql.connect()
         cursor = conn.cursor()
-        cursor.execute(sql)
+        cursor.execute(sql1)
+        cursor.execute(sql2)
+        cursor.execute(sql3)
         conn.commit()
         cursor.close()
         conn.close()
     # 좋아요가 눌러져 있지 않은 상태라면
     else:
-        sql = "DELETE FROM OpenLiked WHERE u_id = '%s' AND show_id = '%s'" % (user_info, show_id_receive)
+        sql1 = "SET foreign_key_checks = 0; "
+        sql2 = "DELETE FROM OpenLiked WHERE u_id = '%s' AND show_id = '%s'" % (user_info, show_id_receive)
+        sql3 = "SET foreign_key_checks = 1; "
         from website import mysql
         conn = mysql.connect()
         cursor = conn.cursor()
-        cursor.execute(sql)
+        cursor.execute(sql1)
+        cursor.execute(sql2)
+        cursor.execute(sql3)
         conn.commit()
         cursor.close()
         conn.close()
@@ -317,21 +325,29 @@ def update_like_in_hot():
     action_receive = request.form["action_give"]
     # 좋아요가 눌려져 있는 상태라면
     if action_receive == "like":
-        sql = "INSERT INTO NewLiked (u_id, show_id) VALUES ('%s', '%s')" % (user_info, show_id_receive)
+        sql1 = "SET foreign_key_checks = 0; "
+        sql2 = "INSERT INTO NewLiked (u_id, show_id) VALUES ('%s', '%s')" % (user_info, show_id_receive)
+        sql3 = "SET foreign_key_checks = 1; "
         from website import mysql
         conn = mysql.connect()
         cursor = conn.cursor()
-        cursor.execute(sql)
+        cursor.execute(sql1)
+        cursor.execute(sql2)
+        cursor.execute(sql3)
         conn.commit()
         cursor.close()
         conn.close()
     # 좋아요가 눌러져 있지 않은 상태라면
     else:
-        sql = "DELETE FROM NewLiked WHERE u_id = '%s' AND show_id = '%s'" % (user_info, show_id_receive)
+        sql1 = "SET foreign_key_checks = 0; "
+        sql2 = "DELETE FROM NewLiked WHERE u_id = '%s' AND show_id = '%s'" % (user_info, show_id_receive)
+        sql3 = "SET foreign_key_checks = 1; "
         from website import mysql
         conn = mysql.connect()
         cursor = conn.cursor()
-        cursor.execute(sql)
+        cursor.execute(sql1)
+        cursor.execute(sql2)
+        cursor.execute(sql3)
         conn.commit()
         cursor.close()
         conn.close()
@@ -357,21 +373,29 @@ def update_like_in_key():
     action_receive = request.form["action_give"]
     # 좋아요가 눌려져 있는 상태라면
     if action_receive == "like":
-        sql = "INSERT INTO NewLiked (u_id, show_id) VALUES ('%s', '%s')" % (user_info, show_id_receive)
+        sql1 = "SET foreign_key_checks = 0; "
+        sql2 = "INSERT INTO NewLiked (u_id, show_id) VALUES ('%s', '%s')" % (user_info, show_id_receive)
+        sql3 = "SET foreign_key_checks = 1; "
         from website import mysql
         conn = mysql.connect()
         cursor = conn.cursor()
-        cursor.execute(sql)
+        cursor.execute(sql1)
+        cursor.execute(sql2)
+        cursor.execute(sql3)
         conn.commit()
         cursor.close()
         conn.close()
     # 좋아요가 눌러져 있지 않은 상태라면
     else:
-        sql = "DELETE FROM NewLiked WHERE u_id = '%s' AND show_id = '%s'" % (user_info, show_id_receive)
+        sql1 = "SET foreign_key_checks = 0; "
+        sql2 = "DELETE FROM NewLiked WHERE u_id = '%s' AND show_id = '%s'" % (user_info, show_id_receive)
+        sql3 = "SET foreign_key_checks = 1; "
         from website import mysql
         conn = mysql.connect()
         cursor = conn.cursor()
-        cursor.execute(sql)
+        cursor.execute(sql1)
+        cursor.execute(sql2)
+        cursor.execute(sql3)
         conn.commit()
         cursor.close()
         conn.close()
