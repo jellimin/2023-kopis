@@ -5,15 +5,18 @@
 html, body {margin: 0 auto; padding: 0px;}
 
 /* 레이아웃 */
-body {
+body{
+  overflow-x: hidden;
   max-width: 100%;
   width: 1200px;
   position: relative;
-  right: 100px;
+  right: 180px;
+  margin: 0;
+
 }
 
 main {
-  margin: auto;
+  margin: 0;
   /* background: #ffffff; */
   /* background-color: aqua; */
   /* background-color: aqua; */
@@ -154,6 +157,10 @@ main {
 .nav-link {
   color:black;
   font-weight:bold;
+}
+
+.info-thumnail{
+  cursor: pointer;
 }
 
 /* 공연 더보기 버튼 */
