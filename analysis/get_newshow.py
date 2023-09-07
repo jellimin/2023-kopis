@@ -7,7 +7,7 @@ conn = pymysql.connect(host='admin.ckaurvkcjohj.eu-north-1.rds.amazonaws.com', u
 def prepro_df(df):    
     df = df.apply(lambda x: x.replace("'",""))
     df = df.apply(lambda x: x.replace('"',""))
-    df = df.apply(lambda x: x.replace('',""))
+    df = df.apply(lambda x: x.replace('',""))       
     return df
 df_topic['줄거리'] = prepro_df(df_topic['줄거리'] )
 df_topic['작품설명'] = prepro_df(df_topic['작품설명'] )
