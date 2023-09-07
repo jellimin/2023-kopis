@@ -1,3 +1,4 @@
+
 {% extends "base.html" %}
 
 {% block title %}Home{% endblock %}
@@ -17,7 +18,7 @@
                      <div class="cont_name" style="font-size:105%; text-align: center; width: 170px; height: 40px;">
                         <dt>{{info['name']}}</dt>
                     </div>   
-                    <div class="info-thumnail">
+                    <div class="info-thumnail" onclick="location.href='{{info.url}}';">
                         <!-- 사용자 지정 이미지가 없을 경우 -->
                         {% if info['image']=='nan' %}
                         <img src="{{ url_for('static', filename='no_image.png')}}" alt="기본이미지"
@@ -110,7 +111,7 @@
                             <div class="cont_name" style="font-size:105%; text-align: center; height: 20px; white-space: nowrap;">
                                <dt>{{info['name']}}</dt>
                            </div>   
-                           <div class="info-thumnail">
+                           <div class="info-thumnail" onclick="location.href='{{info.url}}';">
                                <!-- 사용자 지정 이미지가 없을 경우 -->
                                {% if info['image']=='nan' %}
                                <img src="{{ url_for('static', filename='no_image.png')}}" alt="기본이미지"
@@ -172,7 +173,7 @@
                             <div class="cont_name" style="font-size:105%; text-align: center; height: 20px; white-space: nowrap;">
                                <dt>{{info['name']}}</dt>
                            </div>   
-                           <div class="info-thumnail">
+                           <div class="info-thumnail" onclick="location.href='{{info.url}}';">
                                <!-- 사용자 지정 이미지가 없을 경우 -->
                                {% if info['image']=='nan' %}
                                <img src="{{ url_for('static', filename='no_image.png')}}" alt="기본이미지"
@@ -234,7 +235,7 @@
                             <div class="cont_name" style="font-size:105%; text-align: center; height: 20px; white-space: nowrap;">
                                <dt>{{info['name']}}</dt>
                            </div>   
-                           <div class="info-thumnail">
+                           <div class="info-thumnail" onclick="location.href='{{info.url}}';">
                                <!-- 사용자 지정 이미지가 없을 경우 -->
                                {% if info['image']=='nan' %}
                                <img src="{{ url_for('static', filename='no_image.png')}}" alt="기본이미지"
@@ -296,7 +297,7 @@
                             <div class="cont_name" style="font-size:105%; text-align: center; height: 20px; white-space: nowrap;">
                                <dt>{{info['name']}}</dt>
                            </div>   
-                           <div class="info-thumnail">
+                           <div class="info-thumnail" onclick="location.href='{{info.url}}';">
                                <!-- 사용자 지정 이미지가 없을 경우 -->
                                {% if info['image']=='nan' %}
                                <img src="{{ url_for('static', filename='no_image.png')}}" alt="기본이미지"
@@ -358,7 +359,7 @@
                             <div class="cont_name" style="font-size:105%; text-align: center; height: 20px; white-space: nowrap;">
                                <dt>{{info['name']}}</dt>
                            </div>   
-                           <div class="info-thumnail">
+                           <div class="info-thumnail" onclick="location.href='{{info.url}}';">
                                <!-- 사용자 지정 이미지가 없을 경우 -->
                                {% if info['image']=='nan' %}
                                <img src="{{ url_for('static', filename='no_image.png')}}" alt="기본이미지"
@@ -420,7 +421,7 @@
                             <div class="cont_name" style="font-size:105%; text-align: center; height: 20px; white-space: nowrap;">
                                <dt>{{info['name']}}</dt>
                            </div>   
-                           <div class="info-thumnail">
+                           <div class="info-thumnail" onclick="location.href='{{info.url}}';">
                                <!-- 사용자 지정 이미지가 없을 경우 -->
                                {% if info['image']=='nan' %}
                                <img src="{{ url_for('static', filename='no_image.png')}}" alt="기본이미지"
@@ -482,7 +483,7 @@
                             <div class="cont_name" style="font-size:105%; text-align: center; height: 20px; white-space: nowrap;">
                                <dt>{{info['name']}}</dt>
                            </div>   
-                           <div class="info-thumnail">
+                           <div class="info-thumnail" onclick="location.href='{{info.url}}';">
                                <!-- 사용자 지정 이미지가 없을 경우 -->
                                {% if info['image']=='nan' %}
                                <img src="{{ url_for('static', filename='no_image.png')}}" alt="기본이미지"
@@ -730,12 +731,12 @@
     <!-- 4. OpenInfo -->
     <div class="temp-box box-four">
         <div style="text-align:center">
-            <p class="my-underline" style="font-size:30px"><b>오픈 공연</b></p>
+            <p class="my-underline" style="font-size:30px"><b>{{week}} 오픈 예정 공연</b></p>
         </div>
         <div class="row">
             {% for info in open %}
             <div class="col-sm-2" id="{{info._id}}">
-               <div class="info-thumnail">
+               <div class="info-thumnail" onclick="location.href='{{info.url}}';">
                    <!-- 사용자 지정 이미지가 없을 경우 -->
                    {% if info['image']=='nan' %}
                    <img src="{{ url_for('static', filename='no_image.png')}}" alt="기본이미지"
