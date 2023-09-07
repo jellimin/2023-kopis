@@ -1,6 +1,6 @@
 @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
 
-html, body {margin: 0 auto; padding: 0px;}
+/* html, body {margin: 0 auto; padding: 0px;} */
 
 /* 레이아웃 */
 body{
@@ -13,7 +13,7 @@ body{
     
 .image_update {
     position: relative;
-    left: 50px;
+    left: 0px;
 }
 
 .w-btn {
@@ -33,3 +33,12 @@ body{
     background-color: #77af9c;
     color: #d7fff1;
   }
+
+.sex-choose {
+    position: relative;
+    left: 60px;
+}
+.juso-choose {
+    position: relative;
+    left: 0px;
+}
