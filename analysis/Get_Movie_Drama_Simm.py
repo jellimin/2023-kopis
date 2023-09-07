@@ -229,8 +229,8 @@ conn = pymysql.connect(host='admin.ckaurvkcjohj.eu-north-1.rds.amazonaws.com', u
 # 커서 생성
 db = conn.cursor()
 # 쿼리 실행
-# sql_state = """alter table KEYWIDB.HotLiked drop foreign key HotLiked_ibfk_2""" # 참조하는 경우 테이블 삭제 안되므로 외래키 제거
-# db.execute(sql_state)
+sql_state = """alter table KEYWIDB.HotLiked drop foreign key HotLiked_ibfk_2""" # 참조하는 경우 테이블 삭제 안되므로 외래키 제거
+db.execute(sql_state)
 
 sql_state = """TRUNCATE KEYWIDB.HotInfo"""
 db.execute(sql_state)
@@ -243,7 +243,7 @@ for cat, cont_num, cont_name, simm, show_name, show_venue, show_address, show_da
                 VALUES ("%s","%s","%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s")"""%(tuple([cat,cont_num,cont_name,simm,show_name,show_venue,show_address,show_date,img_url,show_url, id]))
     db.execute(sql_state)
 
-# 외래키 다시 추가하기
+# # 외래키 다시 추가하기
 sql_state = """alter table KEYWIDB.HotLiked add constraint HotLiked_ibfk_2 foreign key(show_id) references KEYWIDB.HotInfo(id) ON DELETE CASCADE"""
 db.execute(sql_state)
 

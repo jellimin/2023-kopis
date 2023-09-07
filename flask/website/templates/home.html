@@ -14,7 +14,7 @@
             <div class="row">
                 {% for info in hot %}
                 <div class="col-sm-2" id="{{info._id}}">
-                     <div class="cont_name" style="font-size:105%; text-align: center; height: 20px; white-space: nowrap;">
+                     <div class="cont_name" style="font-size:105%; text-align: center; width: 170px; height: 40px;">
                         <dt>{{info['name']}}</dt>
                     </div>   
                     <div class="info-thumnail">
@@ -563,21 +563,19 @@
             </ul>
             <div class="cont_area">
                 <div id="con1" class="cont">
-                    <ul class="newsletter-list">
+                    <div class="newsletter-list">
                         <li>
                             <a href="newsletter1" style="text-decoration: none; color:black;">
                                 <img src="./static/thumbnail1.png" alt="뉴스레터 1" class="newsletter-thumbnail">
-
-                                <div class="info-name-1" style="text-align:center;">  
+                                <div class="info-name" style="text-align:center; width: 280px;">  
                                     <p><b>음악 취향을 찾고 싶은 당신에게 추천하는 가을 페스티벌</b></p>
                                 </div>
                             </a>
                         </li>
                         <li>
                             <a href="newsletter2" style="text-decoration: none; color:black;">
-                                <img src="./static/thumbnail2.jpg" alt="뉴스레터 2" class="newsletter-thumbnail">
-
-                                <div class="info-name-1" style="text-align:center;">  
+                                <img src="./static/thumbnail2.jpg" alt="뉴스레터 2" class="newsletter-thumbnail-except">
+                                <div class="info-name" style="text-align:center; width: 280px;">  
                                     <p><b>스탠딩 콘서트 100% 즐기는 꿀팁</b></p>
                                 </div>
                             </a>
@@ -585,12 +583,12 @@
                         <li>
                             <a href="newsletter3" style="text-decoration: none; color:black;">
                                 <img src="./static/thumbnail3.jpg" alt="뉴스레터 3" class="newsletter-thumbnail">
-                                <div class="info-name-1" style="text-align:center;">  
+                                <div class="info-name" style="text-align:center; width: 280px;">  
                                     <p><b>[9월 PLAYLIST] 감성 충만한 가을에 듣기 좋은 뮤지컬 넘버 🎶</b></p>
                                 </div>
                             </a>
                         </li>
-                    </ul>
+                    </div>
                 </div>
                 <div id="con2" class="cont">
                     <div class="row" >
@@ -789,7 +787,7 @@
 
 <div class="sideBanner">
     <a href="https://waveon.io/apps/30298" target="_blank">
-        <img src="{{ url_for('static', filename='banner.png') }}" width="100px" height="150px">
+        <img src="{{ url_for('static', filename='banner.png') }}" width="150px" height="200">
     </a>
 </div>
 

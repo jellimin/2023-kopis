@@ -43,7 +43,7 @@ def classificate_show(show_df):
             topic.append('함께 보기 좋은')
         elif (any(keyword in content for keyword in list_4)) or (any(keyword in detail for keyword in list_4)) or (genre=='라이선스') or ("오픈런" in date):
             topic.append('손꼽아 기다려지는')
-        elif (any(keyword in content for keyword in list_3)) or (any(keyword in detail for keyword in list_3)) or (genre in ['클래식','오페라','콘서트']):
+        elif (any(keyword in content for keyword in list_3)) or (any(keyword in detail for keyword in list_3)) or (genre in ['클래식','오페라']):
             topic.append('음악과 함께하는')
         else:
             topic.append(' ')
