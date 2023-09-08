@@ -9,7 +9,7 @@
     <!-- 1. HotInfo -->
     <div class="temp-box box-one">
         <div style="text-align:center">
-            <p class="my-underline" style="font-size:30px "><b>{{week}} 영화, 드라마와 유사한 공연</b></p>
+            <p class="my-underline" style="font-size:30px "><b> 영화, 드라마와 유사한 공연</b></p>
         </div>
         <div class="cont-area">
             <div class="row">
@@ -735,7 +735,7 @@
         </div>
         <div class="row">
             {% for info in open %}
-            <div class="col-sm-2" id="{{info._id}}">
+            <div class="col-sm-2" id="{{info._id}}">`
                <div class="info-thumnail" onclick="location.href='{{info.url}}';">
                    <!-- 사용자 지정 이미지가 없을 경우 -->
                    {% if info['image']=='nan' %}
